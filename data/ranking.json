@@ -1,0 +1,20 @@
+[
+  { "cap": 1, "trinhDo": "Võ sinh",            "mauDai": "den",      "hexDai": "#2A2A2A", "colorName": "Đen",     "so": 0, "thoiGian": 3},
+  { "cap": 2, "trinhDo": "Võ sinh",            "mauDai": "den",      "hexDai": "#2A2A2A", "colorName": "Đen",     "so": 1, "thoiGian": 6},
+  { "cap": 3, "trinhDo": "Võ sinh",            "mauDai": "den",      "hexDai": "#2A2A2A", "colorName": "Đen",     "so": 2, "thoiGian": 9},
+  { "cap": 4, "trinhDo": "Võ sinh",            "mauDai": "den",      "hexDai": "#2A2A2A", "colorName": "Đen",     "so": 3, "thoiGian": 12},
+  { "cap": 5, "trinhDo": "Võ sinh",            "mauDai": "xanhla",   "hexDai": "#27AE60", "colorName": "Xanh lá", "so": 0, "thoiGian": 15},
+  { "cap": 6, "trinhDo": "Võ sinh",            "mauDai": "xanhla",   "hexDai": "#27AE60", "colorName": "Xanh lá", "so": 1, "thoiGian": 18},
+  { "cap": 7, "trinhDo": "Võ sinh",            "mauDai": "xanhla",   "hexDai": "#27AE60", "colorName": "Xanh lá", "so": 2, "thoiGian": 21},
+  { "cap": 8, "trinhDo": "Võ sinh",            "mauDai": "xanhla",   "hexDai": "#27AE60", "colorName": "Xanh lá", "so": 3, "thoiGian": 24},
+  { "cap": 9,"trinhDo": "Hướng dẫn viên",     "mauDai": "do",       "hexDai": "#E74C3C", "colorName": "Đỏ",      "so": 0, "thoiGian": 30},
+  { "cap": 10,"trinhDo": "Hướng dẫn viên",     "mauDai": "do",       "hexDai": "#E74C3C", "colorName": "Đỏ",      "so": 1, "thoiGian": 36},
+  { "cap": 11,"trinhDo": "Hướng dẫn viên",     "mauDai": "do",       "hexDai": "#E74C3C", "colorName": "Đỏ",      "so": 2, "thoiGian": 42},
+  { "cap": 12,"trinhDo": "Hướng dẫn viên",     "mauDai": "do",       "hexDai": "#E74C3C", "colorName": "Đỏ",      "so": 3, "thoiGian": 48},
+  { "cap": 13,"trinhDo": "Huấn luyện viên",    "mauDai": "vang",     "hexDai": "#F5C518", "colorName": "Vàng",    "so": 0, "thoiGian": 60},
+  { "cap": 14,"trinhDo": "Huấn luyện viên",    "mauDai": "vang",     "hexDai": "#F5C518", "colorName": "Vàng",    "so": 1, "thoiGian": 84},
+  { "cap": 15,"trinhDo": "Huấn luyện viên",    "mauDai": "vang",     "hexDai": "#F5C518", "colorName": "Vàng",    "so": 2, "thoiGian": 120},
+  { "cap": 16,"trinhDo": "Huấn luyện viên",    "mauDai": "vang",     "hexDai": "#F5C518", "colorName": "Vàng",    "so": 3, "thoiGian": 168},
+  { "cap": 17,"trinhDo": "Chuẩn võ sư",        "mauDai": "trang",    "hexDai": "#E8E8E8", "colorName": "Trắng",   "so": 0, "thoiGian": 228},
+  { "cap": 18,"trinhDo": "Võ sư",              "mauDai": "trang",    "hexDai": "#E8E8E8", "colorName": "Trắng",   "so": 0, "thoiGian": 300}
+]

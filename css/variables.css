@@ -1,0 +1,82 @@
+/* ===== CSS VARIABLES — VÕ SINH MANAGEMENT SYSTEM ===== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* ── Core Palette ─────────────────────────── */
+  --bg-base:        #F9F9F9; /* Off-white background */
+  --bg-surface:     #FFFFFF; /* Pure white surface */
+  --bg-raised:      #F0F0F0;
+  --bg-overlay:     #E8E8E8;
+  --bg-hover:       #E0E0E0;
+
+  /* ── Gold Accent ──────────────────────────── */
+  --gold-bright:    #C09020; /* Main gold — số 4000+, accent chính */
+  --gold-mid:       #A07818; /* Gold tối hơn, dùng cho link/border accent */
+  --gold-light:     #D4A843; /* Gold sáng, dùng cho hero/dot */
+  --gold-dim:       #7A5C12;
+  --gold-glow:      rgba(192, 144, 32, 0.15);
+
+  /* ── Crimson ──────────────────────────────── */
+  --red-bright:     #C0392B; /* Main red — nút Đăng nhập, brand primary */
+  --red-mid:        #96281B; /* Dark red — pair với red-bright trong gradient */
+  --red-dim:        #6B1A12;
+  --red-glow:       rgba(192, 57, 43, 0.12);
+
+  /* ── Text ─────────────────────────────────── */
+  --text-primary:   #000000; /* Pure black */
+  --text-secondary: #111111; /* Very dark gray for sub-text */
+  --text-muted:     #222222;
+  --text-inverse:   #FFFFFF;
+
+  /* ── Border ───────────────────────────────── */
+  --border-subtle:  rgba(0,0,0,0.08); /* Dark subtle border */
+  --border-mid:     rgba(0,0,0,0.15);
+  --border-strong:  rgba(0,0,0,0.3);
+
+  /* ── Belt Colors ──────────────────────────── */
+  --belt-trang:     #E8E8E8;
+  --belt-vang:      #F5C518;
+  --belt-xanhla:    #27AE60;
+  --belt-do:        #E74C3C;
+  --belt-den:       #2A2A2A;
+
+  /* ── Semantic ─────────────────────────────── */
+  --success:        #27AE60;
+  --warning:        #F39C12;
+  --danger:         #E74C3C;
+  --info:           #2980B9;
+
+  /* ── Shadows ──────────────────────────────── */
+  --shadow-sm:      0 2px 8px rgba(0,0,0,0.05);
+  --shadow-md:      0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg:      0 8px 40px rgba(0,0,0,0.12);
+  --shadow-gold:    0 4px 20px rgba(192, 144, 32, 0.3);
+  --shadow-red:     0 4px 20px rgba(192, 57, 43, 0.35);
+
+  /* ── Fonts ────────────────────────────────── */
+  --font-display:   'Montserrat', sans-serif;
+  --font-heading:   'Montserrat', sans-serif;
+  --font-body:      'Be Vietnam Pro', sans-serif;
+
+  /* ── Spacing ──────────────────────────────── */
+  --space-1: 4px;  --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px; --space-5: 20px;  --space-6: 24px;
+  --space-8: 32px; --space-10: 40px; --space-12: 48px;
+
+  /* ── Radius ───────────────────────────────── */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-full: 9999px;
+
+  /* ── Transition ───────────────────────────── */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.7, 0, 0.84, 0);
+  --duration-fast: 150ms;
+  --duration-mid:  250ms;
+  --duration-slow: 400ms;
+
+  /* ── Sidebar ──────────────────────────────── */
+  --sidebar-width: 260px;
+}

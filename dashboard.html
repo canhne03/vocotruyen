@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard HLV — Võ Cổ Truyền Tây Ninh</title>
+  <meta name="description" content="Trang quản lý võ sinh dành cho Huấn luyện viên — Võ Cổ Truyền Tây Ninh">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+  <!-- ── SIDEBAR ─────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="img/logo-vct.png" alt="Logo VCT" class="sidebar-logo">
+      <span class="sidebar-brand">VCT Tây Ninh</span>
+    </div>
+
+    <div class="sidebar-coach" id="sidebar-coach">
+      <div class="coach-avatar" id="coach-avatar"></div>
+      <div class="coach-info">
+        <div class="coach-name" id="coach-name">Huấn luyện viên</div>
+        <div class="coach-role">Huấn luyện viên</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-tab="overview" id="nav-overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>Tổng quan</span>
+      </button>
+      <button class="nav-item" data-tab="students" id="nav-students">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Danh sách VS</span>
+      </button>
+      <button class="nav-item" data-tab="tuition" id="nav-tuition">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        <span>Học phí</span>
+      </button>
+      <button class="nav-item" data-tab="classes" id="nav-classes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Lớp học</span>
+      </button>
+      <button class="nav-item" data-tab="suspended" id="nav-suspended">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        <span>Ngưng hoạt động</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html" class="sidebar-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+        <span>Trang chủ</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── SIDEBAR OVERLAY (mobile) ────────────────── -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ── MAIN CONTENT ────────────────────────────── -->
+  <main class="main-content" id="main-content">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-left">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+          <span></span><span></span><span></span>
+        </button>
+        <h1 class="page-title" id="page-title">Tổng quan</h1>
+      </div>
+      <div class="header-right">
+        <div class="header-date" id="header-date"></div>
+      </div>
+    </header>
+
+    <!-- ── TAB: Tổng quan ──────────────────────── -->
+    <section class="tab-content active" id="tab-overview">
+      <div class="stats-grid">
+        <div class="stat-card stat-total" onclick="App.switchTab('students')">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-total-vs">0</div>
+            <div class="stat-label">Tổng võ sinh</div>
+          </div>
+        </div>
+        <div class="stat-card stat-paid" onclick="App.switchTab('tuition')">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-paid">0</div>
+            <div class="stat-label">Đã đóng HP</div>
+          </div>
+        </div>
+        <div class="stat-card stat-unpaid" onclick="App.switchTab('tuition')">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          </div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-unpaid">0</div>
+            <div class="stat-label">Chưa đóng HP</div>
+          </div>
+        </div>
+        <div class="stat-card stat-clubs" onclick="App.switchTab('classes')">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="stat-body">
+            <div class="stat-value" id="stat-clubs">0</div>
+            <div class="stat-label">Câu lạc bộ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tuition summary per club -->
+      <div class="overview-section">
+        <div class="section-heading">
+          <h3>Học phí tháng hiện tại</h3>
+          <select id="overview-month" class="select-sm"></select>
+        </div>
+        <div id="overview-clubs-grid" class="overview-clubs-grid"></div>
+      </div>
+
+      <!-- Recent students -->
+      <div class="overview-section">
+        <h3>Võ sinh mới nhập học</h3>
+        <div id="overview-recent" class="recent-list"></div>
+      </div>
+    </section>
+
+    <!-- ── TAB: Danh sách VS ───────────────────── -->
+    <section class="tab-content" id="tab-students">
+      <div class="tab-toolbar">
+        <div class="toolbar-left">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="search-student" placeholder="Tìm kiếm võ sinh...">
+          </div>
+          <select id="filter-club" class="select-input">
+            <option value="">Tất cả CLB</option>
+          </select>
+        </div>
+        <button class="btn-primary" id="btn-add-vs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Thêm Võ sinh
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="student-table">
+          <thead>
+            <tr>
+              <th>Họ tên</th>
+              <th>Năm sinh</th>
+              <th>Giới tính</th>
+              <th>Cấp đai</th>
+              <th>CLB</th>
+              <th class="th-actions"></th>
+            </tr>
+          </thead>
+          <tbody id="student-tbody"></tbody>
+        </table>
+        <div class="empty-state" id="empty-students" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <p>Chưa có võ sinh nào</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB: Học phí ────────────────────────── -->
+    <section class="tab-content" id="tab-tuition">
+      <div class="tab-toolbar">
+        <div class="toolbar-left">
+          <select id="tuition-club-filter" class="select-input">
+          </select>
+          <div class="toolbar-range">
+            <label class="toolbar-label">Từ</label>
+            <select id="tuition-month-start" class="select-input select-sm"></select>
+            <label class="toolbar-label">Đến</label>
+            <select id="tuition-month-end" class="select-input select-sm"></select>
+          </div>
+        </div>
+        <div class="tuition-stats" id="tuition-stats"></div>
+      </div>
+      <div class="table-wrap tuition-matrix-wrap">
+        <table class="data-table tuition-table matrix-table" id="tuition-table">
+          <thead>
+            <tr id="tuition-thead-row">
+              <th class="sticky-col">Họ tên Võ sinh</th>
+              <th class="th-center">Đã đóng</th>
+            </tr>
+          </thead>
+          <tbody id="tuition-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── TAB: Lớp học ────────────────────────── -->
+    <section class="tab-content" id="tab-classes">
+      <div class="tab-toolbar">
+        <div class="toolbar-left">
+          <h3 class="toolbar-title">Câu lạc bộ / Lớp học</h3>
+        </div>
+        <button class="btn-primary" id="btn-add-class">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Thêm lớp
+        </button>
+      </div>
+      <div class="classes-grid" id="classes-grid"></div>
+    </section>
+
+    <!-- ── TAB: Ngưng hoạt động ─────────────────── -->
+    <section class="tab-content" id="tab-suspended">
+      <div class="tab-toolbar">
+        <div class="toolbar-left">
+          <h3 class="toolbar-title">Võ sinh Ngưng hoạt động</h3>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="suspended-table">
+          <thead>
+            <tr>
+              <th>Họ tên</th>
+              <th>Năm sinh</th>
+              <th>Giới tính</th>
+              <th>Cấp đai</th>
+              <th>CLB</th>
+              <th class="th-actions"></th>
+            </tr>
+          </thead>
+          <tbody id="suspended-tbody"></tbody>
+        </table>
+        <div class="empty-state" id="empty-suspended" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          <p>Không có võ sinh ngưng hoạt động</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── MODAL: Thêm/Sửa Võ sinh ─────────────── -->
+  <div class="modal-overlay" id="modal-vs">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-vs-title">Thêm Võ sinh</h3>
+        <button class="modal-close" data-close="modal-vs" aria-label="Đóng">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-vs" autocomplete="off">
+          <input type="hidden" id="vs-edit-id">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="vs-ten">Họ tên <span class="required">*</span></label>
+              <input type="text" id="vs-ten" required placeholder="Nhập họ tên">
+            </div>
+            <div class="form-group">
+              <label for="vs-ngaysinh">Ngày sinh <span class="required">*</span></label>
+              <input type="date" id="vs-ngaysinh" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="vs-gioitinh">Giới tính</label>
+              <select id="vs-gioitinh">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="vs-dangcap">Cấp đai</label>
+              <select id="vs-dangcap"></select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="vs-clb">CLB <span class="required">*</span></label>
+              <select id="vs-clb" required></select>
+            </div>
+            <div class="form-group">
+              <label for="vs-diachi">Địa chỉ</label>
+              <input type="text" id="vs-diachi" placeholder="Nhập địa chỉ">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="vs-ngaynhaphoc">Ngày nhập học</label>
+              <input type="date" id="vs-ngaynhaphoc">
+            </div>
+            <div class="form-group">
+              <label for="vs-password">Mật khẩu</label>
+              <input type="text" id="vs-password" placeholder="Mật khẩu">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-ghost" data-close="modal-vs">Hủy</button>
+            <button type="submit" class="btn-primary" id="btn-save-vs">Lưu</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: Xem chi tiết VS ─────────────────── -->
+  <div class="modal-overlay" id="modal-view-vs">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Hồ sơ Võ sinh</h3>
+        <button class="modal-close" data-close="modal-view-vs" aria-label="Đóng">✕</button>
+      </div>
+      <div class="modal-body" id="view-vs-body">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: Thêm Lớp ─────────────────────── -->
+  <div class="modal-overlay" id="modal-class">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Thêm Lớp học mới</h3>
+        <button class="modal-close" data-close="modal-class" aria-label="Đóng">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-class" autocomplete="off">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="class-msclb">Mã CLB <span class="auto-tag">Tự động</span></label>
+              <input type="text" id="class-msclb" readonly class="input-readonly">
+            </div>
+            <div class="form-group">
+              <label for="class-tenclb">Tên CLB <span class="required">*</span></label>
+              <input type="text" id="class-tenclb" required placeholder="Tên câu lạc bộ">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="class-diachi">Địa chỉ <span class="required">*</span></label>
+            <input type="text" id="class-diachi" required placeholder="Địa chỉ lớp học">
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-ghost" data-close="modal-class">Hủy</button>
+            <button type="submit" class="btn-primary">Thêm lớp</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

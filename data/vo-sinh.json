@@ -1,0 +1,92 @@
+[
+  {
+    "msVS": "001100011", "msCLB": "0011", "msHLV": "001",
+    "tenVS": "Phạm Quốc Bảo", "gioiTinh": "Nam", "ngaySinh": "2005-03-15", "diaChi": "23 Lý Tự Trọng, Q1, TP.HCM",
+    "dangCap": 5, "ngayNhapHoc": "2021-09-01", "ngayThi": "2023-06-10",
+    "avatar": null, "password": "vs001", "doiPass": false,
+    "hocPhi": { "2024-11": true, "2024-12": true, "2025-01": false, "2025-02": false },
+    "thanhTich": ["Huy chương bạc giải học sinh TP.HCM 2023"],
+    "trangThaiThi": null
+  },
+  {
+    "msVS": "001100021", "msCLB": "0011", "msHLV": "001",
+    "tenVS": "Nguyễn Thị Lan", "gioiTinh": "Nữ", "ngaySinh": "2006-07-22", "diaChi": "56 Nguyễn Huệ, Q1, TP.HCM",
+    "dangCap": 3, "ngayNhapHoc": "2022-02-14", "ngayThi": "2023-08-20",
+    "avatar": null, "password": "vs002", "doiPass": false,
+    "hocPhi": { "2024-11": true, "2024-12": true, "2025-01": true, "2025-02": false },
+    "thanhTich": [],
+    "trangThaiThi": null
+  },
+  {
+    "msVS": "001100031", "msCLB": "0011", "msHLV": "001",
+    "tenVS": "Trần Văn Đức", "gioiTinh": "Nam", "ngaySinh": "2004-11-08", "diaChi": "89 Đồng Khởi, Q1, TP.HCM",
+    "dangCap": 7, "ngayNhapHoc": "2020-06-15", "ngayThi": "2023-11-05",
+    "avatar": null, "password": "vs003", "doiPass": false,
+    "hocPhi": { "2024-11": true, "2024-12": false, "2025-01": false, "2025-02": false },
+    "thanhTich": ["Vô địch giải Trẻ TP.HCM 2022", "Huy chương vàng Cúp Mùa xuân 2023"],
+    "trangThaiThi": "cho_xac_nhan"
+  },
+  {
+    "msVS": "001100041", "msCLB": "0011", "msHLV": "001",
+    "tenVS": "Lê Thị Hoa", "gioiTinh": "Nữ", "ngaySinh": "2007-04-30", "diaChi": "12 Phạm Ngũ Lão, Q1, TP.HCM",
+    "dangCap": 2, "ngayNhapHoc": "2023-01-10", "ngayThi": "2023-07-15",
+    "avatar": null, "password": "vs004", "doiPass": true,
+    "hocPhi": { "2024-11": true, "2024-12": true, "2025-01": true, "2025-02": true },
+    "thanhTich": [],
+    "trangThaiThi": null
+  },
+  {
+    "msVS": "001200011", "msCLB": "0012", "msHLV": "001",
+    "tenVS": "Võ Thanh Tùng", "gioiTinh": "Nam", "ngaySinh": "2003-09-18", "diaChi": "34 Nơ Trang Long, Bình Thạnh, TP.HCM",
+    "dangCap": 8, "ngayNhapHoc": "2019-03-01", "ngayThi": "2024-01-20",
+    "avatar": null, "password": "vs005", "doiPass": false,
+    "hocPhi": { "2024-11": true, "2024-12": true, "2025-01": true, "2025-02": false },
+    "thanhTich": ["Á quân giải Võ cổ truyền miền Nam U21 2022"],
+    "trangThaiThi": null
+  },
+  {
+    "msVS": "001200021", "msCLB": "0012", "msHLV": "001",
+    "tenVS": "Đinh Thị Thu Hằng", "gioiTinh": "Nữ", "ngaySinh": "2005-12-03", "diaChi": "67 Bạch Đằng, Bình Thạnh, TP.HCM",
+    "dangCap": 4, "ngayNhapHoc": "2021-08-20", "ngayThi": "2023-04-10",
+    "avatar": null, "password": "vs006", "doiPass": false,
+    "hocPhi": { "2024-11": false, "2024-12": false, "2025-01": false, "2025-02": false },
+    "thanhTich": [],
+    "trangThaiThi": "cho_xac_nhan"
+  },
+  {
+    "msVS": "002100011", "msCLB": "0021", "msHLV": "002",
+    "tenVS": "Huỳnh Minh Triết", "gioiTinh": "Nam", "ngaySinh": "2004-05-14", "diaChi": "15 Phan Văn Trị, Gò Vấp, TP.HCM",
+    "dangCap": 6, "ngayNhapHoc": "2020-10-05", "ngayThi": "2023-09-15",
+    "avatar": null, "password": "vs007", "doiPass": false,
+    "hocPhi": { "2024-11": true, "2024-12": true, "2025-01": true, "2025-02": true },
+    "thanhTich": ["Huy chương đồng giải Trẻ toàn quốc 2023"],
+    "trangThaiThi": null
+  },
+  {
+    "msVS": "002100021", "msCLB": "0021", "msHLV": "002",
+    "tenVS": "Nguyễn Hoàng Phúc", "gioiTinh": "Nam", "ngaySinh": "2006-02-28", "diaChi": "88 Nguyễn Oanh, Gò Vấp, TP.HCM",
+    "dangCap": 3, "ngayNhapHoc": "2022-06-01", "ngayThi": "2023-12-01",
+    "avatar": null, "password": "vs008", "doiPass": false,
+    "hocPhi": { "2024-11": true, "2024-12": true, "2025-01": false, "2025-02": false },
+    "thanhTich": [],
+    "trangThaiThi": null
+  },
+  {
+    "msVS": "002100031", "msCLB": "0021", "msHLV": "002",
+    "tenVS": "Trần Thị Bích Ngọc", "gioiTinh": "Nữ", "ngaySinh": "2005-08-11", "diaChi": "22 Dương Quảng Hàm, Gò Vấp, TP.HCM",
+    "dangCap": 5, "ngayNhapHoc": "2021-03-15", "ngayThi": "2023-07-20",
+    "avatar": null, "password": "vs009", "doiPass": false,
+    "hocPhi": { "2024-11": true, "2024-12": true, "2025-01": true, "2025-02": true },
+    "thanhTich": ["Vô địch học sinh TP.HCM 2022"],
+    "trangThaiThi": "cho_xac_nhan"
+  },
+  {
+    "msVS": "003100011", "msCLB": "0031", "msHLV": "003",
+    "tenVS": "Lý Văn Nam", "gioiTinh": "Nam", "ngaySinh": "2003-01-25", "diaChi": "5 Kha Vạn Cân, Thủ Đức, TP.HCM",
+    "dangCap": 9, "ngayNhapHoc": "2018-09-01", "ngayThi": "2023-10-30",
+    "avatar": null, "password": "vs010", "doiPass": false,
+    "hocPhi": { "2024-11": true, "2024-12": true, "2025-01": true, "2025-02": true },
+    "thanhTich": ["Huy chương vàng giải Võ cổ truyền TP.HCM 2021", "Á quân toàn quốc 2023"],
+    "trangThaiThi": null
+  }
+]

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Võ Cổ Truyền Tây Ninh — Hệ thống Quản lý Võ sinh</title>
+  <meta name="description"
+    content="Hệ thống quản lý võ sinh Võ Cổ Truyền Tây Ninh — tra cứu thông tin, hệ thống đai, quy chế thi đấu." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+
+<body>
+
+
+  <!-- ── NAVBAR ──────────────────────────────────────────── -->
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <!-- Brand -->
+      <a class="nav-brand" href="#">
+        <img src="img/logo-vct.png" alt="VCT Tây Ninh Logo" class="nav-logo" />
+      </a>
+
+      <!-- Desktop links -->
+      <div class="nav-links" id="nav-links">
+        <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
+        <a href="#mon-phai" class="nav-link">Môn phái</a>
+        <a href="#quy-che" class="nav-link">Quy chế</a>
+        <a href="#he-thong-dai" class="nav-link">Hệ thống Đai</a>
+      </div>
+
+      <!-- Inline search bar -->
+      <div class="nav-search-wrap" id="nav-search-wrap">
+        <div class="nav-search-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="nav-search-icon">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input type="text" id="search-input" class="nav-search-input" placeholder="Tra cứu võ sinh..."
+            autocomplete="off" />
+          <button class="nav-search-clear" id="search-clear" aria-label="Xóa tìm kiếm">✕</button>
+        </div>
+        <div class="nav-search-results" id="search-results"></div>
+      </div>
+
+      <!-- Login button -->
+      <button class="btn-nav-login" id="btn-nav-login">Đăng nhập</button>
+
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Mở menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#gioi-thieu" class="mobile-link">Giới thiệu</a>
+      <a href="#mon-phai" class="mobile-link">Môn phái</a>
+      <a href="#quy-che" class="mobile-link">Quy chế</a>
+      <a href="#he-thong-dai" class="mobile-link">Hệ thống Đai</a>
+      <button class="mobile-login-btn">Đăng nhập</button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────────────────── -->
+  <section class="hero" id="top">
+    <div class="hero-visuals">
+      <div class="hero-slider">
+        <div class="hero-track">
+          <div class="hero-slide" style="background-image: url('img/hero-bg2.png');"></div>
+          <div class="hero-slide" style="background-image: url('img/hero-bg3.png');"></div>
+          <div class="hero-slide" style="background-image: url('img/hero-bg4.png');"></div>
+          <div class="hero-slide" style="background-image: url('img/hero-bg5.png');"></div>
+          <div class="hero-slide" style="background-image: url('img/hero-bg6.png');"></div>
+        </div>
+      </div>
+      <div class="hero-overlay"></div>
+
+      <!-- Hero Slider Navigation -->
+      <button class="hero-nav prev" aria-label="Previous Slide">❮</button>
+      <button class="hero-nav next" aria-label="Next Slide">❯</button>
+
+      <!-- Hero Slider Indicators -->
+      <div class="hero-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <div class="hero-particles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Võ Cổ Truyền
+        <span class="hero-title-accent">Tây Ninh</span>
+      </h1>
+      <p class="hero-slogan">
+        <em>Võ Lâm Đạo - Đoàn Tâm Ảnh</em><br />
+      </p>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-hero btn-hero-primary" onclick="openLoginModal()">Đăng nhập ngay</button>
+      <a href="#gioi-thieu" class="btn-hero btn-hero-secondary">Tìm hiểu thêm</a>
+    </div>
+  </section>
+
+  <!-- ── GIỚI THIỆU ───────────────────────────────────────── -->
+  <section class="about-section" id="gioi-thieu">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Võ Cổ Truyền<br>Việt Nam</h2>
+        <p class="section-sub">Di sản văn hóa phi vật thể của dân tộc</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            <strong>Võ Cổ Truyền Việt Nam</strong> là nền võ học dân tộc được cha ông ta truyền thừa và
+            phát triển hơn 4.000 năm lịch sử. Khác với các môn võ của nước ngoài, Võ Cổ Truyền
+            Việt Nam mang đầy đủ triết lý, tinh thần và bản sắc văn hóa của người Việt —
+            vừa để rèn luyện thể chất, vừa để bồi dưỡng đạo đức, tâm tính.
+          </p>
+          <p>
+            <strong>Liên đoàn Võ Cổ Truyền Tây Ninh</strong> được thành lập nhằm gìn giữ, phát huy và
+            phát triển nền võ học dân tộc tại địa phương. Hệ thống quản lý này giúp các huấn luyện viên
+            và ban quản lý theo dõi hành trình tu luyện của từng võ sinh một cách minh bạch và hiện đại.
+          </p>
+          <div class="about-stats">
+            <div class="stat-item">
+              <span class="stat-number" data-count="4000" data-suffix="+">4.000+</span>
+              <span class="stat-label">Năm lịch sử</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" data-count="18" data-suffix="">18</span>
+              <span class="stat-label">Cấp bậc đai</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" data-count="100" data-suffix="+">100+</span>
+              <span class="stat-label">Bài quyền cổ truyền</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-cards">
+          <div class="about-card">
+            <div class="about-card-header">
+              <div class="about-card-icon">🇻🇳</div>
+              <h3>Tinh hoa Dân tộc</h3>
+            </div>
+            <p>Kết tinh từ hàng ngàn năm lịch sử dựng nước và giữ nước, mang đậm hào khí và tâm hồn Việt.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-header">
+              <div class="about-card-icon">🥋</div>
+              <h3>Tinh thần Võ đạo</h3>
+            </div>
+            <p>Rèn luyện thân thể kết hợp với bồi đắp đức hạnh — lấy đức làm trọng, lấy võ làm phương tiện.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-header">
+              <div class="about-card-icon">🏯</div>
+              <h3>Bản sắc Dân tộc</h3>
+            </div>
+            <p>Mỗi bài quyền, mỗi đòn thế đều mang linh hồn của người Việt, phản ánh triết học và lịch sử Việt.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-header">
+              <div class="about-card-icon">📚</div>
+              <h3>Viết nên Lịch sử</h3>
+            </div>
+            <p>Hệ thống hóa các bài quyền cổ truyền bằng văn bản, giúp việc truyền thừa không bị mai một.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-header">
+              <div class="about-card-icon">📜</div>
+              <h3>Truyền thừa Chính thống</h3>
+            </div>
+            <p>Được truyền dạy qua nhiều thế hệ, từ thầy đến trò, giữ gìn nguyên vẹn tinh hoa cổ truyền.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-card-header">
+              <div class="about-card-icon">🌟</div>
+              <h3>Phát triển Hiện đại</h3>
+            </div>
+            <p>Kết hợp phương pháp huấn luyện khoa học hiện đại với nền tảng võ học truyền thống sâu sắc.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MÔN PHÁI ────────────────────────────────────────── -->
+  <section class="mon-phai-section" id="mon-phai">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Võ Lâm Đạo - Đoàn Tâm Ảnh</h2>
+        <p class="section-sub">Di sản võ học "Võ Lâm Đạo Đoàn Tâm Ảnh"</p>
+      </div>
+
+      <div class="mp-grid">
+        <div class="mp-image">
+          <img src="img/su-to.png" alt="Sư Tổ Đoàn Tâm Ảnh" class="su-to-img">
+          <div class="mp-img-caption">
+            <div class="mp-img-text">Vị hiệp khách huyền thoại "Sáu Nhỏ"</div>
+          </div>
+        </div>
+        <div class="mp-text">
+          <h3>Nguồn Gốc và Lịch Sử</h3>
+          <p>
+            Môn phái <strong>Võ Lâm Đạo - Đoàn Tâm Ảnh</strong> do cố Võ sư <strong>Đoàn Tâm Ảnh</strong> 
+            (tên thật là La Tô, biệt danh Sáu Nhỏ) sáng lập. Ông là vị võ sư huyền thoại với hành trình tầm sư học đạo 
+            tại Trung Hoa, được truyền thụ tinh hoa Bắc phái và Nam phái từ các ngôi chùa danh tiếng như Phi Lai Tự và Thiếu Lâm Tự.
+          </p>
+          <p>
+            Trở về Việt Nam, ông chính thức sáng lập môn phái vào năm 1954. Riêng tại <strong>Tây Ninh</strong>, ông có mối nhân duyên
+            đặc biệt khi được ngài Phạm Công Tắc (Hộ pháp Tòa thánh Tây Ninh) mời về giảng dạy võ thuật cho các môn đồ,
+            góp phần hình thành nên bản sắc võ học đặc trưng của vùng đất thánh.
+          </p>
+
+          <div class="mp-stats-grid">
+            <div class="mp-stat">
+              <span class="mp-stat-title">Triết lý</span>
+              <p>Lấy nhu chế cương, chữ Nhẫn làm đầu, võ thuật là học làm người.</p>
+            </div>
+            <div class="mp-stat">
+              <span class="mp-stat-title">Kỹ thuật</span>
+              <p>Thất thập nhị huyền công, Thập bát La hán quyền, Thập nhị xà quyền.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tiểu sử -->
+      <div class="mp-bio">
+        <h2 class="mp-bio-title">Tiểu sử</h2>
+        <div class="mp-bio-content" id="bio-content">
+          <div class="mp-bio-inner">
+            <p>
+              Thiền sư Đoàn Tâm Ảnh (tên thật là Tô Văn), biệt danh Sáu nhỏ sinh năm 1900 tại Chợ Lớn Sài Gòn.Thiền sư Đoàn Tâm Ảnh là con trai út trong 1 gia đình đông con gồm 6 chị em, cha của ông là cụ Tô Nghiêm, người gốc Trung Quốc, mẹ là bà La Thị Muối, người Nghệ An, Việt Nam.Do thể chất nhỏ bé và thường hay bị bệnh tật nên cha mẹ đã gửi ông cho Mộc Đức Thiền Sư, một người Hoa lưu lạc ở Việt Nam, thâu nhận làm đệ tử với mong muốn ông được rèn luyện võ nghệ, tăng cường sức khỏe. Thấy Tô Văn nhỏ bé nhưng rất nhanh nhẹn, tháo vát lại có năng khiếu về võ thuật, Mộc Đức Thiền Sư hết lòng quý mến truyền dạy võ nghệ cho cậu. Năm 1913, được sự đồng ý của gia đình, 2 chú cháu khăn gói sang Trung Quốc. Từ đây, cậu bé Tô Văn được các hòa thượng trong chùa Phi Lai Tự thâu nhận. Họ dạy cho ông cách Thiền định và võ học của Bắc phái như: Côn Luân, Cửu Ngũ Tam Vương, Xà Quyền.Ngoài ra ông được thầy Trường Giang Mạnh Vũ truyền dạy cho Thiếu lâm Nam phái.
+            </p>
+            <p>
+              Sau 11 năm ông quay trở lại quê hương, đổi tên hiệu thành Thiện Tâm Thiền Sư Đoàn Tâm Ảnh. Từ bộ căn bản “Thất Thập Nhị Huyền Công” (72 thế căn bản tuyệt diệu nhất của Thiếu Lâm Tự), “Thập Bát La Hán Thế” bao gồm 18 chiêu thức chiến đấu (18 thế này đã được đúc thành 18 pho tượng ở Chùa Thiếu Lâm; “La Hán Thần Công” (18 chiêu thức tuyệt kỹ) đều được Tô Văn đón nhận, say mê luyện tập. Khi đã lĩnh hội được hầu hết những tinh hoa của Thiếu lâm, kết hợp với 1 số người, Tô Văn vận dụng “Thất thập nhị Huyền Công”, 18 thế quyền La Hán kết hợp với quyền của bên Bắc phái sáng chế ra 18 bài quyền, (Bài thấp nhất có 21 thức chính, bài dài nhất có 73 thức chính). Trong 18 bài quyền này ông lấy “Thất Thập Nhị Huyền Công” làm căn bản, lấy “Thập Bát Chưởng Công”, “Lục Bộ Thần Công” để ghép đan xen vào thành 18 bài quyền theo thức tự từ thấp lên cao, riêng bộ La Hán Thần Công ông để vào chương trình Thượng Đẳng và đặt tên cho môn võ này là môn “Võ Lâm Chánh Tông Thập Bát La Hán Quyền”.
+            </p>
+            <p>
+              Ngày 03/11/2008 (tức ngày 06/10 năm Mậu Tý), lão Thiền sư Đoàn Tâm Ảnh tạ thế, hưởng dương 109 tuổi. Ông mất đi để lại cho các thế hệ sau một kho tàng tài liệu về võ thuật; từ các bí kíp võ thuật của Bắc phái như “Côn Lôn”, “Cửu Ngũ Tam Vương”, “Xà Quyền“… cho đến tài liệu về võ học của phái “Võ Lâm Chánh Tông Thập Bát La Hán Quyền” và cả những kinh nghiệm mà ông đã đúc rút ra trong suốt cuộc đời phiêu bạt giang hồ của mình.
+            </p>
+          </div>
+          <div class="mp-bio-fade"></div>
+        </div>
+        <button class="mp-bio-toggle" id="bio-toggle" aria-label="Xem thêm tiểu sử">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Hoạt động nổi bật -->
+      <div class="mp-activities">
+        <h3 class="mp-activities-title">Hoạt động Nổi bật</h3>
+        <div class="mp-activities-grid">
+          <!-- Bài đăng 2/3/2026 -->
+          <div class="mp-activity-card">
+            <div class="mp-activity-date">02/03/2026 - 09:33</div>
+            <h4>Lễ ra quân Huấn luyện tỉnh Tây Ninh</h4>
+            <p>Biểu diễn võ thuật tinh nhuệ của lực lượng Tự vệ - Ban CHQS huyện Bến Lức tại Lễ ra quân huấn luyện tỉnh Tây Ninh năm 2026.</p>
+            <div class="mp-activity-footer">
+              <span class="mp-activity-tag">Huấn luyện</span>
+              <a href="https://www.facebook.com/share/v/177YKLwjLT/" target="_blank" class="mp-activity-link">Xem video →</a>
+            </div>
+          </div>
+          <!-- Bài đăng 3/3/2026 -->
+          <div class="mp-activity-card">
+            <div class="mp-activity-date">03/03/2026 - 16:45</div>
+            <h4>Hội trại Tòng quân năm 2026</h4>
+            <p>Hoạt động ý nghĩa tại Thủ Thừa, thắt chặt tình đoàn kết và tinh thần hăng hái của lực lượng tòng quân năm 2026.</p>
+            <div class="mp-activity-footer">
+              <span class="mp-activity-tag">Sự kiện</span>
+              <a href="https://www.facebook.com/share/p/14X4dGnEAqZ/" target="_blank" class="mp-activity-link">Xem bài viết →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUY CHẾ ──────────────────────────────────────────── -->
+  <section class="quy-che-section" id="quy-che">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Quy chế Hoạt động</h2>
+        <p class="section-sub">Các quy định của Liên đoàn Võ Cổ Truyền<br>Tây Ninh</p>
+      </div>
+
+      <div class="quy-che-tabs">
+        <button class="qc-tab active" data-target="qc-huan-luyen">Huấn luyện</button>
+        <button class="qc-tab" data-target="qc-thi-dau">Thi đấu</button>
+        <button class="qc-tab" data-target="qc-nang-cap">Nâng cấp đai</button>
+        <button class="qc-tab" data-target="qc-ky-luat">Kỷ luật</button>
+      </div>
+
+      <div class="qc-content-wrap">
+        <div class="qc-content active" id="qc-huan-luyen">
+          <h3>Quy chế Huấn luyện</h3>
+          <ul class="qc-list">
+            <li>Võ sinh phải tham gia tối thiểu <strong>3 buổi tập/tuần</strong> để đảm bảo tiến độ tu luyện.</li>
+            <li>Mỗi buổi tập kéo dài <strong>90–120 phút</strong>, bao gồm khởi động, luyện quyền và tập thực chiến.
+            </li>
+            <li>Võ sinh phải mặc <strong>võ phục đúng quy cách</strong> — áo trắng, quần trắng hoặc quần đen, thắt đai
+              theo cấp bậc được công nhận.</li>
+            <li>Nghiêm cấm sử dụng điện thoại trong suốt thời gian tập luyện trừ trường hợp khẩn cấp.</li>
+            <li>Võ sinh phải tôn trọng huấn luyện viên, sư huynh/sư muội, thể hiện lễ nghĩa đầu buổi tập và cuối buổi
+              tập.</li>
+            <li>Trường hợp vắng tập phải <strong>báo trước ít nhất 2 tiếng</strong> qua huấn luyện viên phụ trách CLB.
+            </li>
+          </ul>
+        </div>
+        <div class="qc-content" id="qc-thi-dau">
+          <h3>🏆 Quy chế Thi đấu</h3>
+          <ul class="qc-list">
+            <li>Võ sinh tham gia thi đấu phải có <strong>ít nhất 6 tháng tập luyện liên tục</strong> và được HLV phụ
+              trách xác nhận đủ điều kiện.</li>
+            <li>Các nội dung thi đấu bao gồm: <strong>quyền cổ truyền, quyền đối kháng, thực chiến võ đài</strong> theo
+              từng hạng cân và cấp bậc.</li>
+            <li>Võ sinh phải kiểm tra y tế và được xác nhận đủ sức khỏe trước khi tham gia thi đấu đối kháng.</li>
+            <li>Nghiêm cấm mọi hành vi thiếu sự tôn trọng đối thủ, hành vi phi thể thao hoặc sử dụng đòn thế nguy hiểm
+              bị cấm.</li>
+            <li>Kết quả thi đấu được ghi nhận vào hồ sơ võ sinh và ảnh hưởng đến quá trình xét nâng cấp.</li>
+          </ul>
+        </div>
+        <div class="qc-content" id="qc-nang-cap">
+          <h3>🎖 Quy chế Nâng cấp Đai</h3>
+          <ul class="qc-list">
+            <li>Võ sinh phải hoàn thành đủ <strong>thời gian tu luyện tối thiểu</strong> theo từng cấp bậc (3–12
+              tháng/cấp tùy cấp độ).</li>
+            <li>Phải đóng <strong>học phí đầy đủ</strong> tất cả các tháng trước kỳ thi — không có nợ học phí.</li>
+            <li>Võ sinh phải thực hiện thành thạo <strong>bài quyền, bài binh khí và các kỹ thuật chiến đấu</strong> của
+              cấp đang thi.</li>
+            <li>Hội đồng Kỹ thuật gồm ít nhất <strong>3 võ sư</strong> sẽ chấm điểm độc lập — kết quả được công bố sau
+              khi tổng hợp điểm.</li>
+            <li>Võ sinh không đạt có thể <strong>đăng ký thi lại</strong> sau tối thiểu 3 tháng tiếp tục tu luyện.</li>
+            <li>Chứng nhận đai và cấp bậc có giá trị toàn quốc, được Liên đoàn Võ Cổ Truyền Việt Nam công nhận.</li>
+          </ul>
+        </div>
+        <div class="qc-content" id="qc-ky-luat">
+          <h3>⚖ Quy định Kỷ luật</h3>
+          <ul class="qc-list">
+            <li>Võ sinh vi phạm đạo đức, có hành vi xấu ngoài xã hội sẽ bị <strong>xem xét kỷ luật</strong> từ cảnh cáo
+              đến khai trừ.</li>
+            <li>Nghiêm cấm sử dụng võ thuật để <strong>bắt nạt, gây hại người khác</strong> ngoài xã hội — vi phạm sẽ bị
+              khai trừ vĩnh viễn.</li>
+            <li>Không truyền dạy võ thuật cho người ngoài khi chưa được <strong>sự đồng ý của HLV và Liên đoàn</strong>.
+            </li>
+            <li>Mọi tranh chấp nội bộ phải được giải quyết qua <strong>kênh chính thức</strong>, không tự ý giải quyết
+              bằng bạo lực.</li>
+            <li>Tôn trọng tất cả các môn võ khác, không nhân danh Võ Cổ Truyền để <strong>công kích hay hạ thấp</strong>
+              các môn phái khác.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HỆ THỐNG ĐAI ─────────────────────────────────────── -->
+  <section class="belt-section" id="he-thong-dai">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Hệ thống Cấp bậc</h2>
+        <p class="section-sub">Hành trình từ Nhập môn đến Võ sư</p>
+      </div>
+      <div class="belt-grid">
+        <!-- Cấp 1-6 -->
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap1.jpg" alt="Cấp 1" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 1</div>
+          <div class="belt-level">Võ sinh</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap2.jpg" alt="Cấp 2" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 2</div>
+          <div class="belt-level">Võ sinh</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap3.jpg" alt="Cấp 3" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 3</div>
+          <div class="belt-level">Võ sinh</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap4.jpg" alt="Cấp 4" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 4</div>
+          <div class="belt-level">Võ sinh</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap5.jpg" alt="Cấp 5" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 5</div>
+          <div class="belt-level">Võ sinh</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap6.jpg" alt="Cấp 6" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 6</div>
+          <div class="belt-level">Võ sinh</div>
+        </div>
+
+        <!-- Cấp 7-12 -->
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap7.jpg" alt="Cấp 7" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 7</div>
+          <div class="belt-level">Võ sinh</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap8.jpg" alt="Cấp 8" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 8</div>
+          <div class="belt-level">Võ sinh</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap9.jpg" alt="Cấp 9" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 9</div>
+          <div class="belt-level">Hướng dẫn viên</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap10.jpg" alt="Cấp 10" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 10</div>
+          <div class="belt-level">Hướng dẫn viên</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap11.jpg" alt="Cấp 11" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 11</div>
+          <div class="belt-level">Hướng dẫn viên</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap12.jpg" alt="Cấp 12" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 12</div>
+          <div class="belt-level">Hướng dẫn viên</div>
+        </div>
+
+        <!-- Cấp 13-18 -->
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap13.jpg" alt="Cấp 13" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 13</div>
+          <div class="belt-level">Huấn luyện viên</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap14.jpg" alt="Cấp 14" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 14</div>
+          <div class="belt-level">Huấn luyện viên</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap15.jpg" alt="Cấp 15" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 15</div>
+          <div class="belt-level">Huấn luyện viên</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap16.jpg" alt="Cấp 16" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 16</div>
+          <div class="belt-level">Huấn luyện viên</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap17.jpg" alt="Cấp 17" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 17</div>
+          <div class="belt-level">Chuẩn võ sư</div>
+        </div>
+        <div class="belt-item">
+          <div class="belt-visual">
+            <img src="img/cap18.jpg" alt="Cấp 18" class="belt-img">
+          </div>
+          <div class="belt-name">Cấp 18</div>
+          <div class="belt-level">Võ sư</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TÍNH NĂNG ────────────────────────────────────────── -->
+  <section class="features-section" id="tinh-nang">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Quản lý Toàn diện</h2>
+        <p class="section-sub">Giải pháp số hóa dành riêng cho<br>Võ Cổ Truyền</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <h3>Quản lý Hệ thống</h3>
+          </div>
+          <p>Phân quyền rõ ràng: Admin — Huấn luyện viên — Võ sinh với giao diện và chức năng riêng biệt theo vai trò.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h3>Theo dõi Cấp bậc</h3>
+          </div>
+          <p>Hệ thống 18 cấp tự động cập nhật, từ Võ sinh đến Võ sư với màu đai trực quan cho từng võ sinh.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </div>
+            <h3>Học phí & Thi cử</h3>
+          </div>
+          <p>Theo dõi học phí theo tháng, quản lý đăng ký thi nâng cấp với điều kiện kiểm tra tự động.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+            </div>
+            <h3>Tra cứu Công khai</h3>
+          </div>
+          <p>Võ sinh, phụ huynh có thể tra cứu thông tin và cấp đai của võ sinh thông qua mã số, không cần đăng nhập.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
+            </div>
+            <h3>Mã QR Võ sinh</h3>
+          </div>
+          <p>Mỗi võ sinh được cấp mã QR độc nhất — dùng để xác thực, tra cứu nhanh thông tin võ sinh.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
+            </div>
+            <h3>Thống kê & Báo cáo</h3>
+          </div>
+          <p>Dashboard trực quan cho admin và HLV — theo dõi tổng số võ sinh, tỷ lệ nâng cấp, doanh thu học phí.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Column 1: Brand -->
+        <div class="footer-col brand-col">
+          <div class="footer-logo">
+            <img src="img/clb.jpg" alt="VCT Logo">
+          </div>
+        </div>
+
+        <!-- Column 2: Contact Info -->
+        <div class="footer-col contact-col">
+          <p><i class="fas fa-phone"></i> <span class="hide-mobile">Hotline:</span> 0329 366 629</p>
+          <p><i class="fas fa-envelope"></i> <span class="hide-mobile">Email:</span> vocotruyentayninh@gmail.com</p>
+        </div>
+
+        <!-- Column 3: Map/Logo -->
+        <div class="footer-col map-col">
+          <a href="https://maps.app.goo.gl/FRGEHVERsJggfwmZ9" target="_blank" class="footer-map-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── LOGIN POPUP MODAL ─────────────────────────────────── -->
+  <div class="login-modal-overlay" id="login-modal-overlay">
+    <div class="login-modal">
+      <button class="modal-close-btn" onclick="closeLoginModal()" aria-label="Đóng">✕</button>
+      <div class="login-modal-header">
+        <span class="login-modal-icon"></span>
+        <h2>Đăng nhập Hệ thống</h2>
+      </div>
+      <div class="error-box" id="login-error"></div>
+      
+      <div class="login-form-content">
+        <div class="form-group animate-item">
+          <input class="form-input" type="text" id="login-id" placeholder=" " />
+          <label class="form-label" id="id-label">Mã số truy cập</label>
+          <button class="btn-input-clear" id="login-id-clear" aria-label="Xóa">✕</button>
+        </div>
+
+        <div class="form-group animate-item">
+          <div class="password-wrapper">
+            <input class="form-input" type="password" id="login-pass" placeholder=" " />
+            <label class="form-label">Mật khẩu</label>
+            <button class="toggle-pass" type="button">
+              <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="animate-item">
+          <button class="btn-login-submit" id="btn-login">
+            <span class="btn-text">Đăng nhập</span>
+            <div class="spinner-small" id="login-spinner"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Confirm Modal ─────────────────────────────────────── -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal">
+      <div class="modal-header"><span class="modal-title">Xác nhận</span></div>
+      <div class="modal-body">
+        <p id="confirm-message"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm">Hủy</button>
+        <button class="btn btn-primary btn-sm" id="confirm-yes">Đồng ý</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAB Overlay -->
+  <div class="fab-overlay" id="fab-overlay"></div>
+
+  <!-- Floating Navigation Buttons -->
+  <div class="floating-nav">
+    <!-- Social Menu (Expanded above) -->
+    <div class="social-menu" id="social-menu">
+      <a href="https://www.facebook.com/share/g/1AjVrCw4cy/" target="_blank" rel="noopener noreferrer" class="btn-social btn-facebook" title="Gia nhập nhóm Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </a>
+      <a href="https://zalo.me/0329366629" target="_blank" rel="noopener noreferrer" class="btn-social btn-zalo" title="Liên hệ Zalo">
+        <svg viewBox="0 0 50 50" fill="none">
+          <path d="M22.782 0.166H27.199C33.2653 0.166 36.8103 1.057 39.9572 2.7442C43.1041 4.4314 45.5875 6.8958 47.2557 10.0428C48.9429 13.19 49.8339 16.7347 49.8339 22.801V27.1991C49.8339 33.2654 48.9429 36.8104 47.2557 39.9573C45.5685 43.1042 43.1041 45.5877 39.9572 47.2559C36.8103 48.9431 33.2653 49.8341 27.199 49.8341H22.8009C16.7346 49.8341 13.1896 48.9431 10.0427 47.2559C6.8958 45.5687 4.4124 43.1042 2.7442 39.9573C1.057 36.8104 0.166 33.2654 0.166 27.1991V22.801C0.166 16.7347 1.057 13.19 2.7442 10.0428C4.4314 6.8958 6.8958 4.4124 10.0427 2.7442C13.1707 1.057 16.7346 0.166 22.782 0.166Z" fill="#0068FF"/>
+          <path d="M7.779 43.5892C10.1019 43.846 13.0061 43.1836 15.0682 42.1825C24.0225 47.1318 38.0197 46.8954 46.4923 41.4732C46.8209 40.9803 47.1279 40.4677 47.4128 39.9363C49.1062 36.7779 50.0004 33.22 50.0004 27.1316V22.7175C50.0004 16.629 49.1062 13.0711 47.4128 9.91273C45.7385 6.75436 43.2461 4.28093 40.0877 2.58758C36.9293 0.894239 33.3714 0 27.283 0H22.8499C17.6644 0 14.2982 0.652754 11.4699 1.89893C11.3153 2.03737 11.1636 2.17818 11.0151 2.32135C2.71734 10.3203 2.08658 27.6593 9.12279 37.0782C9.13064 37.0921 9.13933 37.1061 9.14889 37.1203C10.2334 38.7185 9.18694 41.5154 7.55068 43.1516C7.28431 43.399 7.37944 43.5512 7.779 43.5892Z" fill="white"/>
+          <path d="M20.5632 17H10.8382V19.0853H17.5869L10.9329 27.3317C10.7244 27.635 10.5728 27.9194 10.5728 28.5639V29.0947H19.748C20.203 29.0947 20.5822 28.7156 20.5822 28.2606V27.1421H13.4922L19.748 19.2938C19.8428 19.1801 20.0134 18.9716 20.0893 18.8768L20.1272 18.8199C20.4874 18.2891 20.5632 17.8341 20.5632 17.2844V17Z" fill="#0068FF"/>
+          <path d="M25.814 19.6924C23.1979 19.6924 21.0747 21.8156 21.0747 24.4317C21.0747 27.0478 23.1979 29.171 25.814 29.171C28.4301 29.171 30.5533 27.0478 30.5533 24.4317C30.5723 21.8156 28.4491 19.6924 25.814 19.6924ZM25.814 27.2184C24.2785 27.2184 23.0273 25.9672 23.0273 24.4317C23.0273 22.8962 24.2785 21.645 25.814 21.645C27.3495 21.645 28.6007 22.8962 28.6007 24.4317C28.6007 25.9672 27.3685 27.2184 25.814 27.2184Z" fill="#0068FF"/>
+          <path d="M29.4562 29.0944H30.5747V19.957H28.6221V28.2793C28.6221 28.7153 29.0012 29.0944 29.4562 29.0944Z" fill="#0068FF"/>
+          <path d="M32.9416 29.0947H34.3255V17H32.2402V28.3933C32.2402 28.7725 32.5435 29.0947 32.9416 29.0947Z" fill="#0068FF"/>
+          <path d="M40.4867 19.6162C37.8516 19.6162 35.7095 21.7584 35.7095 24.3934C35.7095 27.0285 37.8516 29.1707 40.4867 29.1707C43.1217 29.1707 45.2639 27.0285 45.2639 24.3934C45.2639 21.7584 43.1217 19.6162 40.4867 19.6162ZM40.4867 27.2181C38.9322 27.2181 37.681 25.9669 37.681 24.4124C37.681 22.8579 38.9322 21.6067 40.4867 21.6067C42.0412 21.6067 43.2924 22.8579 43.2924 24.4124C43.2924 25.9669 42.0412 27.2181 40.4867 27.2181Z" fill="#0068FF"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Toggle Button -->
+    <button class="btn-contact-toggle" id="contact-toggle" title="Liên hệ ngay">
+      <svg class="icon-main" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+      </svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/qr.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

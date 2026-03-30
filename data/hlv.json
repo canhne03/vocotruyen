@@ -1,0 +1,45 @@
+[
+  {
+    "msHLV": "001",
+    "tenHLV": "Nguyễn Văn Hùng",
+    "dangCap": 12,
+    "sdt": "0901234567",
+    "thanhTich": "Huy chương vàng giải Võ cổ truyền toàn quốc 2018, Vô địch TP.HCM 2020",
+    "avatar": null,
+    "trangThai": "hoat_dong",
+    "password": "hlv001",
+    "doiPass": false,
+    "clubs": [
+      { "msCLB": "0011", "tenCLB": "CLB Võ cổ truyền GDU Q1", "diaChi": "12 Đinh Tiên Hoàng, Quận 1, TP.HCM" },
+      { "msCLB": "0012", "tenCLB": "CLB Võ cổ truyền GDU Bình Thạnh", "diaChi": "45 Xô Viết Nghệ Tĩnh, Bình Thạnh, TP.HCM" }
+    ]
+  },
+  {
+    "msHLV": "002",
+    "tenHLV": "Trần Thị Mai Anh",
+    "dangCap": 11,
+    "sdt": "0912345678",
+    "thanhTich": "Á quân giải Võ cổ truyền miền Nam 2019, Giảng viên bộ môn Võ cổ truyền GDU",
+    "avatar": null,
+    "trangThai": "hoat_dong",
+    "password": "hlv002",
+    "doiPass": false,
+    "clubs": [
+      { "msCLB": "0021", "tenCLB": "CLB Võ cổ truyền GDU Gò Vấp", "diaChi": "78 Quang Trung, Gò Vấp, TP.HCM" }
+    ]
+  },
+  {
+    "msHLV": "003",
+    "tenHLV": "Lê Minh Khoa",
+    "dangCap": 13,
+    "sdt": "0923456789",
+    "thanhTich": "Vô địch giải Võ cổ truyền Đông Nam Á 2016, HLV đội tuyển TP.HCM 2017–2022",
+    "avatar": null,
+    "trangThai": "ngung_hoat_dong",
+    "password": "hlv003",
+    "doiPass": false,
+    "clubs": [
+      { "msCLB": "0031", "tenCLB": "CLB Võ cổ truyền GDU Thủ Đức", "diaChi": "101 Võ Văn Ngân, Thủ Đức, TP.HCM" }
+    ]
+  }
+]
