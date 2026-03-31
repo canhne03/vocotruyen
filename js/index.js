@@ -1,9 +1,99 @@
-'use strict';
-// ===== INDEX.JS — Võ Cổ Truyền Tây Ninh =====
+const API_URL = window.location.origin;
+let _searchTimer;
 
-let _searchTimer = null;
+/* ── TRỢ GIÚP / LOGIC TÁI CẤU TRÚC ──────────────── */
+const Utils = {
+  initials(name) {
+    if (!name) return '?';
+    const p = name.trim().split(' ');
+    if (p.length === 1) return p[0][0].toUpperCase();
+    return (p[0][0] + p[p.length - 1][0]).toUpperCase();
+  },
+  formatDate(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('vi-VN');
+  },
+  showToast(msg, type = 'success') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
 
-/* ── Initialization ────────────────────────────── */
+    const toast = document.createElement('div');
+    toast.className = `vct-toast toast-${type}`;
+    
+    toast.innerHTML = `
+      <div class="toast-body">
+        <div class="toast-message">${msg}</div>
+      </div>
+    `;
+
+    container.appendChild(toast);
+    
+    // Animation in
+    setTimeout(() => toast.classList.add('show'), 10);
+    
+    // Auto remove
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 500);
+    }, 4000);
+  }
+};
+
+const DB = {
+  ranking: [],
+  loaded: false,
+  async load() {
+    if (this.loaded) return;
+    try {
+      const r = await fetch(`${API_URL}/rankings`).then(r => r.json());
+      this.ranking = r;
+      this.loaded = true;
+    } catch (e) { console.error('DB Load Error:', e); }
+  },
+  async searchVS(q) {
+    try {
+      const res = await fetch(`${API_URL}/search?q=${encodeURIComponent(q)}`);
+      return await res.json();
+    } catch (e) {
+      console.error('Search Error:', e);
+      return [];
+    }
+  }
+};
+
+const Auth = {
+  getSession() {
+    const s = localStorage.getItem('vct_session');
+    return s ? JSON.parse(s) : null;
+  },
+  async tryLogin(username, password) {
+    try {
+      const res = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (!res.ok) return { error: data.detail || 'Lỗi đăng nhập' };
+      
+      localStorage.setItem('vct_token', data.access_token);
+      return data.user;
+    } catch (e) { return { error: 'Không thể kết nối đến máy chủ backend.' }; }
+  },
+  logout() {
+    localStorage.removeItem('vct_session');
+    localStorage.removeItem('vct_token');
+    window.location.reload();
+  },
+  redirectAfterLogin(user) {
+    localStorage.setItem('vct_session', JSON.stringify(user));
+    if (user.type === 'hlv') window.location.href = 'dashboard.html';
+    else if (user.type === 'vs') window.location.href = 'vosinh.html';
+    else window.location.reload();
+  }
+};
+
+/* ── Khởi tạo ────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initSearch();
@@ -16,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadUserSession();
 });
 
-/* ── Navbar ────────────────────────────────────── */
+/* ── Thanh điều hướng (Navbar) ─────────────────── */
 function initNavbar() {
   const nav = document.getElementById('site-nav');
   if (nav) {
@@ -40,7 +130,7 @@ function initNavbar() {
     });
   }
 
-  // Close menu/search when clicking outside navbar
+  // Đóng menu/kết quả tìm kiếm khi nhấp ra ngoài thanh điều hướng
   document.addEventListener('click', (e) => {
     const navBar = document.getElementById('site-nav');
     const panel = document.getElementById('search-results');
@@ -64,16 +154,24 @@ function closeMobileMenu() {
   document.getElementById('mobile-menu')?.classList.remove('open');
 }
 
-/* ── Search ────────────────────────────────────── */
+/* ── Tìm kiếm ──────────────────────────────────── */
 function initSearch() {
   const searchInput = document.getElementById('search-input');
   const searchClear = document.getElementById('search-clear');
 
   if (searchInput) {
     searchInput.addEventListener('input', () => {
+      console.log('Search input event triggered:', searchInput.value);
       searchClear?.classList.toggle('show', searchInput.value.length > 0);
       clearTimeout(_searchTimer);
-      _searchTimer = setTimeout(doSearch, 350);
+      _searchTimer = setTimeout(() => {
+        console.log('Debounced search triggered');
+        doSearch();
+      }, 350);
+    });
+    // Thêm sự kiện click để hiển thị lại kết quả nếu đã có văn bản
+    searchInput.addEventListener('click', () => {
+      if (searchInput.value.trim().length > 0) doSearch();
     });
     searchInput.addEventListener('keydown', e => {
       if (e.key === 'Enter') { clearTimeout(_searchTimer); doSearch(); }
@@ -96,14 +194,18 @@ function clearSearch() {
   clearSearchResults();
 }
 
-/* ── Login Modal ───────────────────────────────── */
+/* ── Cửa sổ đăng nhập (Login Modal) ────────────── */
 function initLoginModal() {
   document.getElementById('btn-nav-login')?.addEventListener('click', openLoginModal);
   document.querySelector('.modal-close-btn')?.addEventListener('click', closeLoginModal);
   document.getElementById('login-modal-overlay')?.addEventListener('click', e => {
     if (e.target.id === 'login-modal-overlay') closeLoginModal();
   });
+  document.getElementById('vs-detail-overlay')?.addEventListener('click', e => {
+    if (e.target.id === 'vs-detail-overlay') closeVODetails();
+  });
   document.getElementById('btn-login')?.addEventListener('click', doLogin);
+  document.getElementById('btn-forgot-pass')?.addEventListener('click', handleForgotPassword);
   document.querySelector('.toggle-pass')?.addEventListener('click', togglePass);
 
   const idInput   = document.getElementById('login-id');
@@ -116,6 +218,10 @@ function initLoginModal() {
 
 function openLoginModal() {
   const overlay = document.getElementById('login-modal-overlay');
+  const idInput = document.getElementById('login-id');
+  const passInput = document.getElementById('login-pass');
+  if (idInput) idInput.value = '';
+  if (passInput) passInput.value = '';
   if (overlay) { overlay.classList.add('show'); document.body.style.overflow = 'hidden'; }
 }
 
@@ -141,7 +247,7 @@ function clearInput(inputId, btnId) {
   if (btn) btn.classList.remove('show');
 }
 
-/* ── QC Tabs ───────────────────────────────────── */
+/* ── Các tab quy chế ───────────────────────────── */
 function initQCTabs() {
   document.querySelectorAll('.qc-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -154,19 +260,23 @@ function initQCTabs() {
 }
 
 
-/* ── Session Auto-load ─────────────────────────── */
+/* ── Tự động tải phiên làm việc ────────────────── */
 function loadUserSession() {
   const s = Auth.getSession();
-  if (!s) return;
   const loginBtn = document.getElementById('btn-nav-login');
   if (!loginBtn) return;
-  loginBtn.textContent = `${s.name.split(' ').pop()} ▾`;
-  const newBtn = loginBtn.cloneNode(true);
-  loginBtn.replaceWith(newBtn);
-  newBtn.addEventListener('click', () => Auth.logout());
+  
+  if (s) {
+    loginBtn.textContent = `${s.name.split(' ').pop()} ▾`;
+    const newBtn = loginBtn.cloneNode(true);
+    loginBtn.replaceWith(newBtn);
+    newBtn.addEventListener('click', () => Auth.logout());
+  } else {
+    loginBtn.textContent = 'Đăng nhập';
+  }
 }
 
-/* ── Hero Slider ───────────────────────────────── */
+/* ── Trình chiếu Hero (Slider) ─────────────────── */
 let heroCurrentIdx = 0;
 let heroSliderTimer = null;
 
@@ -200,7 +310,7 @@ function initHeroSlider() {
     dot.addEventListener('click', () => { heroCurrentIdx = idx; update(); startAuto(); });
   });
 
-  // Swipe support
+  // Hỗ trợ vuốt (swipe)
   let touchStartX = 0;
   if (slider) {
     slider.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
@@ -214,7 +324,7 @@ function initHeroSlider() {
   startAuto();
 }
 
-/* ── Search Logic ──────────────────────────────── */
+/* ── Logic Tìm kiếm ────────────────────────────── */
 function _renderResults(container, found) {
   if (!found.length) {
     container.innerHTML = `
@@ -228,23 +338,80 @@ function _renderResults(container, found) {
     return;
   }
   container.innerHTML = `<div class="search-result-count">Tìm thấy <strong>${found.length}</strong> kết quả</div>`;
+  
   for (const vs of found) {
-    const info = DB.ranking.find(r => r.cap === vs.dangCap) || DB.ranking[0];
     const card = document.createElement('div');
-    card.className = 'vs-result-card';
-    card.style.cssText = `--belt-color:${info.hexDai}`;
+    card.className = 'vs-result-card simple';
     card.innerHTML = `
-      <div class="vs-result-avatar">${Utils.initials(vs.tenVS)}</div>
       <div class="vs-result-info">
-        <div class="vs-name-big"><span class="vs-id-prefix">${vs.msVS}</span><br>${vs.tenVS}</div>
-        <div class="vs-meta-row">
-          <span class="badge badge-muted">${vs.msVS}</span>
-          <span class="badge badge-belt ${info.mauDai}">${info.colorName}${info.so ? ` · ${info.so} sọc` : ''}</span>
-          <span class="vs-rank-text">${info.trinhDo}</span>
-        </div>
-        <div class="vs-clb-info">CLB: ${vs.msCLB} · Ngày thi: ${Utils.formatDate(vs.ngayThi)}</div>
-      </div>`;
+        <div class="vs-res-name">${vs.tenVS}</div>
+        <div class="vs-res-id">MSVS: ${vs.msVS}</div>
+      </div>
+      <div class="vs-res-arrow">❯</div>`;
+    
+    card.addEventListener('click', () => showVODetails(vs));
     container.appendChild(card);
+  }
+}
+
+async function showVODetails(vs) {
+  // Lấy thông tin xếp hạng
+  await DB.load();
+  const info = DB.ranking.find(r => r.cap === vs.dangCap) || DB.ranking[0];
+
+  // Điền dữ liệu
+  const nameEl = document.getElementById('det-name');
+  const msEl = document.getElementById('det-ms');
+  const namsinhEl = document.getElementById('det-namsinh');
+  const gioitinhEl = document.getElementById('det-gioitinh');
+  const trinhdoEl = document.getElementById('det-trinhdo');
+  const maudaiEl = document.getElementById('det-maudai');
+  const beltImgEl = document.getElementById('det-belt-img');
+  const rankNameEl = document.getElementById('det-rank-name');
+  const achievementsList = document.getElementById('det-achievements');
+  const achievementsWrap = document.getElementById('det-achievements-wrap');
+
+  if (nameEl) nameEl.textContent = vs.tenVS;
+  if (msEl) msEl.textContent = `MSVS: ${vs.msVS}`;
+  
+  // Trích xuất năm sinh
+  const year = vs.ngaySinh ? vs.ngaySinh.split('-')[0] : '—';
+  if (namsinhEl) namsinhEl.textContent = year;
+  
+  if (gioitinhEl) gioitinhEl.textContent = vs.gioiTinh || '—';
+  if (trinhdoEl) trinhdoEl.textContent = info.trinhDo;
+  if (maudaiEl) maudaiEl.textContent = vs.tenCLB || info.colorName;
+  if (beltImgEl) beltImgEl.src = `img/cap${vs.dangCap}.jpg`;
+  if (rankNameEl) rankNameEl.textContent = `Cấp ${vs.dangCap} · ${info.trinhDo}`;
+
+  // Xử lý thành tích
+  if (achievementsList) {
+    achievementsList.innerHTML = '';
+    if (vs.thanhTich && vs.thanhTich.length > 0) {
+      vs.thanhTich.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        achievementsList.appendChild(li);
+      });
+      if (achievementsWrap) achievementsWrap.style.display = 'block';
+    } else {
+      if (achievementsWrap) achievementsWrap.style.display = 'none';
+    }
+  }
+
+  // Hiển thị modal
+  const overlay = document.getElementById('vs-detail-overlay');
+  if (overlay) {
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeVODetails() {
+  const overlay = document.getElementById('vs-detail-overlay');
+  if (overlay) {
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
   }
 }
 
@@ -257,7 +424,7 @@ async function doSearch() {
   const q = input.value.trim();
   if (!q) { clearSearchResults(); return; }
 
-  const res = DB.searchVS(q);
+  const res = await DB.searchVS(q);
   if (!res.length) {
     panel.innerHTML = '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:0.9rem;">Không tìm thấy kết quả</div>';
     panel.classList.add('has-results');
@@ -300,24 +467,81 @@ async function doLogin() {
     btn.disabled = false;
     btn.classList.remove('loading');
     showError(result.error);
+    Utils.showToast(result.error, 'error');
     return;
   }
 
   errBox.classList.remove('show');
-  Auth.redirectAfterLogin(result);
+  Utils.showToast('Đăng nhập thành công!', 'success');
+  setTimeout(() => Auth.redirectAfterLogin(result), 800);
 }
 
-/* ── Biography Collapsible ─────────────────────── */
+async function handleForgotPassword() {
+  const idInput = document.getElementById('login-id');
+  const msVS = idInput?.value.trim();
+  const errBox = document.getElementById('login-error');
+
+  if (!msVS) {
+    if (errBox) {
+      errBox.textContent = 'Vui lòng nhập Mã số võ sinh trước.';
+      errBox.classList.add('show');
+    }
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/reset-password-request?msVS=${encodeURIComponent(msVS)}`, {
+      method: 'POST'
+    });
+    const data = await res.json();
+    if (res.ok) {
+      const isPending = data.message.includes('chờ');
+      Utils.showToast(data.message, isPending ? 'error' : 'warning');
+      if (errBox) errBox.classList.remove('show');
+    } else {
+      if (errBox) {
+        errBox.textContent = data.detail || 'Lỗi gửi yêu cầu.';
+        errBox.classList.add('show');
+      }
+      Utils.showToast(data.detail || 'Lỗi gửi yêu cầu.', 'error');
+    }
+  } catch (e) {
+    if (errBox) {
+      errBox.textContent = 'Không thể kết nối đến máy chủ.';
+      errBox.classList.add('show');
+    }
+    Utils.showToast('Không thể kết nối đến máy chủ.', 'error');
+  }
+}
+
+/* ── Tiểu sử (Biography Collapsible) ───────────── */
 function initBioToggle() {
   const toggleBtn  = document.getElementById('bio-toggle');
   const bioContent = document.getElementById('bio-content');
+  const mpBio      = document.querySelector('.mp-bio');
   if (!toggleBtn || !bioContent) return;
 
-  toggleBtn.addEventListener('click', () => {
-    const isExpanded = bioContent.classList.toggle('expanded');
-    toggleBtn.classList.toggle('expanded', isExpanded);
-    if (!isExpanded) {
-      document.querySelector('.mp-bio')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const doToggle = (forceClose = false) => {
+    const wasExpanded = bioContent.classList.contains('expanded');
+    const shouldExpand = forceClose ? false : !wasExpanded;
+
+    bioContent.classList.toggle('expanded', shouldExpand);
+    toggleBtn.classList.toggle('expanded', shouldExpand);
+
+    if (wasExpanded && !shouldExpand) {
+      mpBio?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    doToggle();
+  });
+
+  // Nhấp vào bất kỳ đâu trên thẻ tiểu sử để thu gọn nếu đang mở rộng
+  mpBio?.addEventListener('click', () => {
+    if (bioContent.classList.contains('expanded')) {
+      doToggle(true);
     }
   });
 }
@@ -325,7 +549,7 @@ function initBioToggle() {
 
 
 
-/* ── Feature C: Counter Animation ─────────────── */
+/* ── Tính năng C: Hiệu ứng đếm số ──────────────── */
 function initCounterAnimation() {
   const counters = document.querySelectorAll('.stat-number[data-count]');
   if (!counters.length) return;
@@ -364,7 +588,7 @@ function initCounterAnimation() {
 
   counters.forEach(el => observer.observe(el));
 }
-/* ── Contact FAB ───────────────────────────────── */
+/* ── Nút liên hệ nổi (FAB) ─────────────────────── */
 function initContactFAB() {
   const toggle  = document.getElementById('contact-toggle');
   const menu    = document.getElementById('social-menu');
@@ -394,7 +618,7 @@ function initContactFAB() {
 
   overlay.addEventListener('click', cerrarMenu);
 
-  // Close when clicking outside (just in case)
+  // Đóng khi nhấp ra ngoài (phòng hờ)
   document.addEventListener('click', (e) => {
     if (!toggle.contains(e.target) && !menu.contains(e.target)) {
       cerrarMenu();

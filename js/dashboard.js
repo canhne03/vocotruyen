@@ -1,90 +1,97 @@
 'use strict';
-// ===== DASHBOARD.JS — Coach Management Dashboard =====
+// ===== DASHBOARD.JS — Trang quản lý dành cho Huấn luyện viên =====
+
+const API_URL = 'http://localhost:8000';
 
 const App = {
   voSinh: [],
-  hlv: [],
   ranking: [],
   currentHLV: null,
   currentTab: 'overview',
   deleteTarget: null,
+  deleteResetTarget: null, // Thêm cho xóa yêu cầu pass
 
-  /* ── Init ─────────────────────────────────────── */
+  /* ── Khởi tạo ─────────────────────────────────── */
   async init() {
     this.setHeaderDate();
+    const token = localStorage.getItem('vct_token');
+    if (!token) {
+      window.location.href = 'index.html';
+      return;
+    }
     await this.loadData();
-    this.currentHLV = this.hlv[0] || null;
     this.setupUI();
     this.renderAll();
   },
 
-  /* ── Date Header ──────────────────────────────── */
+  /* ── Tiêu đề Ngày tháng ───────────────────────── */
   setHeaderDate() {
     const el = document.getElementById('header-date');
     if (!el) return;
     const now = new Date();
     const days = ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
     const formatted = `${days[now.getDay()]}, ${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
-    el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${formatted}`;
+    el.innerHTML = `<i class="bi bi-calendar3 me-2 text-vct"></i> ${formatted}`;
   },
 
-  /* ── Data Loading ─────────────────────────────── */
+  /* ── Tải Dữ liệu ──────────────────────────────── */
   async loadData() {
     try {
-      const saved = localStorage.getItem('vct_voSinh');
-      if (saved) {
-        this.voSinh = JSON.parse(saved);
-      } else {
-        const res = await fetch('data/vo-sinh.json');
-        this.voSinh = await res.json();
-        this.saveVoSinh();
+      const token = localStorage.getItem('vct_token');
+      const headers = { 'Authorization': `Bearer ${token}` };
+
+      const [hlv, vs, r] = await Promise.all([
+        fetch(`${API_URL}/hlv/me`, { headers }).then(r => r.ok ? r.json() : null),
+        fetch(`${API_URL}/students`, { headers }).then(r => r.ok ? r.json() : []),
+        fetch(`${API_URL}/rankings`).then(r => r.json())
+      ]);
+
+      if (!hlv) {
+        localStorage.removeItem('vct_token');
+        window.location.href = 'index.html';
+        return;
       }
 
-      const savedHLV = localStorage.getItem('vct_hlv');
-      if (savedHLV) {
-        this.hlv = JSON.parse(savedHLV);
-      } else {
-        const res2 = await fetch('data/hlv.json');
-        this.hlv = await res2.json();
-        this.saveHLV();
-      }
-
-      const res3 = await fetch('data/ranking.json');
-      this.ranking = await res3.json();
+      this.currentHLV = hlv;
+      this.voSinh = vs;
+      this.ranking = r;
     } catch (e) {
       console.error('Error loading data:', e);
+      this.toast('Lỗi kết nối máy chủ', true);
     }
   },
 
-  saveVoSinh() {
-    localStorage.setItem('vct_voSinh', JSON.stringify(this.voSinh));
+  async saveVoSinh() {
+    // Với Backend, chúng ta không lưu toàn bộ mảng vào localStorage.
+    // Chúng ta đã có các API endpoint cho việc cập nhật từng võ sinh.
+    // Phương thức này có thể giữ lại để đảm bảo tính nhất quán của UI nếu cần ở nơi khác.
   },
 
-  saveHLV() {
-    localStorage.setItem('vct_hlv', JSON.stringify(this.hlv));
+  async saveHLV() {
+    // Tương tự như saveVoSinh, chúng ta sử dụng các gọi API cụ thể như add_club.
   },
 
-  /* ── UI Setup ─────────────────────────────────── */
+  /* ── Thiết lập Giao diện (UI Setup) ───────────── */
   setupUI() {
-    // Dropdown close on outside click
+    // Đóng dropdown khi nhấp ra ngoài
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.actions-cell')) {
+      if (!e.target.closest('.actions-cell') && !e.target.closest('.dropdown')) {
         document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
       }
     });
 
-    // Sidebar nav
+    // Điều hướng Sidebar
     document.querySelectorAll('.nav-item').forEach(btn => {
       btn.addEventListener('click', () => this.switchTab(btn.dataset.tab));
     });
 
-    // Sidebar toggle (mobile)
+    // Bật/tắt Sidebar (mobile)
     const toggle = document.getElementById('sidebar-toggle');
     const overlay = document.getElementById('sidebar-overlay');
     if (toggle) toggle.addEventListener('click', () => this.toggleSidebar());
     if (overlay) overlay.addEventListener('click', () => this.closeSidebar());
 
-    // Coach info
+    // Thông tin Huấn luyện viên
     if (this.currentHLV) {
       const initials = this.getInitials(this.currentHLV.tenHLV);
       const avatar = document.getElementById('coach-avatar');
@@ -93,77 +100,94 @@ const App = {
       if (name) name.textContent = this.currentHLV.tenHLV;
     }
 
-    // Add student button
+    // Nút thêm võ sinh
     document.getElementById('btn-add-vs')?.addEventListener('click', () => this.openAddVS());
 
-    // Add class button
+    // Nút thêm lớp học
     document.getElementById('btn-add-class')?.addEventListener('click', () => this.openAddClass());
 
-    // Student form
+    // Biểu mẫu võ sinh (Student form)
     document.getElementById('form-vs')?.addEventListener('submit', (e) => {
       e.preventDefault();
       this.saveVS();
     });
 
-    // Class form
+    // Biểu mẫu lớp học (Class form)
     document.getElementById('form-class')?.addEventListener('submit', (e) => {
       e.preventDefault();
       this.addClass();
     });
 
-    // Modal close buttons
-    document.querySelectorAll('[data-close]').forEach(btn => {
-      btn.addEventListener('click', () => this.closeModal(btn.dataset.close));
+    // Nút lưu xác nhận cấp lại mật khẩu
+    document.getElementById('btn-confirm-reset-save')?.addEventListener('click', () => {
+      this.confirmReset();
     });
 
-    // Close modal on overlay click
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) this.closeModal(overlay.id);
-      });
-    });
+    // Các instance Bootstrap Modal phần lớn được xử lý qua data attributes, 
+    // nhưng để mở/đóng qua code (openModal/closeModal), chúng ta sẽ định nghĩa chúng.
 
-    // Search student
+    // Chúng ta dựa vào logic static backdrop/close có sẵn của Bootstrap.
+
+    // Tìm kiếm võ sinh
     document.getElementById('search-student')?.addEventListener('input', () => this.renderStudents());
 
-    // Filter club (students)
+    // Bộ lọc CLB (võ sinh)
     const filterClub = document.getElementById('filter-club');
     if (filterClub) {
       filterClub.addEventListener('change', () => this.renderStudents());
     }
 
-    // Tuition time range selectors
+    // Bộ chọn khoảng thời gian học phí
     document.getElementById('tuition-month-start')?.addEventListener('change', () => this.renderTuition());
     document.getElementById('tuition-month-end')?.addEventListener('change', () => this.renderTuition());
     document.getElementById('tuition-club-filter')?.addEventListener('change', () => this.renderTuition());
 
-    // Overview month
-    document.getElementById('overview-month')?.addEventListener('change', () => this.renderOverview());
+    // Nút xác nhận xóa yêu cầu mật khẩu
+    document.getElementById('btn-do-delete-req')?.addEventListener('click', () => {
+      this.doRejectResetRequest();
+    });
 
-    // Single-month reportx` date
+    // Nút xác nhận ngưng hoạt động
+    document.getElementById('btn-do-suspend')?.addEventListener('click', () => {
+      this.doSuspend();
+    });
+
+    // Điền dữ liệu cho các bộ lọc
+    document.querySelector('.sidebar-back')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Xóa phiên đăng nhập để trang chủ không hiển thị tên người dùng cũ
+      localStorage.removeItem('vct_session');
+      localStorage.removeItem('vct_token');
+      window.location.href = '/';
+    });
+
+    // Ngày báo cáo đơn tháng
     document.getElementById('report-month')?.addEventListener('change', () => this.renderTuitionOverview());
 
-    // Populate filters
+    // Điền dữ liệu cho các bộ lọc
     this.populateFilters();
   },
 
-  /* ── Populate Filters ─────────────────────────── */
+  /* ── Điền Dữ liệu Lọc ────────────────────────── */
   populateFilters() {
     const clubs = this.getClubs();
     const clubOptions = clubs.map(c => `<option value="${c.msCLB}">${c.tenCLB}</option>`).join('');
 
-    // Student filter
+    // Bộ lọc võ sinh
     const filterClub = document.getElementById('filter-club');
-    if (filterClub) filterClub.innerHTML = `<option value="">Tất cả CLB</option>` + clubOptions;
+    if (filterClub) {
+      filterClub.innerHTML = clubOptions;
+      if (clubs.length) filterClub.value = clubs[0].msCLB;
+    }
 
-    // Tuition filter
+    // Bộ lọc học phí
     const tuitionFilter = document.getElementById('tuition-club-filter');
     if (tuitionFilter && clubs.length) {
       tuitionFilter.innerHTML = clubOptions;
       tuitionFilter.value = clubs[0].msCLB;
     }
 
-    // Month selectors
+    // Bộ chọn tháng
     const months = this.getAllMonths();
     const monthOptions = months.map(m => `<option value="${m}">${this.formatMonth(m)}</option>`).join('');
 
@@ -172,7 +196,7 @@ const App = {
     if (tuitionMonthStart && tuitionMonthEnd) {
       tuitionMonthStart.innerHTML = monthOptions;
       tuitionMonthEnd.innerHTML = monthOptions;
-      // Default: show last 3 months if possible
+      // Mặc định: hiển thị 3 tháng gần nhất nếu có thể
       tuitionMonthStart.value = months[months.length - 3] || months[0] || '';
       tuitionMonthEnd.value = months[months.length - 1] || '';
     }
@@ -183,24 +207,24 @@ const App = {
       overviewMonth.value = months[months.length - 1] || '';
     }
 
-    // Single-month report default
+    // Mặc định báo cáo đơn tháng
     const reportMonth = document.getElementById('report-month');
     if (reportMonth && months.length) reportMonth.value = months[months.length - 1];
 
-    // Populate form selects
+    // Điền dữ liệu cho các select trong biểu mẫu
     this.populateFormSelects();
   },
 
   populateFormSelects() {
     const clubs = this.getClubs();
 
-    // CLB select in form
+    // Select CLB trong biểu mẫu
     const vsClb = document.getElementById('vs-clb');
     if (vsClb) {
       vsClb.innerHTML = clubs.map(c => `<option value="${c.msCLB}">${c.tenCLB}</option>`).join('');
     }
 
-    // Belt/rank select
+    // Select Cấp đai
     const vsDangCap = document.getElementById('vs-dangcap');
     if (vsDangCap) {
       vsDangCap.innerHTML = this.ranking.map(r =>
@@ -209,7 +233,7 @@ const App = {
     }
   },
 
-  /* ── Tab Navigation ───────────────────────────── */
+  /* ── Điều hướng Tab ──────────────────────────── */
   switchTab(tab) {
     this.currentTab = tab;
 
@@ -226,22 +250,24 @@ const App = {
       students: 'Danh sách Võ sinh',
       tuition: 'Quản lý Học phí',
       classes: 'Lớp học',
-      suspended: 'Ngưng hoạt động'
+      suspended: 'Ngưng hoạt động',
+      'reset-password': 'Cấp lại Mật khẩu'
     };
     const pageTitle = document.getElementById('page-title');
     if (pageTitle) pageTitle.textContent = titles[tab] || '';
 
     this.closeSidebar();
 
-    // Re-render on tab switch
+    // Render lại khi chuyển tab
     if (tab === 'overview') this.renderOverview();
     if (tab === 'students') this.renderStudents();
     if (tab === 'tuition') { this.renderTuition(); }
     if (tab === 'classes') this.renderClasses();
     if (tab === 'suspended') this.renderSuspended();
+    if (tab === 'reset-password') this.loadResetRequests();
   },
 
-  /* ── Render All ───────────────────────────────── */
+  /* ── Hiển thị tất cả (Render All) ───────────── */
   renderAll() {
     this.renderOverview();
     this.renderStudents();
@@ -251,7 +277,7 @@ const App = {
     this.renderSuspended();
   },
 
-  /* ── Get Students for current HLV ─────────────── */
+  /* ── Lấy danh sách Võ sinh của HLV hiện tại ─── */
   getMyStudents() {
     if (!this.currentHLV) return [];
     return this.voSinh.filter(vs => vs.msHLV === this.currentHLV.msHLV && vs.trangThai !== 'Ngưng hoạt động');
@@ -277,7 +303,7 @@ const App = {
     return [...months].sort();
   },
 
-  /* ── Overview ─────────────────────────────────── */
+  /* ── Tổng quan ───────────────────────────────── */
   renderOverview() {
     const students = this.getMyStudents();
     const clubs = this.getClubs();
@@ -295,7 +321,7 @@ const App = {
     document.getElementById('stat-paid').textContent = paid;
     document.getElementById('stat-unpaid').textContent = unpaid;
 
-    // Club summaries
+    // Tóm tắt theo Câu lạc bộ (CLB)
     const grid = document.getElementById('overview-clubs-grid');
     if (grid) {
       grid.innerHTML = clubs.map(club => {
@@ -317,7 +343,7 @@ const App = {
       }).join('');
     }
 
-    // Recent students
+    // Võ sinh mới nhập học
     const recent = document.getElementById('overview-recent');
     if (recent) {
       const sorted = [...students].sort((a, b) => (b.ngayNhapHoc || '').localeCompare(a.ngayNhapHoc || '')).slice(0, 6);
@@ -336,7 +362,7 @@ const App = {
     }
   },
 
-  /* ── Students List ────────────────────────────── */
+  /* ── Danh sách Võ sinh ───────────────────────── */
   renderStudents() {
     const tbody = document.getElementById('student-tbody');
     const empty = document.getElementById('empty-students');
@@ -344,11 +370,11 @@ const App = {
 
     let students = this.getMyStudents();
 
-    // Filter by club
+    // Lọc theo CLB
     const club = document.getElementById('filter-club')?.value;
     if (club) students = students.filter(vs => vs.msCLB === club);
 
-    // Filter by search
+    // Lọc theo tìm kiếm
     const q = (document.getElementById('search-student')?.value || '').trim().toLowerCase();
     if (q) {
       students = students.filter(vs =>
@@ -369,7 +395,7 @@ const App = {
       const rankInfo = this.ranking.find(r => r.cap === vs.dangCap) || this.ranking[0];
       const clubInfo = this.getClubs().find(c => c.msCLB === vs.msCLB);
       return `
-        <tr onclick="if(window.innerWidth <= 900) App.toggleDropdown(event, 'drop-${vs.msVS}')">
+        <tr>
           <td><div class="vs-id-sub">${vs.msVS}</div> <strong>${vs.tenVS}</strong></td>
           <td>${vs.ngaySinh ? vs.ngaySinh.substring(0, 4) : '—'}</td>
           <td>${vs.gioiTinh || '—'}</td>
@@ -381,25 +407,28 @@ const App = {
           </td>
           <td>${clubInfo ? clubInfo.tenCLB : vs.msCLB}</td>
           <td>
-            <div class="actions-cell">
-              <button class="btn-dots" onclick="App.toggleDropdown(event, 'drop-${vs.msVS}')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+            <div class="dropdown actions-cell">
+              <button class="btn btn-sm btn-light border btn-dots" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
               </button>
-              <div class="dropdown-menu" id="drop-${vs.msVS}">
-                <button class="dropdown-item" onclick="App.openViewVS('${vs.msVS}')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 
-                  Xem chi tiết
-                </button>
-                <button class="dropdown-item" onclick="App.openEditVS('${vs.msVS}')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 
-                  Sửa
-                </button>
-                <div class="dropdown-sep"></div>
-                <button class="dropdown-item item-warning" onclick="App.suspendVS('${vs.msVS}')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-                  Ngưng hoạt động
-                </button>
-              </div>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                <li>
+                  <button class="dropdown-item d-flex align-items-center gap-2" onclick="App.openViewVS('${vs.msVS}')">
+                    <i class="bi bi-eye text-primary"></i> Xem chi tiết
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item d-flex align-items-center gap-2" onclick="App.openEditVS('${vs.msVS}')">
+                    <i class="bi bi-pencil text-success"></i> Sửa
+                  </button>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <button class="dropdown-item d-flex align-items-center gap-2 text-danger" onclick="App.suspendVS('${vs.msVS}')">
+                    <i class="bi bi-person-x"></i> Ngưng hoạt động
+                  </button>
+                </li>
+              </ul>
             </div>
           </td>
         </tr>`;
@@ -425,9 +454,8 @@ const App = {
       const rankInfo = this.ranking.find(r => r.cap === vs.dangCap) || this.ranking[0];
       const clubInfo = this.getClubs().find(c => c.msCLB === vs.msCLB);
       return `
-        <tr>
           <td>
-            <div class="vs-id-sub">${vs.msVS}</div> <strong>${vs.tenVS}</strong> <span class="status-badge suspended">Đã ngưng</span>
+            <div class="vs-id-sub">${vs.msVS}</div> <strong>${vs.tenVS}</strong>
           </td>
           <td>${vs.ngaySinh ? vs.ngaySinh.substring(0, 4) : '—'}</td>
           <td>${vs.gioiTinh || '—'}</td>
@@ -440,9 +468,9 @@ const App = {
           <td>${clubInfo ? clubInfo.tenCLB : vs.msCLB}</td>
           <td>
             <div class="actions-cell">
-              <button class="btn-success" style="padding: 6px 12px; font-size: 0.85rem; border-radius: var(--radius-sm); border: none; cursor: pointer; display: flex; align-items: center; gap: 6px;" onclick="App.activateVS('${vs.msVS}')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><polyline points="20 6 9 17 4 12"/></svg>
-                Kích hoạt lại
+              <button class="btn btn-sm btn-success d-flex align-items-center justify-content-center gap-2 btn-activate-vs" onclick="App.activateVS('${vs.msVS}')">
+                <i class="bi bi-check-lg"></i>
+                <span class="d-none d-sm-inline">Kích hoạt</span>
               </button>
             </div>
           </td>
@@ -451,48 +479,68 @@ const App = {
   },
 
   toggleDropdown(e, id) {
-    e.stopPropagation();
-    const menu = document.getElementById(id);
-    const isShowing = menu.classList.contains('show');
-
-    // Close all others
-    document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
-
-    if (!isShowing) {
-      const btn = e.currentTarget;
-      const rect = btn.getBoundingClientRect();
-      menu.style.top = (rect.bottom + 4) + 'px';
-      
-      let leftPos = rect.right - 180; // 180px is menu width config
-      if (leftPos < 10) leftPos = 10;
-      
-      menu.style.left = leftPos + 'px';
-      menu.style.right = 'auto';
-      menu.classList.add('show');
-    }
+    // Dựa vào dropdown gốc của Bootstrap
   },
 
   suspendVS(msVS) {
     const vs = this.voSinh.find(v => v.msVS === msVS);
     if (!vs) return;
-    vs.trangThai = 'Ngưng hoạt động';
-    this.saveVoSinh();
-    this.toast('Đã chuyển võ sinh sang Ngưng hoạt động!');
-    this.renderAll();
-    this.populateFilters();
+    this.suspendTarget = msVS;
+    document.getElementById('suspend-vs-name').textContent = vs.tenVS;
+    this.openModal('modal-confirm-suspend');
   },
 
-  activateVS(msVS) {
+  async doSuspend() {
+    if (!this.suspendTarget) return;
+    const msVS = this.suspendTarget;
     const vs = this.voSinh.find(v => v.msVS === msVS);
     if (!vs) return;
-    vs.trangThai = 'Đang học';
-    this.saveVoSinh();
-    this.toast('Đã kích hoạt lại võ sinh!');
-    this.renderAll();
-    this.populateFilters();
+
+    const oldStatus = vs.trangThai;
+    vs.trangThai = 'Ngưng hoạt động';
+    
+    try {
+      const token = localStorage.getItem('vct_token');
+      const res = await fetch(`${API_URL}/students/${msVS}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(vs)
+      });
+      if (!res.ok) throw new Error();
+      this.toast('Đã chuyển võ sinh sang Ngưng hoạt động!');
+      this.closeModal('modal-confirm-suspend');
+      this.renderAll();
+    } catch (e) {
+      vs.trangThai = oldStatus;
+      this.toast('Lỗi khi cập nhật trạng thái', true);
+    } finally {
+      this.suspendTarget = null;
+    }
   },
 
-  /* ── CRUD: Add/Edit Student ───────────────────── */
+  async activateVS(msVS) {
+    const vs = this.voSinh.find(v => v.msVS === msVS);
+    if (!vs) return;
+    const oldStatus = vs.trangThai;
+    vs.trangThai = 'Đang học';
+    
+    try {
+      const token = localStorage.getItem('vct_token');
+      const res = await fetch(`${API_URL}/students/${msVS}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(vs)
+      });
+      if (!res.ok) throw new Error();
+      this.toast('Đã kích hoạt lại võ sinh!');
+      this.renderAll();
+    } catch (e) {
+      vs.trangThai = oldStatus;
+      this.toast('Lỗi khi kích hoạt lại', true);
+    }
+  },
+
+  /* ── CRUD: Thêm/Sửa Võ sinh ──────────────────── */
   openViewVS(msVS) {
     const vs = this.voSinh.find(v => v.msVS === msVS);
     if (!vs) return;
@@ -500,40 +548,97 @@ const App = {
     const rankInfo = this.ranking.find(r => r.cap === vs.dangCap) || this.ranking[0];
     const clubInfo = this.getClubs().find(c => c.msCLB === vs.msCLB);
 
-    let html = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">`;
-    const addRow = (label, val) => {
-      html += `<div><strong style="color: var(--text-muted); font-size: 0.85rem;">${label}</strong><div style="padding-top:4px; font-weight: 500; font-size: 0.95rem;">${val || '—'}</div></div>`;
-    };
+    let html = `
+      <div class="student-profile-header mb-4 d-flex align-items-center gap-3 p-3 rounded bg-light border">
+        <div class="profile-avatar-large" style="background:${rankInfo.hexDai}; width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-size:1.5rem; font-weight:bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+          ${this.getInitials(vs.tenVS)}
+        </div>
+        <div>
+          <h4 class="mb-1 fw-bold">${vs.tenVS}</h4>
+          <div class="text-muted small"><i class="bi bi-person-badge me-1"></i> Mã số: <strong>${vs.msVS}</strong></div>
+          <div class="mt-2">
+            <span class="belt-badge" style="background:${rankInfo.hexDai}15; color:${rankInfo.hexDai}; border: 1px solid ${rankInfo.hexDai}30;">
+              <span class="belt-dot" style="background:${rankInfo.hexDai}"></span>
+              Cấp ${vs.dangCap} · ${rankInfo.colorName}
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="profile-grid">
+        <div class="profile-section">
+          <h6 class="section-title border-bottom pb-2 mb-3"><i class="bi bi-info-circle me-2"></i>Thông tin cá nhân</h6>
+          <div class="row g-3">
+            <div class="col-6">
+              <label class="info-label">Ngày sinh</label>
+              <div class="info-value">${this.formatDate(vs.ngaySinh)}</div>
+            </div>
+            <div class="col-6">
+              <label class="info-label">Giới tính</label>
+              <div class="info-value">${vs.gioiTinh || '—'}</div>
+            </div>
+            <div class="col-12">
+              <label class="info-label">Địa chỉ</label>
+              <div class="info-value text-break">${vs.diaChi || '—'}</div>
+            </div>
+          </div>
+        </div>
 
-    addRow('Mã VS', vs.msVS);
-    addRow('Họ tên', vs.tenVS);
-    addRow('Ngày sinh', this.formatDate(vs.ngaySinh));
-    addRow('Giới tính', vs.gioiTinh);
-    
-    // Belt badge HTML
-    const beltHtml = `<span class="belt-badge" style="background:${rankInfo.hexDai}15; color:${rankInfo.hexDai}; padding:2px 8px; border-radius:12px; font-size:0.8rem;"><span class="belt-dot" style="background:${rankInfo.hexDai}"></span>Cấp ${vs.dangCap} · ${rankInfo.colorName}</span>`;
-    addRow('Cấp đai', beltHtml);
-    
-    addRow('Câu lạc bộ', clubInfo ? clubInfo.tenCLB : vs.msCLB);
-    addRow('Địa chỉ', vs.diaChi);
-    addRow('Ngày nhập học', this.formatDate(vs.ngayNhapHoc));
-    addRow('Ngày thi gần nhất', this.formatDate(vs.ngayThi));
-    
-    let statusText = 'Chưa xác định';
-    if (vs.trangThaiThi === 0) statusText = 'Chưa thi';
-    if (vs.trangThaiThi === 1) statusText = 'Đủ điều kiện thi';
-    if (vs.trangThaiThi === 2) statusText = 'Đang chờ duyệt kết quả';
-    addRow('Trạng thái thi', statusText);
-    
-    addRow('Mật khẩu', vs.password);
-    addRow('Đổi mật khẩu', vs.doiPass ? 'Đã đổi' : 'Chức đổi (Mặc định)');
+        <div class="profile-section mt-4">
+          <h6 class="section-title border-bottom pb-2 mb-3"><i class="bi bi-activity me-2"></i>Hoạt động & Chuyên môn</h6>
+          <div class="row g-3">
+            <div class="col-6">
+              <label class="info-label">Câu lạc bộ</label>
+              <div class="info-value">${clubInfo ? clubInfo.tenCLB : vs.msCLB}</div>
+            </div>
+            <div class="col-6">
+              <label class="info-label">Ngày nhập học</label>
+              <div class="info-value">${this.formatDate(vs.ngayNhapHoc)}</div>
+            </div>
+            <div class="col-6">
+              <label class="info-label">Ngày thi gần nhất</label>
+              <div class="info-value">${this.formatDate(vs.ngayThi)}</div>
+            </div>
+            <div class="col-6">
+              <label class="info-label">Trạng thái thi</label>
+              <div class="info-value">
+                ${vs.trangThaiThi === 0 ? '<span class="badge bg-secondary">Chưa thi</span>' : 
+                  vs.trangThaiThi === 1 ? '<span class="badge bg-success">Đủ điều kiện</span>' :
+                  vs.trangThaiThi === 2 ? '<span class="badge bg-warning">Chờ duyệt</span>' : '—'}
+              </div>
+            </div>
+          </div>
+        </div>
 
-    html += `</div>`;
+        <div class="profile-section mt-4">
+          <h6 class="section-title border-bottom pb-2 mb-3"><i class="bi bi-shield-lock me-2"></i>Bảo mật</h6>
+          <div class="row g-3">
+            <div class="col-6">
+              <label class="info-label">Mật khẩu</label>
+              <div class="info-value"><code>${vs.password}</code></div>
+            </div>
+            <div class="col-6">
+              <label class="info-label">Trạng thái đổi MK</label>
+              <div class="info-value">${vs.doiPass ? '<span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Đã đổi</span>' : '<span class="text-muted">Mặc định</span>'}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
 
     if (vs.thanhTich && vs.thanhTich.length) {
-      html += `<div style="margin-top: var(--space-5);"><strong style="color: var(--text-muted); font-size: 0.85rem;">Thành tích thi đấu</strong><ul style="padding-top:8px; padding-left:20px; font-size: 0.95rem; line-height: 1.6;">`;
-      vs.thanhTich.forEach(t => { html += `<li><strong>${t.giai}</strong> (${t.nam}) - Huy chương ${t.huyChuong} (${t.noiDung})</li>`; });
-      html += `</ul></div>`;
+      html += `
+        <div class="profile-section mt-4">
+          <h6 class="section-title border-bottom pb-2 mb-3"><i class="bi bi-trophy me-2"></i>Thành tích thi đấu</h6>
+          <div class="achievement-list">`;
+      vs.thanhTich.forEach(t => { 
+        html += `
+          <div class="achievement-item d-flex align-items-center gap-2 mb-1 p-2 rounded bg-light border-start border-primary border-4">
+            <i class="bi bi-award text-warning"></i>
+            <span><strong>${t.giai}</strong> (${t.nam}) - Huy chương ${t.huyChuong} (${t.noiDung})</span>
+          </div>`; 
+      });
+      html += `</div></div>`;
     }
 
     document.getElementById('view-vs-body').innerHTML = html;
@@ -545,7 +650,15 @@ const App = {
     document.getElementById('vs-edit-id').value = '';
     document.getElementById('form-vs').reset();
 
-    // Default date
+    // Mở khóa trường tên, dọn/khóa mã số
+    const tenInput = document.getElementById('vs-ten');
+    tenInput.readOnly = false;
+    tenInput.classList.remove('bg-light');
+    
+    document.getElementById('vs-ms').value = '';
+    document.getElementById('vs-ms').placeholder = 'Tự động tạo';
+
+    // Ngày mặc định
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('vs-ngaynhaphoc').value = today;
 
@@ -559,7 +672,20 @@ const App = {
 
     document.getElementById('modal-vs-title').textContent = 'Chỉnh sửa Võ sinh';
     document.getElementById('vs-edit-id').value = msVS;
-    document.getElementById('vs-ten').value = vs.tenVS || '';
+    
+    // Điền dữ liệu
+    const tenInput = document.getElementById('vs-ten');
+    tenInput.value = vs.tenVS || '';
+    
+    // Khóa trường tên và mã khi sửa
+    tenInput.readOnly = true;
+    tenInput.classList.add('bg-light');
+
+    const msInput = document.getElementById('vs-ms');
+    msInput.value = vs.msVS || '';
+    msInput.readOnly = true;
+    msInput.classList.add('bg-light');
+
     document.getElementById('vs-ngaysinh').value = vs.ngaySinh || '';
     document.getElementById('vs-gioitinh').value = vs.gioiTinh || 'Nam';
     document.getElementById('vs-diachi').value = vs.diaChi || '';
@@ -573,7 +699,7 @@ const App = {
     this.openModal('modal-vs');
   },
 
-  saveVS() {
+  async saveVS() {
     const editId = document.getElementById('vs-edit-id').value;
     const ten = document.getElementById('vs-ten').value.trim();
     const ngaySinh = document.getElementById('vs-ngaysinh').value;
@@ -589,46 +715,56 @@ const App = {
       return;
     }
 
+    const token = localStorage.getItem('vct_token');
+    const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+
     if (editId) {
-      // Edit existing
       const idx = this.voSinh.findIndex(v => v.msVS === editId);
-      if (idx !== -1) {
-        this.voSinh[idx].tenVS = ten;
-        this.voSinh[idx].ngaySinh = ngaySinh;
-        this.voSinh[idx].gioiTinh = gioiTinh;
-        this.voSinh[idx].dangCap = dangCap;
-        this.voSinh[idx].msCLB = msCLB;
-        this.voSinh[idx].diaChi = diaChi;
-        this.voSinh[idx].ngayNhapHoc = ngayNhapHoc;
-        if (password) this.voSinh[idx].password = password;
+      if (idx === -1) return;
+      const original = { ...this.voSinh[idx] };
+      
+      const updatedData = {
+        ...this.voSinh[idx],
+        tenVS: ten, ngaySinh, gioiTinh, dangCap, msCLB, diaChi, ngayNhapHoc
+      };
+      if (password) updatedData.password = password;
+
+      try {
+        const res = await fetch(`${API_URL}/students/${editId}`, {
+          method: 'PUT', headers, body: JSON.stringify(updatedData)
+        });
+        if (!res.ok) throw new Error();
+        this.voSinh[idx] = await res.json();
         this.toast('Cập nhật võ sinh thành công!');
+      } catch (e) {
+        this.toast('Lỗi khi cập nhật võ sinh', true);
+        return;
       }
     } else {
-      // Add new
       const msVS = this.generateMsVS(msCLB);
       const newVS = {
-        msVS,
-        msCLB,
-        msHLV: this.currentHLV?.msHLV || '001',
-        tenVS: ten,
-        gioiTinh,
-        ngaySinh,
-        diaChi,
-        dangCap,
+        msVS, msCLB, msHLV: this.currentHLV?.msHLV || '001',
+        tenVS: ten, gioiTinh, ngaySinh, diaChi, dangCap,
         ngayNhapHoc: ngayNhapHoc || new Date().toISOString().split('T')[0],
-        ngayThi: null,
-        avatar: null,
+        ngayThi: null, avatar: null,
         password: password || `vs${Date.now().toString().slice(-4)}`,
-        doiPass: false,
-        hocPhi: {},
-        thanhTich: [],
-        trangThaiThi: null
+        doiPass: false, hocPhi: {}, thanhTich: [], trangThaiThi: null, trangThai: "Đang học"
       };
-      this.voSinh.push(newVS);
-      this.toast('Thêm võ sinh mới thành công!');
+
+      try {
+        const res = await fetch(`${API_URL}/students`, {
+          method: 'POST', headers, body: JSON.stringify(newVS)
+        });
+        if (!res.ok) throw new Error();
+        const saved = await res.json();
+        this.voSinh.push(saved);
+        this.toast('Thêm võ sinh mới thành công!');
+      } catch (e) {
+        this.toast('Lỗi khi thêm võ sinh', true);
+        return;
+      }
     }
 
-    this.saveVoSinh();
     this.closeModal('modal-vs');
     this.renderAll();
     this.populateFilters();
@@ -642,7 +778,7 @@ const App = {
   },
 
 
-  /* ── Tuition ──────────────────────────────────── */
+  /* ── Học phí ─────────────────────────────────── */
   renderTuition() {
     const tbody = document.getElementById('tuition-tbody');
     const theadRow = document.getElementById('tuition-thead-row');
@@ -652,10 +788,10 @@ const App = {
     const endMonth = document.getElementById('tuition-month-end')?.value || '';
     const clubFilter = document.getElementById('tuition-club-filter')?.value || '';
     
-    // Get list of months to show
+    // Lấy danh sách các tháng cần hiển thị
     const monthsToShow = this.getMonthsBetween(startMonth, endMonth);
 
-    // Update table header
+    // Cập nhật tiêu đề bảng
     let headHtml = `<th class="sticky-col">Họ tên Võ sinh</th>`;
     monthsToShow.forEach(m => {
       headHtml += `<th class="th-center th-month">${this.formatMonthShort(m)}</th>`;
@@ -668,7 +804,7 @@ const App = {
     let paidCount = 0, unpaidCount = 0;
 
     tbody.innerHTML = students.map(vs => {
-      // For stats, we count the latest month in the selected range
+      // Đối với thống kê, chúng ta đếm tháng mới nhất trong khoảng đã chọn
       const latestMonth = monthsToShow[monthsToShow.length - 1] || '';
       const isLatestPaid = vs.hocPhi && vs.hocPhi[latestMonth];
       if (isLatestPaid) paidCount++; else unpaidCount++;
@@ -697,19 +833,32 @@ const App = {
     }
   },
 
-  toggleTuition(msVS, month, checked) {
+  async toggleTuition(msVS, month, checked) {
     const vs = this.voSinh.find(v => v.msVS === msVS);
     if (!vs) return;
     if (!vs.hocPhi) vs.hocPhi = {};
+    const oldVal = vs.hocPhi[month];
     vs.hocPhi[month] = checked;
-    this.saveVoSinh();
-
-    // Update stats without full re-render
-    this.renderTuition();
-    this.renderTuitionOverview();
+    
+    try {
+      const token = localStorage.getItem('vct_token');
+      const res = await fetch(`${API_URL}/students/${msVS}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(vs)
+      });
+      if (!res.ok) throw new Error();
+      this.renderTuition();
+      this.renderTuitionOverview();
+      this.renderOverview();
+    } catch (e) {
+      vs.hocPhi[month] = oldVal;
+      this.renderTuition();
+      this.toast('Lỗi khi cập nhật học phí', true);
+    }
   },
 
-  /* ── Tuition Single-month Report ─────────────── */
+  /* ── Báo cáo Học phí đơn tháng ───────────────── */
   renderTuitionOverview() {
     const paidList = document.getElementById('report-paid-list');
     const unpaidList = document.getElementById('report-unpaid-list');
@@ -739,7 +888,7 @@ const App = {
     unpaidList.innerHTML = unpaidHtml || '<li class="empty-li">Chưa có dữ liệu</li>';
   },
 
-  /* ── Classes ──────────────────────────────────── */
+  /* ── Lớp học ─────────────────────────────────── */
   renderClasses() {
     const grid = document.getElementById('classes-grid');
     if (!grid) return;
@@ -764,13 +913,13 @@ const App = {
             <h4>${club.tenCLB}</h4>
             <span class="class-code">${club.msCLB}</span>
           </div>
-          <div class="class-address">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="class-address small text-muted mb-2 d-flex align-items-center gap-2">
+            <i class="bi bi-geo-alt"></i>
             <span>${club.diaChi}</span>
           </div>
-          <div class="class-stat">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <span><strong>${count}</strong> võ sinh</span>
+          <div class="class-stat fw-bold small d-flex align-items-center gap-2">
+            <i class="bi bi-people"></i>
+            <span>${count} võ sinh</span>
           </div>
         </div>`;
     }).join('');
@@ -801,7 +950,7 @@ const App = {
     return String(max + 1).padStart(4, '0');
   },
 
-  addClass() {
+  async addClass() {
     const msclb = document.getElementById('class-msclb')?.value.trim();
     const tenclb = document.getElementById('class-tenclb')?.value.trim();
     const diachi = document.getElementById('class-diachi')?.value.trim();
@@ -811,41 +960,42 @@ const App = {
       return;
     }
 
-    // Check duplicate
-    if (this.currentHLV.clubs.some(c => c.msCLB === msclb)) {
-      this.toast('Mã CLB đã tồn tại!', true);
-      return;
+    const token = localStorage.getItem('vct_token');
+    try {
+      const res = await fetch(`${API_URL}/hlv/club`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ msCLB: msclb, tenCLB: tenclb, diaChi: diachi })
+      });
+      if (!res.ok) throw new Error();
+      
+      this.currentHLV.clubs.push({ msCLB: msclb, tenCLB: tenclb, diaChi: diachi });
+      this.closeModal('modal-class');
+      this.toast('Thêm lớp học thành công!');
+      this.renderClasses();
+      this.populateFilters();
+      this.renderOverview();
+    } catch (e) {
+      this.toast('Lỗi khi thêm lớp học', true);
     }
-
-    this.currentHLV.clubs.push({ msCLB: msclb, tenCLB: tenclb, diaChi: diachi });
-    this.saveHLV();
-
-    this.closeModal('modal-class');
-    document.getElementById('form-class').reset();
-    this.toast('Thêm lớp học thành công!');
-    this.renderClasses();
-    this.populateFilters();
-    this.renderOverview();
   },
 
-  /* ── Modal Helpers ────────────────────────────── */
+  /* ── Hỗ trợ Modal ────────────────────────────── */
   openModal(id) {
     const el = document.getElementById(id);
-    if (el) {
-      el.classList.add('show');
-      document.body.style.overflow = 'hidden';
-    }
+    if (!el) return;
+    const modal = bootstrap.Modal.getOrCreateInstance(el);
+    modal.show();
   },
 
   closeModal(id) {
     const el = document.getElementById(id);
-    if (el) {
-      el.classList.remove('show');
-      document.body.style.overflow = '';
-    }
+    if (!el) return;
+    const modal = bootstrap.Modal.getInstance(el);
+    if (modal) modal.hide();
   },
 
-  /* ── Sidebar Toggle ───────────────────────────── */
+  /* ── Bật/tắt Sidebar ─────────────────────────── */
   toggleSidebar() {
     document.getElementById('sidebar')?.classList.toggle('open');
     document.getElementById('sidebar-overlay')?.classList.toggle('show');
@@ -856,26 +1006,26 @@ const App = {
     document.getElementById('sidebar-overlay')?.classList.remove('show');
   },
 
-  /* ── Toast ────────────────────────────────────── */
+  /* ── Thông báo (Toast) ───────────────────────── */
   toast(msg, isError = false) {
     const container = document.getElementById('toast-container');
     if (!container) return;
     const t = document.createElement('div');
-    t.className = `toast${isError ? ' toast-error' : ''}`;
-    t.textContent = msg;
+    t.className = `vct-toast${isError ? ' toast-error' : ' toast-success'}`;
+    t.innerHTML = `<div class="toast-message">${msg}</div>`;
     container.appendChild(t);
-    setTimeout(() => t.remove(), 3000);
+    
+    // Animation in
+    setTimeout(() => t.classList.add('show'), 10);
+    
+    // Auto remove
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 500);
+    }, 3000);
   },
 
-  /* ── Utilities ────────────────────────────────── */
-  setHeaderDate() {
-    const el = document.getElementById('header-date');
-    if (el) {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      el.textContent = now.toLocaleDateString('vi-VN', options);
-    }
-  },
+  /* ── Tiện ích (Utilities) ────────────────────── */
 
   getInitials(name) {
     if (!name) return '?';
@@ -909,7 +1059,7 @@ const App = {
     let [y1, m1] = start.split('-').map(Number);
     let [y2, m2] = end.split('-').map(Number);
     
-    // Ensure start <= end
+    // Đảm bảo start <= end
     if (y1 > y2 || (y1 === y2 && m1 > m2)) {
       [y1, y2, m1, m2] = [y2, y1, m2, m1];
       [start, end] = [end, start];
@@ -923,8 +1073,122 @@ const App = {
       if (cm > 12) { cm = 1; cy++; }
     }
     return res;
+  },
+
+  /* ── Cấp lại Mật khẩu ────────────────────────── */
+  async loadResetRequests() {
+    try {
+      const token = localStorage.getItem('vct_token');
+      const res = await fetch(`${API_URL}/reset-password-requests`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const requests = await res.json();
+        this.renderResetRequests(requests);
+      }
+    } catch (e) {
+      console.error('Error loading reset requests:', e);
+    }
+  },
+
+  renderResetRequests(requests) {
+    const tbody = document.getElementById('reset-tbody');
+    const empty = document.getElementById('empty-reset');
+    if (!tbody) return;
+
+    if (!requests.length) {
+      tbody.innerHTML = '';
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+
+    if (empty) empty.style.display = 'none';
+
+    tbody.innerHTML = requests.map(req => `
+      <tr>
+        <td>
+          <div class="vs-id-sub">${req.msVS}</div>
+          <strong>${req.tenVS}</strong>
+        </td>
+        <td>${req.msVS}</td>
+        <td>${req.tenCLB}</td>
+        <td>${this.formatDate(req.ngayYeuCau)}</td>
+        <td>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-vct-primary btn-reset-action" onclick="App.openResetConfirm('${req.msVS}', '${req.tenVS}')">
+              <i class="bi bi-check-circle"></i> 
+              <span class="d-none d-sm-inline">Xác nhận</span>
+            </button>
+            <button class="btn btn-sm btn-outline-danger btn-reset-action" onclick="App.rejectResetRequest('${req.msVS}')">
+              <i class="bi bi-trash"></i> 
+              <span class="d-none d-sm-inline">Xóa</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  },
+
+  openResetConfirm(msVS, name) {
+    this.resetTarget = { msVS, name };
+    document.getElementById('reset-vs-name').textContent = name;
+    document.getElementById('new-password-input').value = 'vct' + Math.floor(1000 + Math.random() * 9000);
+    this.openModal('modal-reset-confirm');
+  },
+
+  async confirmReset() {
+    if (!this.resetTarget) return;
+    const newPassword = document.getElementById('new-password-input').value.trim();
+    if (!newPassword) {
+      this.toast('Vui lòng nhập mật khẩu mới', true);
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('vct_token');
+      const res = await fetch(`${API_URL}/reset-password-confirm`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ msVS: this.resetTarget.msVS, newPassword })
+      });
+      if (res.ok) {
+        this.toast('Đã cấp lại mật khẩu mới cho ' + this.resetTarget.name);
+        this.closeModal('modal-reset-confirm');
+        this.loadResetRequests();
+        this.loadData();
+      } else {
+        this.toast('Lỗi khi xác nhận cấp lại mật khẩu', true);
+      }
+    } catch (e) {
+      this.toast('Lỗi kết nối', true);
+    }
+  },
+
+  async rejectResetRequest(msVS) {
+    this.deleteResetTarget = msVS;
+    this.openModal('modal-confirm-delete-req');
+  },
+
+  async doRejectResetRequest() {
+    if (!this.deleteResetTarget) return;
+    try {
+      const token = localStorage.getItem('vct_token');
+      const res = await fetch(`${API_URL}/reset-password-request/${this.deleteResetTarget}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        this.toast('Đã xóa yêu cầu');
+        this.closeModal('modal-confirm-delete-req');
+        this.loadResetRequests();
+      }
+    } catch (e) {
+      this.toast('Lỗi khi xóa yêu cầu', true);
+    } finally {
+      this.deleteResetTarget = null;
+    }
   }
 };
 
-/* ── Boot ───────────────────────────────────────── */
+/* ── Khởi động ────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => App.init());

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khu vực Võ sinh</title>
+  <meta name="description" content="Trang cá nhân dành cho Võ sinh">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    :root {
+      --vs-primary: #2563eb;
+      --vs-bg: #f8fafc;
+    }
+    
+    .vs-profile-card {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    
+    .vs-profile-header {
+      background: linear-gradient(135deg, var(--vct-red-dark), var(--vct-red));
+      height: 160px;
+      position: relative;
+      border-radius: 1rem 1rem 0 0;
+    }
+    
+    .vs-profile-info-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 2rem;
+      padding: 0 2rem;
+      margin-top: -70px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .vs-avatar-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+    }
+    
+    .vs-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 5px solid white;
+      background: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--text-muted);
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .vs-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .vs-avatar-edit {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      width: 32px;
+      height: 32px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--vs-primary);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .vs-avatar-edit:hover {
+      background: var(--vs-primary);
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    .vs-profile-body {
+      padding: 1.5rem 2rem 2rem;
+    }
+    
+    .vs-main-info {
+      flex-grow: 1;
+      padding-bottom: 0.5rem;
+    }
+
+    .vs-name {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+    
+    .vs-id-tag {
+      font-family: var(--font-mono);
+      color: var(--vct-red);
+      font-weight: 700;
+      font-size: 0.95rem;
+      background: var(--vct-red-light);
+      padding: 4px 12px;
+      border-radius: 2rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .belt-status-card {
+      margin-top: 0;
+      padding: 1rem 1.5rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 450px;
+    }
+
+    .vs-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+      text-align: left;
+    }
+    
+    .info-item {
+      background: #f8fafc;
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s;
+    }
+    
+    .info-item:hover {
+      border-color: var(--vct-red);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .info-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .info-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    
+    .info-value {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    
+    .tuition-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+    
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    
+    .status-paid { background: #10b981; }
+    .status-unpaid { background: #ef4444; }
+
+    @media (max-width: 768px) {
+      .vs-profile-info-row {
+        gap: 1rem;
+        padding: 0 1rem;
+        margin-top: -60px;
+      }
+      .vs-avatar-wrapper {
+        width: 100px;
+        height: 100px;
+      }
+      .vs-avatar {
+        font-size: 2.25rem;
+        border-width: 3px;
+      }
+      .vs-profile-body {
+        padding: 1rem 1rem 1.5rem;
+      }
+      .vs-name {
+        font-size: 1.4rem;
+      }
+      .vs-id-tag {
+        font-size: 0.8rem;
+        padding: 2px 10px;
+      }
+      .belt-status-card {
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+      }
+      .belt-status-card .belt-icon {
+        font-size: 1.6rem !important;
+      }
+      .vs-info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ── SIDEBAR ────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="img/logo-vct.png" alt="Logo VCT" class="sidebar-logo">
+      <span class="sidebar-brand">VCT Tây Ninh</span>
+    </div>
+
+    <div class="sidebar-coach" id="student-mini-profile">
+      <div class="coach-avatar" id="side-vs-avatar">?</div>
+      <div class="coach-info">
+        <div class="coach-name" id="side-vs-name">Võ sinh</div>
+        <div class="coach-role" id="side-vs-id">MSVS: ---</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-tab="profile">
+        <i class="bi bi-person-circle"></i>
+        <span>Hồ sơ cá nhân</span>
+      </button>
+      <button class="nav-item" data-tab="tuition">
+        <i class="bi bi-cash-stack"></i>
+        <span>Học phí</span>
+      </button>
+      <button class="nav-item" data-tab="achievements">
+        <i class="bi bi-trophy-fill"></i>
+        <span>Thành tích</span>
+      </button>
+      <button class="nav-item" data-tab="security">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>Bảo mật</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/" class="sidebar-back" id="btn-logout">
+        <i class="bi bi-box-arrow-left"></i>
+        <span>Đăng xuất</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ── MAIN CONTENT ────────────────────────────── -->
+  <main class="main-content" id="main-content">
+    <header class="main-header">
+      <div class="header-left">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+          <span></span><span></span><span></span>
+        </button>
+        <h1 class="page-title" id="page-title">Hồ sơ cá nhân</h1>
+      </div>
+      <div class="header-right">
+        <div class="header-date" id="header-date"></div>
+      </div>
+    </header>
+
+    <!-- ── TAB: Profile ──────────────────────── -->
+    <section class="tab-content active" id="tab-profile">
+      <div class="vs-profile-card">
+        <div class="vs-profile-header"></div>
+        <div class="vs-profile-info-row">
+          <div class="vs-avatar-wrapper">
+            <div id="main-vs-avatar" class="vs-avatar">?</div>
+            <label for="avatar-upload" class="vs-avatar-edit" title="Cập nhật ảnh đại diện">
+              <i class="bi bi-camera-fill"></i>
+            </label>
+            <input type="file" id="avatar-upload" hidden accept="image/*">
+          </div>
+          <div class="vs-main-info">
+            <h2 class="vs-name" id="vs-display-name">---</h2>
+            <div class="vs-id-tag" id="vs-display-id">MSVS: ---</div>
+            
+            <div id="belt-card" class="belt-status-card">
+              <div class="belt-icon" style="font-size: 2.2rem;"><i class="bi bi-shield-check"></i></div>
+              <div class="text-start">
+                <div class="fw-bold mb-0" style="font-size: 1.05rem;" id="vs-rank-text">Đang tải...</div>
+                <div class="small opacity-75" id="vs-club-text">Câu lạc bộ: ---</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="vs-profile-body">
+          <div class="vs-info-grid">
+            <div class="info-item">
+              <div class="info-icon text-primary"><i class="bi bi-balloon-fill"></i></div>
+              <div>
+                <div class="info-label">Ngày sinh</div>
+                <div class="info-value" id="vs-dob">---</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon text-info"><i class="bi bi-gender-ambiguous"></i></div>
+              <div>
+                <div class="info-label">Giới tính</div>
+                <div class="info-value" id="vs-gender">---</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon text-success"><i class="bi bi-geo-alt-fill"></i></div>
+              <div>
+                <div class="info-label">Địa chỉ</div>
+                <div class="info-value" id="vs-address">---</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon text-warning"><i class="bi bi-door-open-fill"></i></div>
+              <div>
+                <div class="info-label">Ngày nhập học</div>
+                <div class="info-value" id="vs-enroll-date">---</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB: Tuition ────────────────────────── -->
+    <section class="tab-content" id="tab-tuition">
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h4 class="fw-bold mb-0"><i class="bi bi-calendar-check me-2 text-primary"></i>Lịch sử Học phí</h4>
+          <div class="small text-muted"><i class="bi bi-info-circle me-1"></i>Dữ liệu được cập nhật bởi HLV</div>
+        </div>
+        <div id="tuition-grid" class="row g-3">
+          <!-- Tuition cards will be injected here -->
+          <div class="col-12 text-center py-4 text-muted">Đang tải thông tin...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB: Achievements ───────────────────── -->
+    <section class="tab-content" id="tab-achievements">
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+        <h4 class="fw-bold mb-4"><i class="bi bi-award me-2 text-warning"></i>Bảng vàng thành tích</h4>
+        <div id="achievements-list" class="row g-3">
+          <!-- Achievements will be injected here -->
+          <div class="col-12 text-center py-5 text-muted">
+             <i class="bi bi-trophy opacity-25" style="font-size: 4rem;"></i>
+             <p class="mt-3">Chưa có thông tin thành tích được ghi nhận.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TAB: Security ────────────────────────── -->
+    <section class="tab-content" id="tab-security">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h4 class="fw-bold mb-4"><i class="bi bi-key me-2 text-danger"></i>Đổi mật khẩu</h4>
+            <form id="form-change-password">
+              <div class="mb-3">
+                <label class="form-label small fw-bold">Mật khẩu hiện tại</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                  <input type="password" id="old-pass" class="form-control" required placeholder="Nhập mật khẩu hiện tại">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small fw-bold">Mật khẩu mới</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light"><i class="bi bi-shield-lock"></i></span>
+                  <input type="password" id="new-pass" class="form-control" required minlength="4" placeholder="Nhập mật khẩu mới">
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="form-label small fw-bold">Xác nhận mật khẩu mới</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light"><i class="bi bi-check2-circle"></i></span>
+                  <input type="password" id="confirm-pass" class="form-control" required placeholder="Xác nhận mật khẩu mới">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-vct-primary w-100 py-2 fw-bold" id="btn-save-pass">
+                Lưu mật khẩu mới
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="alert alert-info border-0 rounded-4 p-4 mt-4 mt-lg-0">
+             <h5 class="fw-bold"><i class="bi bi-info-circle-fill me-2"></i>Lưu ý bảo mật</h5>
+             <ul class="mb-0 mt-3 small lh-lg">
+                <li>Mật khẩu nên có ít nhất 6 ký tự để đảm bảo an toàn.</li>
+                <li>Không chia sẻ tài khoản MSVS và mật khẩu cho người khác.</li>
+                <li>Nếu quên mật khẩu, hãy liên hệ trực tiếp với Huấn luyện viên hoặc sử dụng chức năng "Quên mật khẩu" tại trang đăng nhập.</li>
+             </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/vosinh.js"></script>
+</body>
+
+</html>
