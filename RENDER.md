@@ -20,7 +20,7 @@ Khi trang cấu hình hiện ra, bạn hãy điền các thông tin sau:
 - **Environment**: `Python 3` (thường Render tự nhận diện).
 - **Region**: Chọn vùng gần bạn nhất (ví dụ: `Singapore` hoặc `Ohio`).
 - **Branch**: `master` (hoặc `main` nếu bạn đã đổi tên).
-- **Build Command**: `pip install -r backend/requirements.txt`
+- **Build Command**: `pip install -r requirements.txt`
 - **Start Command**: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
 - **Plan Type**: Chọn **Free** (Miễn phí).
 
