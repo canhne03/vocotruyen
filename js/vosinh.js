@@ -5,6 +5,7 @@ const API_URL = window.location.origin;
 const VSApp = {
   user: null,
   ranking: [],
+  cropper: null,
 
   async init() {
     const token = localStorage.getItem('vct_token');
@@ -81,6 +82,15 @@ const VSApp = {
 
     // Avatar upload
     document.getElementById('avatar-upload')?.addEventListener('change', (e) => this.handleAvatarUpload(e));
+    document.getElementById('btn-crop-save')?.addEventListener('click', () => this.applyCropAvatar());
+
+    // Clean up cropper when modal closed
+    document.getElementById('modal-crop-avatar')?.addEventListener('hidden.bs.modal', () => {
+      if (this.cropper) {
+        this.cropper.destroy();
+        this.cropper = null;
+      }
+    });
 
     // Change password form
     document.getElementById('form-change-password')?.addEventListener('submit', (e) => {
@@ -251,39 +261,86 @@ const VSApp = {
     const file = e.target.files[0];
     if (!file) return;
 
-    if (file.size > 1024 * 1024 * 2) { // 2MB
-      this.showToast('Vui lòng chọn ảnh nhỏ hơn 2MB.', 'error');
+    if (file.size > 1024 * 1024 * 5) { // Tăng lên 5MB vì sẽ được crop lại
+      this.showToast('Vui lòng chọn ảnh nhỏ hơn 5MB.', 'error');
       return;
     }
 
     const reader = new FileReader();
-    reader.onload = async (event) => {
-      const base64 = event.target.result;
+    reader.onload = (event) => {
+      const img = document.getElementById('image-to-crop');
+      img.src = event.target.result;
       
-      try {
-        const token = localStorage.getItem('vct_token');
-        const res = await fetch(`${API_URL}/vs/update-profile`, {
-          method: 'PUT',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ avatar: base64 })
+      const modal = new bootstrap.Modal(document.getElementById('modal-crop-avatar'));
+      modal.show();
+
+      // Khởi tạo Cropper sau khi modal hiển thị hoàn toàn
+      document.getElementById('modal-crop-avatar').addEventListener('shown.bs.modal', () => {
+        if (this.cropper) this.cropper.destroy();
+        this.cropper = new Cropper(img, {
+          aspectRatio: 1,
+          viewMode: 1,
+          dragMode: 'move',
+          autoCropArea: 1,
+          restore: false,
+          guides: true,
+          center: true,
+          highlight: false,
+          cropBoxMovable: true,
+          cropBoxResizable: true,
+          toggleDragModeOnDblclick: false,
         });
-        
-        const data = await res.json();
-        if (res.ok) {
-          this.user.avatar = base64;
-          this.renderProfile();
-          this.showToast('Cập nhật ảnh đại diện thành công!');
-        } else {
-          this.showToast(data.detail || 'Lỗi khi cập nhật ảnh.', 'error');
-        }
-      } catch (err) {
-        this.showToast('Không thể kết nối đến máy chủ.', 'error');
-      }
+      }, { once: true });
     };
     reader.readAsDataURL(file);
+    // Reset input để có thể chọn lại cùng 1 file
+    e.target.value = '';
+  },
+
+  async applyCropAvatar() {
+    if (!this.cropper) return;
+
+    const btn = document.getElementById('btn-crop-save');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Đang lưu...';
+
+    try {
+      const canvas = this.cropper.getCroppedCanvas({
+        width: 400,
+        height: 400,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+      });
+
+      const base64 = canvas.toDataURL('image/jpeg', 0.9);
+      const token = localStorage.getItem('vct_token');
+      
+      const res = await fetch(`${API_URL}/vs/update-profile`, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ avatar: base64 })
+      });
+      
+      const data = await res.json();
+      if (res.ok) {
+        this.user.avatar = base64;
+        this.renderProfile();
+        this.showToast('Cập nhật nội dung ảnh đại diện thành công!');
+        bootstrap.Modal.getInstance(document.getElementById('modal-crop-avatar')).hide();
+      } else {
+        this.showToast(data.detail || 'Lỗi khi cập nhật ảnh.', 'error');
+      }
+    } catch (err) {
+      this.showToast('Không thể kết nối đến máy chủ.', 'error');
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
   },
 
   async changePassword() {

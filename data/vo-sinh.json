@@ -81,7 +81,7 @@
     "trangThaiThi": "cho_xac_nhan"
   },
   {
-    "msVS": "003100011", "msCLB": "0031", "msHLV": "003",
+    "msVS": "`003100011`", "msCLB": "0031", "msHLV": "003",
     "tenVS": "Lý Văn Nam", "gioiTinh": "Nam", "ngaySinh": "2003-01-25", "diaChi": "5 Kha Vạn Cân, Thủ Đức, TP.HCM",
     "dangCap": 9, "ngayNhapHoc": "2018-09-01", "ngayThi": "2023-10-30",
     "avatar": null, "password": "vs010", "doiPass": false,

@@ -8,7 +8,7 @@ DB_FILE = os.path.join(os.path.dirname(__file__), 'vct_db.json')
 
 def migrate():
     # Initialize TinyDB
-    db = TinyDB(DB_FILE)
+    db = TinyDB(DB_FILE, sort_keys=False, indent=2, ensure_ascii=False)
     
     # Clear existing tables
     db.drop_tables()
