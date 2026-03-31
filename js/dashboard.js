@@ -1,7 +1,7 @@
 'use strict';
 // ===== DASHBOARD.JS — Trang quản lý dành cho Huấn luyện viên =====
 
-const API_URL = 'http://localhost:8000';
+const API_URL = window.location.origin;
 
 const App = {
   voSinh: [],

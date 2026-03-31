@@ -51,7 +51,20 @@ Sau khi máy chủ báo thành công (`Application startup complete`), hãy mở
 - **MSVS**: `001100011`
 - **Mật khẩu**: `vs001`
 
-## Lưu ý về triển khai (Deployment)
-Nếu bạn muốn chia sẻ một đường link để mọi người truy cập từ xa (không phải qua localhost), bạn cần:
-1. Triển khai code Backend lên một máy chủ công khai.
-2. Cập nhật `API_URL` trong các file JS (`index.js`, `dashboard.js`, `vosinh.js`) để trỏ đến địa chỉ Backend mới.
+## Cách đưa trang web lên Internet (đối với Mobile/Người dùng khác)
+
+Nếu bạn muốn người khác chỉ cần mở link trên điện thoại là dùng được luôn (không cần tải code), bạn nên sử dụng **Render.com** (miễn phí):
+
+1.  **Đăng ký/Đăng nhập** vào [Render.com](https://render.com/) bằng tài khoản GitHub.
+2.  Chọn **"New"** -> **"Web Service"**.
+3.  Kết nối với Repository GitHub này (`vocotruyen`).
+4.  **Cấu hình trên Render:**
+    - **Language**: `Python`
+    - **Build Command**: `pip install -r backend/requirements.txt`
+    - **Start Command**: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+5.  Nhấn **Create Web Service**.
+
+Sau vài phút, Render sẽ cấp cho bạn một đường link (ví dụ: `https://vct-tn.onrender.com`). Bạn chỉ cần gửi link này cho mọi người là họ có thể đăng nhập trên điện thoại bình thường!
+
+> [!IMPORTANT]
+> Vì cơ sở dữ liệu `vct_db.json` đang được để trong `.gitignore` để bảo mật, khi chạy trên Render nó sẽ bắt đầu với dữ liệu trống. Bạn có thể cần cấu hình một "Disk" trên Render hoặc bỏ qua file đó khỏi .gitignore nếu muốn dùng dữ liệu có sẵn (không khuyến khích cho dữ liệu thực).

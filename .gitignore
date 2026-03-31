@@ -2,7 +2,7 @@ __pycache__/
 *.pyc
 .env
 .ipynb_checkpoints
-backend/vct_db.json
+# backend/vct_db.json (Bỏ qua việc ignore để Render có dữ liệu ban đầu)
 *.log
 .vscode/
 .idea/
