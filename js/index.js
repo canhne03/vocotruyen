@@ -161,7 +161,7 @@ function initSearch() {
       clearTimeout(_searchTimer);
       _searchTimer = setTimeout(() => {
         doSearch();
-      }, 350);
+      }, 200); // Giảm xuống 200ms để kết quả hiện ra ngay "theo từng số" gõ vào
     });
     // Thêm sự kiện click để hiển thị lại kết quả nếu đã có văn bản
     searchInput.addEventListener('click', () => {
@@ -335,23 +335,19 @@ function _renderResults(container, found) {
   
   for (const item of found) {
     
-    // Robust recognition logic
-    const hasHLVField = !!(item.msHLV || item.tenHLV);
-    const isHLV = item.type === 'hlv' || hasHLVField;
+    // Fix logic: Use 'type' from backend to distinguish HLV vs VS
+    const isHLV = item.type === 'hlv';
+    const name = isHLV ? item.tenHLV : item.tenVS;
+    const ms   = isHLV ? item.msHLV : item.msVS;
+    const badge = isHLV ? '<span class="result-badge hlv">HLV</span>' : '';
     
     const card = document.createElement('div');
     card.className = `vs-result-card simple ${isHLV ? 'hlv-card' : ''}`;
-    
-    // Safety getters for name and ID, checking both variants
-    const name = item.tenHLV || item.tenVS || 'Không rõ';
-    const ms   = item.msHLV || item.msVS || '—';
-    const label = isHLV ? 'MSHLV' : 'MSVS';
-    const badge = isHLV ? '<span class="result-badge hlv">HLV</span>' : '';
 
     card.innerHTML = `
       <div class="vs-result-info">
         <div class="vs-res-name">${name} ${badge}</div>
-        <div class="vs-res-id">${label}: ${ms}</div>
+        <div class="vs-res-id">${ms}</div>
       </div>
       <div class="vs-res-arrow">❯</div>`;
     
@@ -363,7 +359,7 @@ function _renderResults(container, found) {
 }
 
 async function showVODetails(data) {
-  const isHLV = data.type === 'hlv' || !!(data.msHLV || data.tenHLV);
+  const isHLV = data.type === 'hlv'; // Sửa logic: Chỉ dùng type từ backend để tránh nhầm lẫn
   await DB.load();
   const info = DB.ranking.find(r => r.cap === data.cap) || DB.ranking[0];
 

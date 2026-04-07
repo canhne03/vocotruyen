@@ -464,7 +464,6 @@ const App = {
 
     tbody.innerHTML = students.map(vs => {
       const rankInfo = this.ranking.find(r => r.cap === vs.cap) || this.ranking[0];
-      const clubInfo = this.getClubs().find(c => c.msCLB === vs.msCLB);
       return `
         <tr>
           <td><div class="vs-id-sub">${vs.msVS}</div> <strong>${vs.tenVS}</strong></td>
@@ -476,7 +475,7 @@ const App = {
               Cấp ${vs.cap} · ${rankInfo.colorName}
             </span>
           </td>
-          <td>${clubInfo ? clubInfo.tenCLB : vs.msCLB}</td>
+          <td>${vs.tenCLB || vs.msCLB}</td>
           <td>
             <div class="dropdown actions-cell">
               <button class="btn btn-sm btn-light border btn-dots" type="button" 

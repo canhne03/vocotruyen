@@ -11,6 +11,15 @@ students_table = db.table('students')
 rankings_table = db.table('rankings')
 reset_requests_table = db.table('reset_requests')
 
+def _get_club_name(msCLB):
+    """Tra cứu tên CLB từ danh sách các HLV"""
+    hlvs = hlv_table.all()
+    for hlv in hlvs:
+        for club in hlv.get('clubs', []):
+            if club.get('msCLB') == msCLB:
+                return club.get('tenCLB')
+    return None
+
 def remove_accents(input_str):
     if not input_str:
         return ""
@@ -24,6 +33,18 @@ def find_hlv(msHLV):
     return hlv_table.get(where('msHLV') == msHLV)
 
 def update_hlv(msHLV, hlv_data):
+    # Lấy thông tin HLV cũ để so sánh tên CLB
+    old_hlv = find_hlv(msHLV)
+    if old_hlv and 'clubs' in hlv_data:
+        old_clubs = {c['msCLB']: c['tenCLB'] for c in old_hlv.get('clubs', [])}
+        new_clubs = {c['msCLB']: c['tenCLB'] for c in hlv_data['clubs']}
+        
+        # Kiểm tra xem có CLB nào đổi tên không
+        for ms, new_name in new_clubs.items():
+            if ms in old_clubs and old_clubs[ms] != new_name:
+                # Tên CLB đã thay đổi -> Cập nhật toàn bộ võ sinh thuộc CLB này
+                students_table.update({'tenCLB': new_name}, where('msCLB') == ms)
+
     hlv_table.update(hlv_data, where('msHLV') == msHLV)
     return find_hlv(msHLV)
 
@@ -70,10 +91,22 @@ def get_rankings():
     return rankings_table.all()
 
 def add_student(vs_data):
+    # Tự động điền tenCLB nếu chưa có hoặc cập nhật lại theo msCLB
+    if 'msCLB' in vs_data:
+        club_name = _get_club_name(vs_data['msCLB'])
+        if club_name:
+            vs_data['tenCLB'] = club_name
+            
     students_table.insert(vs_data)
     return vs_data
 
 def update_student(msVS, vs_data):
+    # Cập nhật tenCLB nếu msCLB thay đổi
+    if 'msCLB' in vs_data:
+        club_name = _get_club_name(vs_data['msCLB'])
+        if club_name:
+            vs_data['tenCLB'] = club_name
+            
     students_table.update(vs_data, where('msVS') == msVS)
     return find_student(msVS)
 
@@ -82,6 +115,7 @@ def add_hlv_club(msHLV, club_data):
     if hlv:
         clubs = hlv.get('clubs', [])
         clubs.append(club_data)
+        # Khi thêm CLB mới, không cần cập nhật hàng loạt vì chưa có võ sinh
         hlv_table.update({'clubs': clubs}, where('msHLV') == msHLV)
         return True
     return False

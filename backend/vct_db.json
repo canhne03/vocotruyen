@@ -65,7 +65,7 @@
       "sdt": "",
       "avatar": null,
       "namSinh": "2008",
-      "tenCLB": null,
+      "tenCLB": "Tân Bửu",
       "thongBao": []
     },
     "2": {
@@ -87,7 +87,7 @@
       "trangThai": "Đang học",
       "avatar": null,
       "namSinh": "2010",
-      "tenCLB": null,
+      "tenCLB": "Tân Bửu",
       "thongBao": []
     },
     "3": {
@@ -112,7 +112,7 @@
       "trangThaiThi": null,
       "trangThai": "Đang học",
       "avatar": null,
-      "tenCLB": null
+      "tenCLB": "Tân Bửu"
     }
   },
   "rankings": {
