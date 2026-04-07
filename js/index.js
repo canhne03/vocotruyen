@@ -14,28 +14,25 @@ const Utils = {
     return new Date(d).toLocaleDateString('vi-VN');
   },
   showToast(msg, type = 'success') {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      customClass: {
+        popup: 'vct-swal-toast'
+      },
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
+    });
 
-    const toast = document.createElement('div');
-    toast.className = `vct-toast toast-${type}`;
-    
-    toast.innerHTML = `
-      <div class="toast-body">
-        <div class="toast-message">${msg}</div>
-      </div>
-    `;
-
-    container.appendChild(toast);
-    
-    // Animation in
-    setTimeout(() => toast.classList.add('show'), 10);
-    
-    // Auto remove
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 500);
-    }, 4000);
+    Toast.fire({
+      icon: type === 'error' ? 'error' : 'success',
+      title: msg
+    });
   }
 };
 
@@ -48,14 +45,13 @@ const DB = {
       const r = await fetch(`${API_URL}/rankings`).then(r => r.json());
       this.ranking = r;
       this.loaded = true;
-    } catch (e) { console.error('DB Load Error:', e); }
+    } catch (e) { }
   },
   async searchVS(q) {
     try {
       const res = await fetch(`${API_URL}/search?q=${encodeURIComponent(q)}`);
       return await res.json();
     } catch (e) {
-      console.error('Search Error:', e);
       return [];
     }
   }
@@ -87,7 +83,7 @@ const Auth = {
   },
   redirectAfterLogin(user) {
     localStorage.setItem('vct_session', JSON.stringify(user));
-    if (user.type === 'hlv') window.location.href = 'dashboard.html';
+    if (user.type === 'hlv') window.location.href = 'hlv.html';
     else if (user.type === 'vs') window.location.href = 'vosinh.html';
     else window.location.reload();
   }
@@ -161,11 +157,9 @@ function initSearch() {
 
   if (searchInput) {
     searchInput.addEventListener('input', () => {
-      console.log('Search input event triggered:', searchInput.value);
       searchClear?.classList.toggle('show', searchInput.value.length > 0);
       clearTimeout(_searchTimer);
       _searchTimer = setTimeout(() => {
-        console.log('Debounced search triggered');
         doSearch();
       }, 350);
     });
@@ -333,78 +327,103 @@ function _renderResults(container, found) {
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
         <h4>Không tìm thấy kết quả</h4>
-        <p>Thử nhập mã số võ sinh hoặc tên chính xác hơn</p>
+        <p>Thử nhập mã số hoặc tên chính xác hơn</p>
       </div>`;
     return;
   }
   container.innerHTML = `<div class="search-result-count">Tìm thấy <strong>${found.length}</strong> kết quả</div>`;
   
-  for (const vs of found) {
+  for (const item of found) {
+    
+    // Robust recognition logic
+    const hasHLVField = !!(item.msHLV || item.tenHLV);
+    const isHLV = item.type === 'hlv' || hasHLVField;
+    
     const card = document.createElement('div');
-    card.className = 'vs-result-card simple';
+    card.className = `vs-result-card simple ${isHLV ? 'hlv-card' : ''}`;
+    
+    // Safety getters for name and ID, checking both variants
+    const name = item.tenHLV || item.tenVS || 'Không rõ';
+    const ms   = item.msHLV || item.msVS || '—';
+    const label = isHLV ? 'MSHLV' : 'MSVS';
+    const badge = isHLV ? '<span class="result-badge hlv">HLV</span>' : '';
+
     card.innerHTML = `
       <div class="vs-result-info">
-        <div class="vs-res-name">${vs.tenVS}</div>
-        <div class="vs-res-id">MSVS: ${vs.msVS}</div>
+        <div class="vs-res-name">${name} ${badge}</div>
+        <div class="vs-res-id">${label}: ${ms}</div>
       </div>
       <div class="vs-res-arrow">❯</div>`;
     
-    card.addEventListener('click', () => showVODetails(vs));
+    card.addEventListener('click', () => {
+      showVODetails(item);
+    });
     container.appendChild(card);
   }
 }
 
-async function showVODetails(vs) {
-  // Lấy thông tin xếp hạng
+async function showVODetails(data) {
+  const isHLV = data.type === 'hlv' || !!(data.msHLV || data.tenHLV);
   await DB.load();
-  const info = DB.ranking.find(r => r.cap === vs.dangCap) || DB.ranking[0];
+  const info = DB.ranking.find(r => r.cap === data.cap) || DB.ranking[0];
 
-  // Điền dữ liệu
   const nameEl = document.getElementById('det-name');
   const msEl = document.getElementById('det-ms');
-  const namsinhEl = document.getElementById('det-namsinh');
-  const gioitinhEl = document.getElementById('det-gioitinh');
-  const trinhdoEl = document.getElementById('det-trinhdo');
-  const maudaiEl = document.getElementById('det-maudai');
-  const beltImgEl = document.getElementById('det-belt-img');
-  const rankNameEl = document.getElementById('det-rank-name');
+  const avatarEl = document.getElementById('det-avatar-main');
+  const infoList = document.getElementById('det-info-list');
   const achievementsList = document.getElementById('det-achievements');
   const achievementsWrap = document.getElementById('det-achievements-wrap');
 
-  if (nameEl) nameEl.textContent = vs.tenVS;
-  if (msEl) msEl.textContent = `MSVS: ${vs.msVS}`;
-  
-  // Trích xuất năm sinh
-  const year = vs.ngaySinh ? vs.ngaySinh.split('-')[0] : '—';
-  if (namsinhEl) namsinhEl.textContent = year;
-  
-  if (gioitinhEl) gioitinhEl.textContent = vs.gioiTinh || '—';
-  if (trinhdoEl) trinhdoEl.textContent = info.trinhDo;
-  if (maudaiEl) maudaiEl.textContent = vs.tenCLB || info.colorName;
-  if (beltImgEl) beltImgEl.src = `img/cap${vs.dangCap}.jpg`;
-  if (rankNameEl) rankNameEl.textContent = `Cấp ${vs.dangCap} · ${info.trinhDo}`;
+  if (avatarEl) {
+    const name = data.tenHLV || data.tenVS || '?';
+    const initials = name.trim().split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+    avatarEl.innerHTML = data.avatar ? `<img src="${data.avatar}" alt="Avatar">` : `<div class="avatar-placeholder" style="background:${info.hexDai}">${initials}</div>`;
+  }
+  if (nameEl) nameEl.textContent = data.tenHLV || data.tenVS;
+  if (msEl) msEl.textContent = data.msHLV || data.msVS;
 
-  // Xử lý thành tích
+  let items = [
+    { label: 'Trình độ', value: info.trinhDo },
+    { label: 'Cấp', value: `Cấp ${data.cap}` },
+    { label: 'Màu đai', value: `<img src="img/cap${data.cap}.jpg" class="belt-icon-small" alt="đai">` }
+  ];
+
+  if (isHLV) {
+    if (data.sdt) items.push({ label: 'Số điện thoại', value: data.sdt });
+    const clubNames = data.clubs && data.clubs.length ? data.clubs.map(c => c.tenCLB).join(', ') : '—';
+    items.push({ label: 'Câu lạc bộ', value: clubNames });
+  } else {
+    items.push({ label: 'Câu lạc bộ', value: data.tenCLB || '—' });
+  }
+
+  if (infoList) {
+    infoList.innerHTML = items.map(item => `
+      <div class="det-info-row">
+        <span class="det-info-label">${item.label}</span>
+        <span class="det-info-value">${item.value}</span>
+      </div>
+    `).join('');
+  }
+
   if (achievementsList) {
     achievementsList.innerHTML = '';
-    if (vs.thanhTich && vs.thanhTich.length > 0) {
-      vs.thanhTich.forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = t;
-        achievementsList.appendChild(li);
+    const text = data.thanhTich || '';
+    let hasAchievement = false;
+    if (text) {
+      const lines = typeof text === 'string' ? text.split(/[,;]\s*/) : (Array.isArray(text) ? text : []);
+      lines.forEach(t => {
+        if (t && t.trim()) {
+          const li = document.createElement('li');
+          li.textContent = t.trim();
+          achievementsList.appendChild(li);
+          hasAchievement = true;
+        }
       });
-      if (achievementsWrap) achievementsWrap.style.display = 'block';
-    } else {
-      if (achievementsWrap) achievementsWrap.style.display = 'none';
     }
+    if (achievementsWrap) achievementsWrap.style.display = hasAchievement ? 'block' : 'none';
   }
-
-  // Hiển thị modal
-  const overlay = document.getElementById('vs-detail-overlay');
-  if (overlay) {
-    overlay.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
+  
+  document.getElementById('vs-detail-overlay').classList.add('show');
 }
 
 function closeVODetails() {

@@ -8,43 +8,43 @@
   <meta name="description" content="Trang cá nhân dành cho Võ sinh">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/variables.css?v=1.1">
+  <link rel="stylesheet" href="css/components.css?v=1.1">
+  <link rel="stylesheet" href="css/hlv.css?v=1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
   <style>
     :root {
       --vs-primary: #2563eb;
       --vs-bg: #f8fafc;
+      --vct-red: #C0392B;
+      --vct-red-dark: #96281B;
+      --vct-red-light: rgba(192, 57, 43, 0.1);
     }
-    
+
+
     .vs-profile-card {
-      background: white;
-      border-radius: 1rem;
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 2rem;
     }
-    
-    .vs-profile-header {
-      background: linear-gradient(135deg, var(--vct-red-dark), var(--vct-red));
-      height: 160px;
-      position: relative;
-      border-radius: 1rem 1rem 0 0;
-    }
-    
-    .vs-profile-info-row {
+
+    .vs-profile-header-new {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       gap: 2rem;
-      padding: 0 2rem;
-      margin-top: -70px;
+      padding: 1.5rem 2rem;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-bottom: 1px solid var(--border-subtle);
       position: relative;
-      z-index: 2;
     }
 
     .vs-avatar-wrapper {
       position: relative;
-      width: 140px;
-      height: 140px;
+      width: 120px;
+      height: 120px;
       flex-shrink: 0;
     }
     
@@ -52,54 +52,216 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      border: 5px solid white;
+      border: 4px solid #f8fafc;
       background: #e2e8f0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: bold;
-      color: var(--text-muted);
+      color: #64748b;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .vs-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 50%;
     }
-    
+
+    .vs-identity {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .vs-info-section {
+      background: #f8fafc;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e8f0;
+      height: 100%;
+    }
+
+    .vs-section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .vs-section-title i {
+      color: var(--vs-primary);
+      font-size: 1.25rem;
+    }
+
+    .vs-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .info-item-simple {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      gap: 1rem;
+    }
+
+    .info-item-simple .label {
+      color: #64748b;
+      font-weight: 500;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .info-item-simple .value {
+      color: #1e293b;
+      font-weight: 600;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .border-highlight {
+      background: transparent;
+      margin: 0.25rem 0;
+      padding: 0;
+      border-radius: 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    @media (max-width: 768px) {
+      .vs-profile-header-new {
+        flex-direction: row;
+        padding: 1.25rem;
+        gap: 1.25rem;
+      }
+      .vs-avatar-wrapper {
+        width: 80px;
+        height: 80px;
+      }
+      .vs-name {
+        font-size: 1.4rem;
+      }
+      .info-item-simple {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.1rem;
+      }
+      .info-item-simple .value {
+        text-align: left;
+        margin-top: 0.1rem;
+      }
+      .vs-avatar-edit {
+        width: 26px;
+        height: 26px;
+        font-size: 0.75rem;
+        bottom: 2px;
+        right: 2px;
+      }
+    }
+
+    @media (min-width: 992px) {
+      #vs-belt-img {
+        position: absolute;
+        bottom: 1.25rem;
+        right: 1.5rem;
+        height: 48px;
+        margin: 0 !important;
+      }
+    }
+
     .vs-avatar-edit {
       position: absolute;
       bottom: 5px;
       right: 5px;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       background: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--vs-primary);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
     
     .vs-avatar-edit:hover {
       background: var(--vs-primary);
       color: white;
-      transform: scale(1.1);
+      transform: scale(1.12);
+      box-shadow: 0 4px 12px rgba(37,99,235,0.35);
+    }
+
+    .vs-avatar-delete {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 30px;
+      height: 30px;
+      background: #ef4444;
+      border-radius: 50%;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.7rem;
+      box-shadow: 0 2px 8px rgba(239,68,68,0.4);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      z-index: 3;
+    }
+
+    .vs-avatar-delete:hover {
+      background: #dc2626;
+      transform: scale(1.15);
+      box-shadow: 0 4px 12px rgba(239,68,68,0.5);
+    }
+
+    /* Dropdown customization for avatar */
+    .vs-avatar-wrapper .dropdown-menu {
+      min-width: 180px;
+      padding: 0.5rem;
+      z-index: 1050;
+    }
+
+    .vs-avatar-wrapper .dropdown-item {
+      border-radius: 0.5rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .vs-avatar-wrapper .dropdown-item:hover {
+      background-color: #f1f5f9;
+    }
+
+    .vs-avatar-wrapper .dropdown-item.text-danger:hover {
+      background-color: #fef2f2;
+    }
+
+    .vs-section-title i {
+      font-size: 1.15rem;
     }
     
     .vs-profile-body {
-      padding: 1.5rem 2rem 2rem;
+      padding: 1.5rem 0 2rem;
     }
     
     .vs-main-info {
       flex-grow: 1;
       padding-bottom: 0.5rem;
+      min-width: 0;
     }
 
     .vs-name {
@@ -185,75 +347,155 @@
       color: var(--text-main);
     }
     
-    .tuition-status {
+    /* --- Premium Tuition UI --- */
+    .tuition-summary-row {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tuition-stat-card {
+      flex: 1;
+      min-width: 200px;
+      padding: 1.5rem;
+      border-radius: 1.25rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-    }
-    
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    
-    .status-paid { background: #10b981; }
-    .status-unpaid { background: #ef4444; }
-
-    @media (max-width: 768px) {
-      .vs-profile-info-row {
-        gap: 1rem;
-        padding: 0 1rem;
-        margin-top: -60px;
-      }
-      .vs-avatar-wrapper {
-        width: 100px;
-        height: 100px;
-      }
-      .vs-avatar {
-        font-size: 2.25rem;
-        border-width: 3px;
-      }
-      .vs-profile-body {
-        padding: 1rem 1rem 1.5rem;
-      }
-      .vs-name {
-        font-size: 1.4rem;
-      }
-      .vs-id-tag {
-        font-size: 0.8rem;
-        padding: 2px 10px;
-      }
-      .belt-status-card {
-        padding: 0.75rem 1rem;
-        gap: 0.75rem;
-        font-size: 0.9rem;
-      }
-      .belt-status-card .belt-icon {
-        font-size: 1.6rem !important;
-      }
-      .vs-info-grid { grid-template-columns: 1fr; }
+      gap: 1.25rem;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border: 1px solid #f1f5f9;
+      transition: all 0.3s ease;
     }
 
-    /* Cropper Custom Styles */
-    .img-container {
-      max-height: 400px;
-      width: 100%;
-      background-color: #f7f7f7;
+    .tuition-stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .stat-icon-circle {
+      width: 54px;
+      height: 54px;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .current-month-card-new {
+      background: linear-gradient(135deg, white, #fffcf0);
+    }
+
+    .tuition-slider-container {
+      position: relative;
+      margin: 0 -1rem;
+      padding: 1rem;
+      overflow-x: auto;
+      display: flex;
+      gap: 1.25rem;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+
+    .tuition-slider-container:active { cursor: grabbing; }
+
+    .tuition-slider-container::-webkit-scrollbar { height: 6px; }
+    .tuition-slider-container::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+    .tuition-slider-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .tuition-slider-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    .month-card-new {
+      min-width: 180px;
+      flex-shrink: 0;
+      border-radius: 1.25rem;
+      background: white;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .img-container img {
-      max-width: 100%;
+
+    .month-card-new:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      z-index: 2;
     }
-    .cropper-view-box,
-    .cropper-face {
-      border-radius: 50%;
+
+    .month-card-new .month-name {
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
     }
-    /* Đảm bảo modal hiển thị trên các thành phần khác */
-    #modal-crop-avatar {
-      z-index: 2000;
+
+    .month-card-new .year-name {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 1.25rem;
+    }
+
+
+
+    .month-card-new .status-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .month-card-new.paid .status-badge { background: #ecfdf5; color: #10b981; }
+    .month-card-new.unpaid .status-badge { background: #fef2f2; color: #ef4444; }
+
+    /* Filter Row Styles */
+    .tuition-filter-row {
+      background: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      border: 1px solid #f1f5f9;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .filter-label {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vct-month-input {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      font-weight: 600;
+      color: #1e293b;
+      outline: none;
+      transition: all 0.2s ease;
+      background-color: white;
+    }
+
+    .vct-month-input:focus {
+      border-color: var(--vct-red);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
     }
   </style>
 </head>
@@ -270,7 +512,7 @@
       <div class="coach-avatar" id="side-vs-avatar">?</div>
       <div class="coach-info">
         <div class="coach-name" id="side-vs-name">Võ sinh</div>
-        <div class="coach-role" id="side-vs-id">MSVS: ---</div>
+        <div class="coach-role" id="side-vs-id">---</div>
       </div>
     </div>
 
@@ -312,64 +554,140 @@
         </button>
         <h1 class="page-title" id="page-title">Hồ sơ cá nhân</h1>
       </div>
-      <div class="header-right">
-        <div class="header-date" id="header-date"></div>
+      <div class="header-right d-flex align-items-center gap-3">
+        <div class="header-date d-none d-sm-block" id="header-date"></div>
+        
+        <!-- Notification Bell -->
+        <div class="notification-bell-wrapper" id="notif-bell-trigger">
+          <i class="bi bi-bell-fill fs-5"></i>
+          <div class="notification-badge" id="notif-badge" style="display: none;">0</div>
+          
+          <div class="notification-dropdown" id="notif-dropdown">
+            <div class="notif-header">
+              <h6>Thông báo</h6>
+              <button class="btn btn-link btn-sm p-0 text-decoration-none" id="btn-mark-all-read">Đánh dấu tất cả đã đọc</button>
+            </div>
+            <div class="notif-list" id="notif-list">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
     <!-- ── TAB: Profile ──────────────────────── -->
     <section class="tab-content active" id="tab-profile">
       <div class="vs-profile-card">
-        <div class="vs-profile-header"></div>
-        <div class="vs-profile-info-row">
-          <div class="vs-avatar-wrapper">
+        <!-- New Simplified Header -->
+        <div class="vs-profile-header-new">
+          <div class="vs-avatar-wrapper dropdown">
             <div id="main-vs-avatar" class="vs-avatar">?</div>
-            <label for="avatar-upload" class="vs-avatar-edit" title="Cập nhật ảnh đại diện">
-              <i class="bi bi-camera-fill"></i>
-            </label>
+            <div class="vs-avatar-edit shadow" id="avatar-dropdown-trigger" data-bs-toggle="dropdown" aria-expanded="false" title="Cập nhật ảnh đại diện">
+              <i class="bi bi-pencil-fill"></i>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 mt-2" aria-labelledby="avatar-dropdown-trigger">
+              <li>
+                <button class="dropdown-item py-2 d-flex align-items-center" type="button" id="btn-trigger-upload">
+                  <i class="bi bi-image me-2 text-primary fs-5"></i>
+                  <span>Thêm ảnh mới</span>
+                </button>
+              </li>
+              <li id="li-delete-avatar" style="display:none;">
+                <button class="dropdown-item py-2 d-flex align-items-center text-danger" type="button" id="btn-delete-avatar">
+                  <i class="bi bi-trash3 me-2 fs-5"></i>
+                  <span>Xóa ảnh đại diện</span>
+                </button>
+              </li>
+            </ul>
             <input type="file" id="avatar-upload" hidden accept="image/*">
           </div>
-          <div class="vs-main-info">
+          <div class="vs-identity">
             <h2 class="vs-name" id="vs-display-name">---</h2>
-            <div class="vs-id-tag" id="vs-display-id">---</div>
-            
-            <div id="belt-card" class="belt-status-card">
-              <div class="belt-icon" style="font-size: 2.2rem;"><i class="bi bi-shield-check"></i></div>
-              <div class="text-start">
-                <div class="fw-bold mb-0" style="font-size: 1.05rem;" id="vs-rank-text">Đang tải...</div>
-                <div class="small opacity-75" id="vs-club-text">Câu lạc bộ: ---</div>
-              </div>
-            </div>
+            <div id="vs-display-id" class="vs-id-tag">---</div>
+            <img id="vs-belt-img-mobile" class="vs-belt-img d-lg-none d-block mt-2" src="" alt="Belt">
           </div>
+          <!-- Belt Image for Laptop -->
+          <img id="vs-belt-img" class="vs-belt-img d-none d-lg-block" src="" alt="Belt">
         </div>
+
         <div class="vs-profile-body">
-          <div class="vs-info-grid">
-            <div class="info-item">
-              <div class="info-icon text-primary"><i class="bi bi-balloon-fill"></i></div>
-              <div>
-                <div class="info-label">Ngày sinh</div>
-                <div class="info-value" id="vs-dob">---</div>
+          <div class="row g-4">
+            <!-- Section: Thông tin cá nhân -->
+            <div class="col-md-6">
+              <div class="vs-info-section">
+                <div class="vs-section-title">
+                  <i class="bi bi-person-vcard"></i>
+                  <span>Thông tin cá nhân</span>
+                </div>
+                <div class="vs-info-list">
+                  <div class="info-item-simple">
+                    <span class="label">Trình độ:</span>
+                    <span class="value" id="vs-level">---</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Cấp bậc:</span>
+                    <span class="value" id="vs-rank">---</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Màu đai:</span>
+                    <span class="value" id="vs-belt-color">---</span>
+                  </div>
+                  <div class="info-item-simple border-highlight">
+                    <span class="label">Ngày thi gần nhất:</span>
+                    <span class="value" id="vs-exam-date-personal">---</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Năm sinh:</span>
+                    <span class="value" id="vs-dob">---</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Giới tính:</span>
+                    <span class="value">
+                      <span id="vs-gender">---</span>
+                      <i class="bi ms-1" id="vs-gender-icon"></i>
+                    </span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Số điện thoại:</span>
+                    <span class="value" id="vs-phone">Chưa cập nhật</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Địa chỉ:</span>
+                    <span class="value" id="vs-address">---</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Trạng thái học:</span>
+                    <span class="value" id="vs-status">---</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="info-item">
-              <div class="info-icon text-info"><i class="bi bi-gender-ambiguous"></i></div>
-              <div>
-                <div class="info-label">Giới tính</div>
-                <div class="info-value" id="vs-gender">---</div>
-              </div>
-            </div>
-            <div class="info-item">
-              <div class="info-icon text-success"><i class="bi bi-geo-alt-fill"></i></div>
-              <div>
-                <div class="info-label">Địa chỉ</div>
-                <div class="info-value" id="vs-address">---</div>
-              </div>
-            </div>
-            <div class="info-item">
-              <div class="info-icon text-warning"><i class="bi bi-door-open-fill"></i></div>
-              <div>
-                <div class="info-label">Ngày nhập học</div>
-                <div class="info-value" id="vs-enroll-date">---</div>
+
+            <!-- Section: Thông tin tập luyện -->
+            <div class="col-md-6">
+              <div class="vs-info-section">
+                <div class="vs-section-title">
+                  <i class="bi bi-fire"></i>
+                  <span>Thông tin tập luyện</span>
+                </div>
+                <div class="vs-info-list">
+                  <div class="info-item-simple">
+                    <span class="label">Tên câu lạc bộ:</span>
+                    <span class="value" id="vs-club-name">---</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Huấn luyện viên:</span>
+                    <span class="value" id="vs-hlv-name">---</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Ngày nhập học:</span>
+                    <span class="value" id="vs-enroll-date">---</span>
+                  </div>
+                  <div class="info-item-simple">
+                    <span class="label">Trạng thái thi:</span>
+                    <span class="value" id="vs-exam-status">---</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -381,12 +699,41 @@
     <section class="tab-content" id="tab-tuition">
       <div class="card border-0 shadow-sm rounded-4 p-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h4 class="fw-bold mb-0"><i class="bi bi-calendar-check me-2 text-primary"></i>Lịch sử Học phí</h4>
-          <div class="small text-muted"><i class="bi bi-info-circle me-1"></i>Dữ liệu được cập nhật bởi HLV</div>
+          <div>
+            <h4 class="fw-bold mb-1"><i class="bi bi-wallet2 me-2 text-primary"></i>Quản lý Học phí</h4>
+          </div>
+          <div class="header-actions">
+             <i class="bi bi-info-circle-fill text-vct-subtle" title="Dữ liệu do HLV cập nhật"></i>
+          </div>
         </div>
-        <div id="tuition-grid" class="row g-3">
+
+        <!-- Filter Row -->
+        <div class="tuition-filter-row">
+          <div class="filter-group">
+            <select id="tuition-status-filter" class="vct-month-input" style="width: auto;">
+              <option value="all">Tất cả các tháng</option>
+              <option value="paid">Tháng đã đóng</option>
+              <option value="unpaid">Tháng chưa đóng</option>
+            </select>
+          </div>
+          <div class="ms-auto small text-muted d-none d-md-block">
+            <i class="bi bi-info-circle-fill text-info me-1"></i>Dữ liệu từ ngày nhập học
+          </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="tuition-summary-row" id="tuition-summary">
+          <!-- Summary cards will be injected here -->
+        </div>
+
+        <!-- History Slider -->
+        <div class="mb-3 d-flex align-items-center justify-content-between">
+          <span class="fw-bold text-dark"><i class="bi bi-clock-history me-2"></i>Lịch sử đóng phí</span>
+        </div>
+        
+        <div id="tuition-grid" class="tuition-slider-container">
           <!-- Tuition cards will be injected here -->
-          <div class="col-12 text-center py-4 text-muted">Đang tải thông tin...</div>
+          <div class="text-center w-100 py-4 text-muted">Đang tải lịch sử...</div>
         </div>
       </div>
     </section>
@@ -407,45 +754,46 @@
 
     <!-- ── TAB: Security ────────────────────────── -->
     <section class="tab-content" id="tab-security">
-      <div class="row">
+      <div class="row g-4">
         <div class="col-lg-6">
           <div class="card border-0 shadow-sm rounded-4 p-4">
             <h4 class="fw-bold mb-4"><i class="bi bi-key me-2 text-danger"></i>Đổi mật khẩu</h4>
             <form id="form-change-password">
               <div class="mb-3">
                 <label class="form-label small fw-bold">Mật khẩu hiện tại</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
-                  <input type="password" id="old-pass" class="form-control" required placeholder="Nhập mật khẩu hiện tại">
+                <div class="seamless-input-group">
+                  <div class="input-icon"><i class="bi bi-lock"></i></div>
+                  <input type="password" id="old-pass" required placeholder="Nhập mật khẩu hiện tại">
                 </div>
               </div>
               <div class="mb-3">
                 <label class="form-label small fw-bold">Mật khẩu mới</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-light"><i class="bi bi-shield-lock"></i></span>
-                  <input type="password" id="new-pass" class="form-control" required minlength="4" placeholder="Nhập mật khẩu mới">
+                <div class="seamless-input-group">
+                  <div class="input-icon"><i class="bi bi-shield-lock"></i></div>
+                  <input type="password" id="new-pass" required minlength="4" placeholder="Nhập mật khẩu mới">
                 </div>
               </div>
               <div class="mb-4">
                 <label class="form-label small fw-bold">Xác nhận mật khẩu mới</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-light"><i class="bi bi-check2-circle"></i></span>
-                  <input type="password" id="confirm-pass" class="form-control" required placeholder="Xác nhận mật khẩu mới">
+                <div class="seamless-input-group">
+                  <div class="input-icon"><i class="bi bi-check2-circle"></i></div>
+                  <input type="password" id="confirm-pass" required placeholder="Xác nhận mật khẩu mới">
                 </div>
               </div>
-              <button type="submit" class="btn btn-vct-primary w-100 py-2 fw-bold" id="btn-save-pass">
-                Lưu mật khẩu mới
+              <button type="submit" class="btn btn-vct-primary w-100 py-2 fw-bold rounded-3" id="btn-save-pass">
+                Cập nhật mật khẩu
               </button>
             </form>
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="alert alert-info border-0 rounded-4 p-4 mt-4 mt-lg-0">
+          <div class="alert alert-info border-0 rounded-4 p-4">
              <h5 class="fw-bold"><i class="bi bi-info-circle-fill me-2"></i>Lưu ý bảo mật</h5>
              <ul class="mb-0 mt-3 small lh-lg">
-                <li>Mật khẩu nên có ít nhất 6 ký tự để đảm bảo an toàn.</li>
-                <li>Không chia sẻ tài khoản MSVS và mật khẩu cho người khác.</li>
-                <li>Nếu quên mật khẩu, hãy liên hệ trực tiếp với Huấn luyện viên hoặc sử dụng chức năng "Quên mật khẩu" tại trang đăng nhập.</li>
+                <li>Mật khẩu mới phải có ít nhất 6 ký tự để đảm bảo an toàn.</li>
+                <li>Nên kết hợp chữ cái, chữ số và ký tự đặc biệt để tăng độ mạnh.</li>
+                <li>Tuyệt đối không chia sẻ mật khẩu của mình cho bất kỳ ai khác.</li>
+                <li>Nếu quên mật khẩu, hãy liên hệ trực tiếp với Huấn luyện viên để yêu cầu cấp lại.</li>
              </ul>
           </div>
         </div>
@@ -484,6 +832,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="js/vosinh.js"></script>
 </body>
 

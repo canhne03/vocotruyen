@@ -23,26 +23,45 @@ def get_hlvs():
 def find_hlv(msHLV):
     return hlv_table.get(where('msHLV') == msHLV)
 
+def update_hlv(msHLV, hlv_data):
+    hlv_table.update(hlv_data, where('msHLV') == msHLV)
+    return find_hlv(msHLV)
+
+def update_hlv_password(msHLV, new_password):
+    hlv_table.update({'password': new_password, 'doiPass': True}, where('msHLV') == msHLV)
+    return True
+
 def get_students():
     return students_table.all()
 
 def find_student(msVS):
     return students_table.get(where('msVS') == msVS)
 
-def search_students_public(q):
+def search_public(q):
     term = remove_accents(q)
     results = []
     
     # Tạo bản đồ CLB để tra cứu tên
     club_map = {}
-    for hlv in hlv_table.all():
+    hlvs = hlv_table.all()
+    for hlv in hlvs:
         for club in hlv.get('clubs', []):
             club_map[club['msCLB']] = club['tenCLB']
-            
+    
+    # Tìm kiếm HLV theo msHLV (ưu tiên)
+    for hlv in hlvs:
+        if q == hlv.get('msHLV'):
+            hlv_copy = hlv.copy()
+            hlv_copy['type'] = 'hlv'
+            # Đảm bảo các trường cần thiết có mặt
+            results.append(hlv_copy)
+
+    # Tìm kiếm Võ sinh
     for s in get_students():
         full_text = remove_accents(s.get('tenVS', '') + s.get('msVS', ''))
         if term in full_text:
             student_copy = s.copy()
+            student_copy['type'] = 'vs'
             student_copy['tenCLB'] = club_map.get(s.get('msCLB'), "CLB: " + s.get('msCLB'))
             results.append(student_copy)
     return results
@@ -104,3 +123,60 @@ def update_student_password(msVS, new_password):
     students_table.update({'password': new_password, 'doiPass': True}, where('msVS') == msVS)
     delete_reset_request(msVS)
     return True
+
+# --- Notifications ---
+
+def add_notification(msVS, notif_data):
+    student = find_student(msVS)
+    if student:
+        notifications = student.get('thongBao', [])
+        notifications.append(notif_data)
+        students_table.update({'thongBao': notifications}, where('msVS') == msVS)
+        return True
+    return False
+
+def mark_notification_read(msVS, notif_id):
+    student = find_student(msVS)
+    if student:
+        notifications = student.get('thongBao', [])
+        for n in notifications:
+            if n['id'] == notif_id:
+                n['daXem'] = True
+        students_table.update({'thongBao': notifications}, where('msVS') == msVS)
+        return True
+    return False
+
+def mark_all_notifications_read(msVS):
+    student = find_student(msVS)
+    if student:
+        notifications = student.get('thongBao', [])
+        for n in notifications:
+            n['daXem'] = True
+        students_table.update({'thongBao': notifications}, where('msVS') == msVS)
+        return True
+    return False
+
+def delete_tuition_notification(msVS, month):
+    student = find_student(msVS)
+    if student:
+        notifications = student.get('thongBao', [])
+        # Nếu thang là list, kiểm tra xem month có nằm trong list đó không
+        # Nếu thang là string (cho các tin cũ), vẫn kiểm tra so sánh trực tiếp
+        new_notifications = []
+        for n in notifications:
+            is_match = False
+            t = n.get('thang')
+            if isinstance(t, list):
+                if month in t:
+                    is_match = True
+            elif isinstance(t, str):
+                if t == month:
+                    is_match = True
+            
+            if not (n.get('loai') == 'hoc_phi' and is_match):
+                new_notifications.append(n)
+
+        if len(new_notifications) != len(notifications):
+            students_table.update({'thongBao': new_notifications}, where('msVS') == msVS)
+            return True
+    return False

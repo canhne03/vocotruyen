@@ -12,10 +12,10 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="css/variables.css" />
-  <link rel="stylesheet" href="css/reset.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/variables.css?v=1.1" />
+  <link rel="stylesheet" href="css/reset.css?v=1.1" />
+  <link rel="stylesheet" href="css/components.css?v=1.1" />
+  <link rel="stylesheet" href="css/index.css?v=1.1" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
           </svg>
-          <input type="text" id="search-input" class="nav-search-input" placeholder="Tra cứu võ sinh..."
+          <input type="text" id="search-input" class="nav-search-input" placeholder="Tra cứu thông tin"
             autocomplete="off" />
           <button class="nav-search-clear" id="search-clear" aria-label="Xóa tìm kiếm">✕</button>
         </div>
@@ -206,7 +206,6 @@
     <div class="section-container">
       <div class="section-header">
         <h2 class="section-title">Võ Lâm Đạo - Đoàn Tâm Ảnh</h2>
-        <p class="section-sub">Di sản võ học "Võ Lâm Đạo Đoàn Tâm Ảnh"</p>
       </div>
 
       <div class="mp-grid">
@@ -217,7 +216,7 @@
           </div>
         </div>
         <div class="mp-text">
-          <h3>Nguồn Gốc và Lịch Sử</h3>
+          <h3>Nguồn Gốc & Lịch Sử</h3>
           <p>
             Môn phái <strong>Võ Lâm Đạo - Đoàn Tâm Ảnh</strong> do cố Võ sư <strong>Đoàn Tâm Ảnh</strong> 
             (tên thật là La Tô, biệt danh Sáu Nhỏ) sáng lập. Ông là vị võ sư huyền thoại với hành trình tầm sư học đạo 
@@ -603,9 +602,9 @@
                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
               </svg>
             </div>
-            <h3>Thống kê & Báo cáo</h3>
+            <h3>Quản lý Chuyên sâu</h3>
           </div>
-          <p>Dashboard trực quan cho admin và HLV — theo dõi tổng số võ sinh, tỷ lệ nâng cấp, doanh thu học phí.</p>
+          <p>Khu vực quản lý trực quan cho HLV — theo dõi tổng số võ sinh, trình độ đai, và học phí.</p>
         </div>
       </div>
     </div>
@@ -696,46 +695,26 @@
 
   <!-- ── Cửa sổ Chi tiết Võ sinh (Student Detail Modal) ──────── -->
   <div class="login-modal-overlay" id="vs-detail-overlay">
-    <div class="login-modal vs-detail-modal">
+    <div class="login-modal vs-detail-modal vs-detail-modal-centered">
       <button class="modal-close-btn" onclick="closeVODetails()" aria-label="Đóng">✕</button>
-      <div class="login-modal-header">
-        <h2 id="det-name">Họ và tên Võ sinh</h2>
-        <p class="det-ms-sub" id="det-ms">MSVS: 000000000</p>
+      
+      <div class="vs-detail-header-centered">
+        <div class="detail-avatar-wrap" id="det-avatar-main">
+          <!-- Rendered by JS -->
+        </div>
+        <div class="detail-name-id-wrap">
+          <h2 id="det-name">Họ và tên</h2>
+          <p class="det-ms-value" id="det-ms">000000000</p>
+        </div>
       </div>
 
       <div class="vs-detail-content">
-        <div class="vs-detail-grid">
-          <!-- Cột trái: Hình ảnh đai -->
-          <div class="vs-detail-visual">
-            <div class="vs-belt-img-wrap">
-              <img src="img/cap1.jpg" id="det-belt-img" alt="Màu đai" />
-            </div>
-            <div class="vs-rank-badge" id="det-rank-name">Cấp 1 · Võ sinh</div>
-          </div>
-
-          <!-- Cột phải: Thông tin -->
-          <div class="vs-detail-info">
-            <div class="det-info-item">
-              <span class="det-label">Năm sinh</span>
-              <span class="det-value" id="det-namsinh">2000</span>
-            </div>
-            <div class="det-info-item">
-              <span class="det-label">Giới tính</span>
-              <span class="det-value" id="det-gioitinh">Nam</span>
-            </div>
-            <div class="det-info-item">
-              <span class="det-label">Trình độ</span>
-              <span class="det-value" id="det-trinhdo">Võ sinh</span>
-            </div>
-            <div class="det-info-item">
-              <span class="det-label">Câu lạc bộ</span>
-              <span class="det-value" id="det-maudai">Đen</span>
-            </div>
-          </div>
+        <div class="det-info-list" id="det-info-list">
+          <!-- Rendered by JS: Trình độ, Cấp, Màu đai, CLB, SĐT... -->
         </div>
 
         <!-- Thành tích -->
-        <div class="vs-detail-achievements" id="det-achievements-wrap">
+        <div class="vs-detail-achievements" id="det-achievements-wrap" style="display: none;">
           <h3>Thành tích đạt được</h3>
           <ul class="achievements-list" id="det-achievements">
             <!-- Rendered by JS -->
@@ -784,10 +763,8 @@
   </div>
 
   <!-- Các tệp kịch bản (Scripts) -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <!-- Thông báo Toast (Toast notification) -->
-  <div class="toast-container" id="toast-container"></div>
-
   <script src="js/index.js"></script>
 </body>
 </html>

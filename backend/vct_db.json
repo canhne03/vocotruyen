@@ -2,323 +2,112 @@
   "hlv": {
     "1": {
       "msHLV": "001",
-      "tenHLV": "Nguyễn Văn Hùng",
-      "dangCap": 12,
-      "sdt": "0901234567",
-      "thanhTich": "Huy chương vàng giải Võ cổ truyền toàn quốc 2018, Vô địch TP.HCM 2020",
-      "avatar": null,
+      "tenHLV": "Võ Cảnh",
+      "cap": 12,
+      "sdt": "0901234568",
+      "thanhTich": "HLV Vo Canh - CLB Tan Buu",
+      "avatar": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAEsASwDASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAABQECAwQGBwAI/8QAShAAAQMCBAMGAgcFBQYEBwAAAQIDEQAEBRIhMQZBURMiYXGBkRShByMyUrHB0RVCcuHwJDNTgpIIFmKisvElQ2PSNERUc4OTwv/EABoBAAIDAQEAAAAAAAAAAAAAAAIDAAEEBQb/xAAsEQACAgICAgICAQMEAwAAAAAAAQIRAyESMQRBE1EiMgUUYZFCUnHwQ1Oh/9oADAMBAAIRAxEAPwDqqIcUkNyZ20pzhJMDcbU5JS2hRSCDtrypluSQVEaydB0ikgnj3TE8uVNCvrUhWgVt414JyAvLO/dSAdzT3O6UBMQNjPWoQa/mTKUACRrIryUy6lZ0jkKe4cwKk/aHX86RP7wVqeVWRs8oqKVJAA6GlIhsawetITKIO9KDI1qFWV16SRv0609tJKZpVAlQIga0/RJI9QKhQik9KRI1g1Dd3rNto8tKVHUJJ19eg8axHEP0gW1mp1m0BeuAkxBASk9VHp6elQtRbN2pSUHKpQzGYHWhl7i+H2jee5vbZEGCFOpEfOuGY7xdjOJhafjVWtuv7SGlFEz1jU+prKO3bRuMwC3ln76iAPQRUGfH9n0kvizAgUpTiVspc6gOpAHqSAfQ1O1j+GPnLb3rLp59mrP+FfMart5I0WEJ6JTFVXr1RBBWVCIjrV0y+CPqd/GbBhBL9yhlP3nDkHzpzOMYa8PqcRtF6xo8mZ96+Umrh5X922AOsVYRcPoCCl4Nq3IbUZB6g1KZXxo+rk3DS5La0LjoqnZtoB12kEfjXzBb8R4uwB2V/caaDMvOR77U1fE2NGB+1L1IkyGVlufMpialMr4z6jJARKgQZ5ikOXs1DMDzGtfLP+9eLbDGMTPgLt3T/mq/acb8R20qaxO723dV2nyWDUplcD6VCgoBQ2VtT0pKYURKd/AxXALD6U+IbZz+0v290J1DzAEf6Mta7DPpXs7lCRidm4ARqu1JcCRzKkGCB5ZqlAuLOkme0WlJzEHLI505I0OY6kbDbyoVhGM2GJMC4w67auGDspB1SehHI+BopIVtzM1RR5U9vmSAhKUhIA8OdLGdQA856CkOqtNevhTtEtRpr89ahBqToY5iKaskMhtsZZ1Wr8hTj3Y6nfwrxqF9jEpyx4V4iSTzpxpCYqFWIRSeVKTSVC7EmvGvTrXjVEsbXo8KXnrXqsoMBQIBJ1ImpGRDZVBCRAmkkpTA6D0pW9VEeG3WoERnXNI56CnRAk6dOdJCdztTj9qI7oioVYyADpudSTzpZ6mTSr0gAeteiT0qFNiEagn1p0cq9E7mon3AzbrXqcu3j4VCD3SEIkjUmIoHimNJZaX8OoJRsXt8x+6gc/PbzqbFH8yRb9oEtlOd1R2jp+M+nUVzribEC9dKg5GkDIhJOoSJ1J6k/jFRjIRtg/jDiVa1/B2i3ENSO0UFmVE6wVbk8+nyrFOvGyJypm46qP2D1A5H5jedjRNORL7l4/lKW0kthWgk7k/j7emexK4zEkSddyNzUWx9Uim7mWvtHlqUuSZmAPKqty8hkKyJ1naaapcqUpRO3PlVNS+0cPMCjAbHuvrcVCRoAEgDw5+pk+tSM26Uyt46ASSeVet2wAVq2H9e9KUrfWEpScg58qspDw7n7jCSlJ0EbmpcqEJyznXzPIeHjSwGGiEEDkpXXwFU3ng2PHkOQ8T+lRFk7qkISCpQjw51TLi7gKDYyomN49KhJU84VKJI50590BGRuRy05UVAsVy4CEhluMiNZG6jzJ/D08TUfbkjc+pqEDTQa+NeA1jnUohYS7l1E+9W2LkIUCVZF8jH51RS0esU8I8z41CGowviVyzvW3+1Uh0DL27X2k+Y2WP+E+hB1rsfBHFTWO24aeKGsQQmVIQZQ4B++jw1Eg6ifIn50hMESRRLAsTusIxBi5tFAraWF5Ce6rkR4SNP+woHEFqz6lC1jmakL6z9og+lB8Bxe2xnDWry1WClQEpnVJ5g0RKhy1oBZY7c80ilS+DuCKr0lQha7ZJ50uYHnVSl1FQhbkHavc5qrmM6GlC1DeqsuixzpTpUAc5mndrO9QlEkAGvac6aVjqKTOOtQsNHuoTlIinDYE90mSCrSnFPI7eNPzJbcQYkgaTrrVkPPII+0ko6A86YogoOu23nTkILrFw8tRK9FAnmJg/lTAJ16VAWIDETpImlOlLGxg9KVISrpUKGiSrzqnii1IsipIM9ogD/AFirYlSYmDyV67VQxh3srXOEhULR3Tz+tRH41C0ZbGL0kqS3ESomecGEjT+AH0rnt/8AWOOdo4XFzJMf140fx/EezShbKysJbBVmESvQAfM/OsLi2LfD2nZMHMtyVFc7awffT0qVZqjpDrktm4KVAKZa70H95W/yg1lL66Drjh66jSrTl+CwE5wpSgpKtfn8z8qzzjpA31jejSokmSOPS2oJAkkCrNs02whCrkFSnPsoBgn+tf6E0NYUVOCRmE7daM4c0p6VOoU6vclOh8BJ0Sn5n2iwUhyLV64Cc+VpuMyG06CPE7n3NL3GxlRE8/CramXXgUhQSkalKU5QOmupJ8TPlzqu7Zv9nmCUIRzWVSPIDc/1pUsugfdvSZAlQ2T08zVHIpSiTvzog42lJ3zeXOqzhCdiR1q0UM0QNJmI0qEg7xFPzAnU14kxp+FXYIgb6nTxpcyEjuiTUcKUrnXlCEmTB8Ksg4OEgxTVXBAgqUrwKjHtUS1k6aAdBTSNKhVji5J1GnnSpXB03qOIpRUIdP8Aobx1VtijmGuZclwMyDt3xuD5iI8R4124GQK+VuHHlW2N2TiVFKg6kpI6g6D1MCvqVhztWkL2zAGlSVMCRNNe3psa05NCCLSmvawa8dhUIJIFISSKWvCOdUSz000k8qUjSvFNWXYgnrS+teiklP3T71RRqVgdshtBmQSpX3TSLLahlVmK1p+0eVIymbpxuCSRImvFALhVoDsDG3lRBDrfPmW24QAUkZRpBG0npTAoZ1pBlPI0yUMjM4VOKWqCkbnpVlCUpQkKhJIkJGp/7VAWRwSIB2r2UEeNeAPauCdUqjUUiSqXAdCZAPIVKKGKWpsKzJzojWNx50H4m0wh1bSgnLldhU6ZVJO/Lb50YKS4stpUQhAEkEgk9J5VnuKfhLTDLlLhbAcaUkIBGYmCRAGupA+fKroJHFuK7+WlIgj6wqJnvQohQBHL86w1/cFxUTWp4rRbvXC1WjiHGZ0W0nQDkk7QQJH+XlpWZNslxxIZeYznQZglU+EqMfKaiNCegeCT96BuQJjz6UYwfhteKKSptbmXnnRk9jJmtHwdwY5iTiLq5lbQGVJWApM88u+Yb6jSuy8OcMoaYbW62EwJGVIpc8taQ6GK9s55gn0ds9ihTjZU4eeXue/P5UbHA7Tei0SBzBIrqbVqhCdJEcjXnbdEaCszySZpWNI5U7wY0UEhJmdBm2oVd8GozFQQrNETO9dect0b5Y8apu2iCZgHzquci+Efo4pc8GKMhKFK8AKGP8GugH6sg9BrXeTZo2KRNQu4agnQfKr+WSB+KJ8/q4ReGgSuPEVA5wncg6IzV3w4SjaSB5VE5grUbCr+eRXwxOBr4buUEpLQ8O8f0qBzh50AjKoK8BXf/wBjslXfQFCmO8M2TqT3UjwSDRLPIF4YnzdfYTcWslSCBQ8iCRX0BjXCzQbITBTHMVy3ibhl21K3WBIGsRyp+PNemIyYa2jIRSgUoEkg6Ebg05SDGgp9meia1Wpt5txtRS62oLSRuCDM19OcL37WJYFaXTJBQocuRnb0r5fQdRG9dq+hvGO2w64snFgKZXITOpB5+80EgZI6bFLzpNvKlAoAB3KvUleG9QgtKNOWtIDvNLUIekzTTTiRSadahBpFey0prwk7VCBT4l375pTcu5gc+vkKrhXWnAzTKMlv7HOv3GYLQ5Ch/wAI/Sq6cRu3HNX15R5fLSpXQVNkJMKPOmFtAACdI0iiVAtv7Jvi380l09TSm/UUGVkCPuTPlpVVYQNVAaepJ/Gs/wARYwizaIccUlcaNIVBHmRz8qkqRcFKTpMsYvxILBbiA4S4ogkqjTQCI61hcd4hZclxwFKlyeUr99SPlQi+xRy7uHU51ZgJ7ugQNflIHuazi0qeU4tKCFZoIM7/ANe1KbOjDFS2QYrel4LDjKy2D3U55UJPOZ6DQfnqc4PwJd3doKC6pKz9qMhCRy5/iaF2dr292gFKNFBIzJJIPPfTofQV2zgnBk2tvKkSS3lJmSpRIJ/AfKgnKlo044Ww1gOEIbaQ2lKlJB1KtSrXnWrYa7MQAUp6SCKSyt8jSekAnz3qypPdBnTpWZmlFZ1AEkGqjm22tXVgq0G9QOIAERQjED3daqLTGhBHyog8kDYVRdazGTpFUQYE9BTopUjUU8jlVEIHTA0FVTJFXFpnaoi3VNEKkxoZilWRGm9TqRvVdwKAIMEcjFEtAsqOAkmZUPAUFxnCm321CNTI2o6RGp99qqPgLJMj0qXQKR8/8cYGrDL7tm0EIVvG1ACARpz2ruXF+FN39mtKkia4piNquyuVsrEZTp4ituHJyRky4+LtFJfdVNajgHGU4NxExcOqi3WC27O2U/zA8t+VZd0SJqWzUAoA01iGrVH1ww4hTQ7qTI00py3Mqe6lE+KQay/AF24/w1YpeMqQ0nnPdjTziI8xWjVCtQdqJROVKUrqyvdOudl3SErSNwgCflVS3ffUs5nNBrECrj6hlg+9DngkLlOg2p8IpqqMuTJKLuxr2IXAX3VgAHTuinsYm4VfXEAAck1ScjMJoh8Kj4SQACUzTnGC00IjkyybakVzfXEk9ofKBSfGXED6w+wqtGsVM2UxCtqtxivRSyTf+piqxC6/xT/pH6Uz9pXQ3dB/yj9KsCyS4kLS4nKNxSt2KXE5kHu8qDlj+g+Gb1J/5NKoa0oIBiarXDkNqmRpyocbpeVKVGYO9JjjcjdPKodhtawlM/hUOeO8YAoc9fTCRoKjfvg0ypSzokTrRfE0tgfMpOkex3EW7C0W+slSyCEpjeuT4vevXd6kvqGcwV5dgCdQB5c+evWjnEF87d3JGYgZskDltp59SPTas6k/2xwhKQnNlEaTEHfpsPU1mk7Z1vHxcY2+yipaWXkOPJUVPrS2Q3BICj3jr0TPt61OLc2oyuxKFZVqzE+RB5yOY3nnOsrrKVlLayCEkrUqNSlCvzMA/wAXhT3im4t7VxRlbL4YVEHOcoAJ5kgEkeh5CgZqRd4Zw9V1xAw0ASgKAAmSec/1yArveEWQTbNQB9713/r0rnn0UYOpabvECmNOxb8jG1dctmsqAJSY0nb5Vnm7NMFSHISRz0mKQ7RI8YqwAAjTqdJqAiBOpilNBogIOkQKjUNCN6sKAOo5VXe6yPeqCKjgGtVXQDyFTXDiUqCSe8dIqo48kbkT4daoschEnSnhEgaVC08ORqZLiUyO7EddvOoUIpvWBr5UxTdSFxtMQQSdwDNQuXAGmg8DUL2MU2CKrvN6aCan7dPUUvaNK3VBqIFgtxOXWKpPADp7UdfZBSSlQWNu7rFBLxspneo0CmB79IU2Qa5X9IGGd1N0hP2TCtK6u/3gazHEdql60cSoSCNRV45cZWTJHlGjiCvtEUjKoXVjEWDb3S0EEQYqqnRddJbOazuX0PXK38KCVKMMrU3qeuoroxUIJnQVxT6JXHmjdpTPZOEEeChM/KK6s5ckthDchPPxrTDHySZxfJyKGRokurgLlKAQOpqoo9aSJ615SJp6SWjBJuWxgUAsGJjWi5cS9amNDG1Ckta97ar10+jsAhk8oNDNW0MxaTsHxBrxFP7FZ2BqzbWRWMzg05A1bkl2VHG26RHahxSMoIyTNFGgEICZmKYi3baHdTrHOn6Cs0pcmbYQ4qmWrrVkkVUbs03DZKV5VjlVw5VtEEwIqthxIdVGo6UxNpaKlFSkkyujDX1KUCQI+dVbhtSHezcTK06wevKtIpaQmVGI6UMukh0ylPfUd6uORy/YqWFQ3Hs55jNv8OFIQZXJBUNIG5+cCszcOoUpoEnKmFOESCNevjE10jiDD4sHVgQTB32A3/KuaraZ7MqeUQqZ7NOnzrHNUztYJ8oipdV+x1PXC0tPLzErUJ7NI125mBMeHKqGErcurkNqRH1qglEg9kiUAqBOpMhI03g+iXLinmbYOt9k2W1achKlaaxJ7oHp0iLPA9sX8Zt0AhSn3WxrsRqZHQ/ZPp1oG6Rojtn0zwhYIsMAtG206EZhHMnUmi99dsWFsHbpwIQDHmegHPypQWrWzLjykoaaTJJ2AHP+utYLEr25xu9+IS2S01owjLMA8yCRM9dAJEEzpmStmi6Qde4obgOL7NDBBVJd1y+IjX0MDbca529+kq2th2jaHFMhIgt263c3koAJ58vDyoDjOBv3Kgb190/vADIUz1KTIzaDXXaspecINPPlxLhBJKpVqZP4UXKK0Vxk9myT9LGGrHe7ZKZjMUHunxkTvppPlRiy4rtsRSpVrcoXsFZVSUnoRy9a5M7wm9mIS/2qI2Xv7/rNVxgF1auJPeUlJ0JMkeR58t/nQtRfQyLkuzrz2IKWZzEk9agFyoqICtayGE3T6Wkh5RKwIM6T/XSjtm/n1Ak9aRIeg6w+EwCSTPPavKfMnKrvb6mh5cgVElxRWaougs5cqSjVRPjVVV0ep/CqinSneYoLimI9i04UypQ0AFWlYLDdxiaWklS1JSBuSqs7fcc4darLZue1WN0sjOR7fpWMxdq8xFz+0ArG+T90emk+v8qpo4dfcbACQhPITr/XtTowj7YiUpejbI+kW1BGVbwSfvIUk/PSr9txhaXTYKZWDpIOhI1Inr/XWOdOcKufZSoEf8Wo+VQjh+8siVWqkJJiUpUYVGsEbfn0ii4Q9C7mdWav7e8n4dYJA1SdD7e3vVLE2+0YUInSuf2l9d2a0uFDjToUAUrOhPKD11Ou2sHeRt8PxBvE7EOtyFDurQd0K5g/1tSpRoZGV6ZyTihnLeqPLWgQT3q1vGzHZXy9IBMisrGtb8b/ABMOTTOlfQ5L17iFqkArU0h0A+CoJ+aa6xcWSmUpUSCDppXLfoQRlx55+CEFlTeaP3pSQPYH2rslyApMHTpWrHNpJHF8nEpTb9gcIipASBtVhdvDWedQdfKlbbClBNN52ZVia0VDqanZYP2liRVxFu2g7A1OEiKVLJ9DoYa7K6WoMwKkEx0pxIqPtAg97SaX2PVIcodapOurCyEiAKvKHdM7UPdcGchOw60UFYGR0eZvEBsoWsZ0mCKfYXCEur7yQFeNPRaofJUG0E9SmpUYUCPsND/KP0o1PVUT4/yuyDE7rsHEJ+8JmapG/Uo8qvvWAQe8hJPkDUIt0/4adPAUceuhU1v9qBlw724CXVEydzyrlmMpUi8etygpVmga6FJkTPvXZTbJIMtJB6xXOPpKsFWt+y8hENLQJOpkidPn86Xmjq6o1+FkqXC7MMwpTzbqCVFKgIPMddeVdC+hzDTd44h5YGRt1OURtEmfDYj0rCNpCWiUzAGmuszpXaPoGsh+y3rtcHMoQem+nzNYcnR2cfZ0bF2XMUeasUpJtmyHHRlnMrkDyAHQgzIIiJqa5tGbJkhTaVrBnMvlz0k6a8vnRaxbCRnyTuY+98vLr8qznEF6XrgoBnkOtIbpGiKtmYxhxKnFqS2Mx5xr770Fes7shSw0oJro1hgbbTCbq9KE5vs5+vIDxqG9cSkQ1buqHikJPsSD8qW4v2OUk+jlzvbMKlxJA8qlZfacEKOvWj+PKEL7ZlQB/hVHsZrIvISlZLau7NBYemEFWyFd5I18Kv2NsVJ0G2+tBba6W2rUyPGtBgl00XyhwZAsaKPI1Oyuh7yMg1qAqCRJOlFcRbDZAEqkAzGlBLjOEq7uvSoF6Iru4hPdoS4gLVJg6zU1yVAiZqupcCiQLEUlA1IE0kidKYpVPZyz3lSeiQVH5VLKFSmeWlRvMpWDmSCDRAG2A+scLY/9RCkD3IpXbZOTO2oKSeYMg1LKAi7VBBBbUQQQRmkEdIJ2qvaW6sOvA8wlQZWAh1PXofTrO0+FF1NiYNWLdlK0KBBMjWiTb0LkktmD+kG2Kmg8BtvWAbMq1rrfGVpmwtw7wCBXJGxqQK1YX+JizdnZvokYLeAF4FAzXC1zvoBl+RH9TXQ1hObvOSrxrP8A0Z4Yg8GWK3TJcQTppuT1HSPatSqyYG6jPnW2K0cXK7kwc4YkBUg760xK1BW50okmxQogIBjrNIvD0gwATRcqFcLGtXCMv2pNOVdaQmCaVGGpUBmJFNcw7KklJJjlQasb+VFdy4WDOgNQELcMqV7mpzawoBQUKd8EiP3qK6FNX2VxmbMpcM+dRqMkkmpHbdCJiahDOb7KZFFsCkGMN7twW50IouEDkaApVleSoHnRNClp1b1PTrSpR2a4y0i4toKTH41CbRB30qVl5Lg0kKG6TT1KFCpNBOKfZX7FCZETWT+k+wFzww4plpSrlK0lAQJMT3vSJrYE1RxooGD3pcSgpDK5zbbUTbaKhUZKj5zZR/YwqIUYMeJrvX0HNlPBbROhW857BRFcIQtLqHshMBxWWNyJNfQP0JoI4DsFCAFLdI15doqPwrJl6Ozhezol24lu1UIk5Yy9IrOYZaquL8vFGbmAdh51ocSKlWSkpUTMCJ3rF41ieJMtm2whANwQY1gIHNSydh5/pSH3Y+HVGjxzHsPwO2z3bwcucuXKCBlHMdEDT9Z3rjnFf0tW7E/CIU5mJA+HSDr/ABH8jVHEuGMZv70P4xcG4bCgpTaVlAOugBI8jMfPYVxjgtm9gyGrGyTa3TCsyVKWkpcBGqc5Pr/3q6T/AGL/AFX4gV/6ScQvHCTYOqRISpZc0BIJAJiJISTE8j0qfCuKmsQzudk+jLAUVJnr0J00rGpwfFrZ0nsH0MrgrbTcoyuEAgZglUbKI2OhPjWpwCzurWwWyqyT2zqs2YqhKdIAGkkenOinDGlorHPI3s11osPsIdaIW0rVKk6g0dwxpbik5RJmNKA8JYXeWQuk3T6HA+4FpZQmEt6akef9b1v8BsCq6ShKANCdRpWbjs0N6DbNn2+Hp7ZOZxIgeP61nMWt+zKsuw51vmbQtMwNuVZvHbYmYGnhVzRUGc5vpznrQ8LUVGa0F6xDqtKGG2AWpUUKYbM9iuJot3C1KlLiShAlUePSgrfHrrTiG7GydWoqyJSCAVHlAEk0Tfwq+ZvHXAtD6FLKk51kESdto/7VlMT4Yvm33Fs9klBUVJQFlKk+ExHzrTCEGtmbJKa/U0tn9IyypKbi1eaCwNoUNdpjl6UWtsUtbtZXZOpaeJ72RXPxT+utc8w2ydbvWP2mhXYtEFRzZ1ORsN/x5URxhQvLkPWVq7buJOjiVQR6DT51cscPQEck12joqH84hwAL8NjV/DyCSDXPMExa9A7G8OaNiRBrb4RcBxIPvSWuLGN8kLxUxmwi6PRClewrhrI1Ewda75jqSvAb/KJV2DhEa65TXF+Fmm3Mew1t8EtuPoQsdQTEHw118K1YTFm0rPozhO0+A4asbd0lKmmUp10nTT9PSiCpkfnSWqOytGGlaltATPWBFOzlK+7XQSpHBk7ZOyoncp8hTyZNRIeSSAQATUmYEmDNLkmNi1Q8UpNQKeRyVr0OhqI3KQqKCmFyRK4rMYyyahcKgkhKdaR55zOkIgA9edOU6lLcrInoDRJNAtpgp9ZkzVC5fdbcyNkgJEGDz50SultgKcQkgIBUQTv0+dCmbVbyM6iJUZ8/GmTfoRFezQPMKZcyuD1q4wsdmk+HOrWJMqWkKGoHKhaVHIBMDMPSan7NMc1xTCDayV/ZB8QYqRJczwQkjqDtTmLUIgk5qepkkko0oGlYabrY3nUbjSXEqS4ApJ5EbV7vhUFJFS3F/Y4epCLtLq3FAFWUaInrS8uWOJXIdgwTzyqJ8/cUYevDuIr9soUlC3c6CRGYHnHv7Hxru/0RsKt+CcLQsd4hxZG/2nFKHyNYT6UrC0Wli+tTmzqJzbgjmo9ANNdtQNyBXUeCWDbcM4U0oQpNs2CPHKJ+dZJzU1aOtjg4OmaN7VohWo6RVBxtoJICEkEydNz41eUe7tVN3UQBJpY5AbE8+QhltsDyEmsHjFpeOXBchtwjYLAVHkIrotzHOT4AUHuLcLJ7kDprSp7HQ0c0dtb1xWUBCI5IbAPvVuywdwmVggncnU1txYgwkCB5aVfs8MSiFLTJ6dKiTZbkAsLwkoCYQfEmtTg1n2SytWuka1bbt0wAAPQVcZaShIjfyolGgW7LS4LWgEDnQHFWQskDejS3RlgHWhV93gdpNRkWjD4paZXCIoYbadxWkxRORwTPjVMJbUmQKW0EmZ+4sUrSZTIoRd4e8g/ULMfdUJFbZTCVCq7tlOsVadEMEptxJh+0bV45ARUrTIMZbdCfJAFbD4ATJAIqVFoEnSrsjMs1hwc1U1PpV1myQyZQjLNaBTOUapHmKjcbSoSNDUAYOcaz2zrR2UgjruK5B9HdkbniO0gIIaIcJU4ExBBnXccvUV2YphUGuY8E2xs+I7/MopDC1o0GphZEdNY6fhT8U+KbMmXH8n4nb3SAAQIBGlRTPOhuA3nxTTjawEZDMDpRYptzs4Z8a6ePIskFJHn8+CWHI4P0MA8RNe7QoSY0pwUw3+9nUee9NW+gJKUonzoxV17IFEqPU0qG3CfsmOtStLTzRr1qcOoG5jzoW2FFJ9lbIsnUGajWyreDVty4bQNSNtqprvi46lLUjWPGouTJJxXsH4kohptkA5nVSfIHT5z7VYaaSltKQNhFVu0+IxJbu6E6J8thRJC0BOmtDb7CSXRqXSlDZK9BFZ8jOpxKf3pj8aK3ThdbISrSNYNC091zTeaKMeMbGSmpS4+ghhV0XGsrg7yefWiKdRQJgKbfOTMBMiOlGbYqcTKjMVMsUnaJhm2uLJQgFQrGcRPziVyFHXMa26dCDWE4wt1M4w64JyLJI9a5XnptRZ3f4lrlJAXFLJ88OPvJzFl5aUmf4tI6a12OwQG2UJGgSABWCKkf7o2QcOmcgkafvR+dbq1XKRrNLx/qacv7F4qzaAx40xSRl7oPtTQvYRNeccyIJJAHjzpgCKNwiTGsc6rFrXURV5YBRmPurSoFkBJMetLaGoiQgJOlPK0pIk1RuLvITHKg1xiKgTmVMH3qrSC4tmytCF9DpVgyqY8qoYFKbJC1yS53svSiwQlNutwhemggb0yrQF0DnyUnQzVF9XJR2q+4QJVG1A71Ss5KYAmNVCqfQxbKmJNhxvuCSKCqUW+VHGnUklClgJVuIoRftlQUG4iY0pbRVUMTcAnxqwhwHQxWfLq2bgoXIPSibLhIGulSiwkAFCRXuzAMiNKibcjnNSqdEb1RRA8ru6fhVRRjWandWNYqo4d9ahTRGsSPGsDb26UcTYuE6KRcZjHRQCvzPvW+R3j1oAWG0Y/i7hQAVJQc0cwgUT/Vi1+6CnC3evLhKZMoP4ijJEKOlUeB2M67i4I7iU5RPMk/oPnWhVbI10jnpXS8KXHEkzhfysOfkNooN95QASTzprkTAq92YabV9ZCY2IqgkBayMyQB1rWnZzXHjoVbukIHrUKlKnUmryENI3IKvOvPFrLqEx1qKRHHXYIeUojekT9VbvvbEDIn+JWn4TUlwUKV9WNBUWICBb2wPLtFjxVt/wAse5o5vVAQX5X9EFqkpQSdzrRBlgrbCiuJqujLoFaDxq80U5AEEkDTelu0tDIU3sT41QnuqH+U0rd2c6SpJ0P3TrRFdqoIJXGnWquVIOgp9OSpAKUYNN2TtXbeczoY3INXG79CUgBwAeVMYZRcWYyIT2gI5bxp+c14YeqdWpHlWdRbVNmpzSdpE4v0H/zE1UxRtjEbaAUqcTt1ipvgkgat/wDLVhm1ykK7Me1Bl8ZZIuNjMHmPDkU6M2+2prhxKADCH1SeggGthhVwHbBh1J+0gH5VTfsUvW10wACVgLSD4aH8RVfAi5b2hYdSUqaUUwa5MIuDcWejlNTSlH2aJh9InxOlOLuYnQeu1D0OgLEnyE1GpxXaEhR3getFZSL16uAlKVa7DxqhevZUQJjrUa1S6CpQAAqlevJg6z50DGxKF7dkkjNpQa5fMynUjaprpUq0VIqJCAktrUMwSoKIjkDS/Y70dYs7QM2TQWoDIgAnqQNTSvX7QtlIZSkJO55mgeKY2BbpQIyAaGN58ayY4iaN6bYPtl3fswsZvbencq0hKhe2aTEcQKEwkQSetA7m5Ws6nSq91fBYzKOg2qgu9BQQBqdjQPY5JFtTikailYuQHROvnQl+5CUlS1BKQJJJgRQqz4jwx+57Bm9bW4doBynyVEH0NSmU6NJjqGn20vohLjZ1jmmoLdRyj8aq3FwezUJnMIFWW05Ug71AaL6HIGs15x3u1XC9NKgdWRsalEJlq2OYE0xawN6rSftc6ey4Fq70Ac6iQEnSLtk32jkwYBoDlVc4xiKWxmzr7MQZk6JrXWeRu3UojYaj0mh/Bdkl/EFlxMkBTy/MnTX1+VP+O6iYpZuClP6J7W0urBhLDDcAfaUFDU8zTwu+E5kmOkitK9ZsI1Kfck0OurdKTKYSOldaEVVI81kk+TlJ7YHdXcrEKRA8CKrqS8NMvzFHW7YLbUrMO7vNIm0QvYgir6BrkAFF8bI+YqJ34oiMhHLUitMmyQ2rMobGao36u0WQkHKNz41Iu3okkorZnwi5zSUAganvUl0q4duVOBKZPjRl2LOwcdUNXDlH8I1Pzy0OsWFrbGhJVqfWrSbf/BVqMaS7Kak3ZH2QP838qZkux0/1GtEixMaq16U8WGmqhVcv7lqDfo0Cm2F/eI6hVVbjD2wApDqEJ/4jVcsvpECYHSvBl5zTIs+dMjFx9knNSVOJYwglt5xrMOoI8dD+VWmrlQcKHVazBmh7CHbe6bUtCgmcpMbTVi/SU3JPJQCh67/OaHinJoim4wT+gslYG9edcSUQlZB6AVTZeloANlQHXWnpIJgaUKx09hvLa0S9l2yMoVlUNlVDdNFFwQcsKSJ8+dX2Gu7POq14UulK0kEjeOlc7yoVktezufx+Tli4v0VUIlSCRtTSlQcP3TUoG+9I6FCDoOs1mZviUVuJK1z+7vQ69WVK7hidtaIOoUsKSnnuo1Wu2R3QPIdBSzRHQIQypxyAJiittY5kjOkVasLNKNSJNXRlBHSauKI5GVx1m4S2pplcoCdAdCK5niGFpK1JftgleadteszXbLxsKT2iROXTLzIoFeYci7AKkJBG2mooqLU6MNgmI3doksXq3XrbZK195SfXciia79lE5DmnaKmxbDVWqCsgFvqBQELBd0SYmqoNb2JjIOIslt3VqQck6GOvWhSGkNEZG4UnbSjxGbl7Urdol1cR6VaZHoI4PbuPNocuVHNEhA2FHUI7sbihtocsJIiBFEWnNcvPyoWLbILnMNE1Ckn972q27EkkxFVFp5g71RdiKMiBvTmAVKKEnXnFREaHwq1h31jkgSE/OjiticjpBi9UlvDHQIAUmPfSr/BbKbexuH+bqgkeQ/mflVW6tHbxtLLCCtUgkAcus8hRqztU2lm3bp1CZk9STJroYMTlLk+kcLzc6hDgnti3dyokpQdOZFUFidSaNPMRbwlsEbzQpxsnTLXQhVaOLku9lRaye7OgqZh8NJIKZPKkbt1rVCU/OrgskpRH7x3PSqyOPTLxKb2isq6DjZSUkK8KouIKvsgyToB1oyi0bSqY/OqziUMuKdQNGgVa/e2T849qWpJdDpQk/wBjO8RuJVctWqTKWwEecak+qia8xKYIJFQs27t3euOQQicqVEbgc6Lt2jSQMxmaJNRjTF05ytECLlSdJmkN0omakftkD7KjVRQSFQFSOsVSSYTckG7fEVoQgrZAUpIKhOx5ip/2ikplLcHpNCuHLZ65wSwdfUStTfeUrUnvGD7RRT9mKjuOJPgamKWOcFJh5o5YTlFdWUH3HHiSVa7+E8qMLKXbe3uSARMKB8R/I+9UXbQspBWUyehq5hku2b1uQSUyU/8AUPwIps600Ihabiy8002USkwD0qc2SFJkTPWhbD5QdgRRu2CwmXCAOlKmpRY/HKM10RsNKa1JJqw+lp22f/szXaFskLSiFEjXUjfarLYSNZqwwygqBSBuKVKpLaH424STizJoMgawaV5GdIB86iEtOraWIUhRSR4gxUiyFwelcpr0eki/ZXeWUuZU7daqkBbkzp0qwvQnrVdSiSTpMaTSmPRMHEpTEgn5U119RT9XkUsbSYA8zQh+4Uw2rOtMzQ5WMtoGrsjwqX9F0a1lpSxmWU6mSZkD1qG7vsNtcweeSVJ5ITKifXSsHiHFFw6Oyt15EbZudBl3alKlSp0OpM60ewlBezcYhjuHXGZs2+ZrbvaVnnLTDlulTLvZigTt1KtVaDTeoSrvSN6rixiSXQYVc2zUhGpGlSWt4ynVSJPWgaQoHUUqXUonMpKfM1dFNI1Ldw24Pqz6VYQ5m1NZFt8EhSFgjwNEGMRyJHaKMeNXxYDDi1lSSCdOUb1El9KzkG9QMvJcEpMg08CHJA86GgSdIlKp2q/hLMNhRESsn0jT5zVdCD2Zjc0Rt/qk5dtqbjWzJmlo1fDbSRa3DriZQtQQIMEQJP8A1fKrLqAFdwn1qzhNr2OE2yVaKUntFSPva/hFTsMNqclRGnKuzjXCCPJ5p/LldFB9bnYAFBIImRVINFYKirKB1o5foDaFKSnoJoG4olWtFHatAZHTpkjGUqMaxz61YCZGtKlsMoChETqZqs5dJDu5ikuLk9GiMlBUyVYSgSpQAoDj9wGbE9not0yPwT//AEaJuqLy0jMCCY8KymP3XbYohtJIQjURy5J+X41ahtIGeS02Pw61cSwCAoQNeVW0tKB8qWzuFhqFLkeJq4ytKzIKNNwKk20VjjFrRQLS1qMgn8qQ2qwdvaiiwOlV1K10FByY/wCNFhtpyywPDGEKUFJt0yQOsk/imoE3FwFSCo+ZmtReIa0YWkENIS15kAD8qGPWDG4SpP8ACZqvFlxxqLC8zG5ZHKIKW64sypKlHzFWsNeWzchZQqCIgEHUGR+dK/bKSjuNrPjVYLU2ZMgpMx5Vsa5x0znprHNWieXA8sJZXlCjEkTHKrjS7szDLyqtIeaSWVLbKioZSqYGmn4RRi2LRgE9nO2tA5ypMb8cLaAzXxRUCbV8eIolbLvUrSEW7p8JijDbaEt5gc3mas2ZbzBQUAoULk2rJxjF0Y3iNl9m9Q8+0ps3CZhR5pgH5Zfeh/aZhE1vuMLH47AXFtDM9bntkgbkD7Q9ifUCubJVzB0OorkZlUrPT+JK8aX0TOqhJqg85oZNTvLJTQ+6UUtq3ms0jbED4kpTumoArN4lw1fYiCqzulsKjROgB961aUBYBOs9avtBKUCQdPExVR0xlnNLbgfHQ4BdXsI5qzJ29BNEk8DWgQFXWK3y1SAUtLKdSoDnyjMdunjW4dMpJmhV4sBWunjTeZaVmde4Kw4NDs8TxLNyzLkb0Me4cWkgt3b5y6f3hFaR9ZSO6uqwdkbkk1OQ1aArfDsA53XlA7y8oz86icwK0bBBZRO0xR1TiuRNRFtbh71WmyMzbmDozkMpUg9UEp+Yq7h+AtpVnfKnV8i4oq/GjzdulsSQJqdlqZVyq22KZFaIy90CAKvN6mJk1EEhBk8zyq3bICla6VSQqcqRdQnRKTtRHC7ZWIYraWiQZecCSRyHM+gk1RSK2/0W4X8TiVxiDiZRbIyIJH76t4Pgn/qFPxrZz8zbi6NNcYRcKVDd8Up2A7NOgqqrAb6MycQQY/8ATH6VqnUZdd6gU4lMhWldDnJ9Hn3jjF/kjJ3OEYi4gJVfNZRro3vVB3Ab3c3bX+ite+8hKd4/Og13iCWlwpC/KKtfJ0ipfF2zP3eH3jaAhVy0Up2hNDX2nmt3kE/w0fuLxlWuUAneRNCcQftlCAlZMbp0psFJumJyyilcaKlmpRUtTzgS0mApQGwO/wAgflQI4W5eXrz7KlBLiypIVGieXyiruIvdnaJt0nvunMr+vKBU+HZ2kaDMI18KVK1JtMbCnFJoonCbtKf74+gqJywuWxKno9KMuX+UxlBPnQ24fK1EnTwoo8n2VLiuhjLd2vu/GLA22mnrwx4qJVfLnypjVxkM5UmrIvUnUJNBKLvQ2EotbKp+kDCFYu7Y9tOVWRV0NWs/SZ9M21HFXr6fsuJjeBrXzfwjh9zjGMN2bS+zcUhau3UkqCQEkgKEiQSAJ5Tz2rvGDtowrD7e0RmdSynKFLOp5/nty2pmGPL0X5bWNpJhoYg4CDknzNMeu3HjBCAk8gB+NNaxBiIcZJ8RBqRzE0BBDKNT4U6Kp6iYMk1JbmPtXe0sQkxmaMe2n6Ubwy6R2JadStz7oHL1rM21wVXC85HfAO0eH6VpMHurdSAFgJWnTpV1Saa6BU7kmn2ggjIVDJnHgoz86KWaDEzT7O3tnmxAknmd6J2tiAAU7ilTyqqGR8Wc5aJbRCoG9c14rwhWC4qpDSYsn5WyRsnqj0/AjxrrTYIGtCuLLFq+wC8Q6kFTbanWzzStIJB/LyJrm5VzPR+LD4Vo5AVTVd9EiRVhSSklKhCgYpyR3SKxuJ01IEZIMmvHNIjar62NdKheYj7O9LoapFC5XAIHKhF2sqGoovesPDYZj4VA3hbzv2gUeYn8KJJjFJIBFKgN6iIcnQ6UfewhbcnMlQ8Kpu2ahsKtRC5A9CVc6nA0qwLbSnJYMd4UdFORChOaJq0mAnbSvJagaCpUpEwalCpSGpbzcqJWdv3aS0tytW1aGxw9TmVISSTyFMhEx5cnoG29k9cPtsW7ZW84oJQkcyf63rtnDeEN4Jg7Fk2QpSRmcWB9tZ3P6eAFDeE+HEYZN1cJBulJhI/wxz9T/LrOlpyVGe7Inms40ih9xbAfacSk9KKnah140DmUpQCRr403G3dGLy8ScbozeKJCFd1yfyoOtbSiUu3AX/EYjymp8YvkqdUhoaAx4mgNw28sFQA9TXTSXH8meaU5cvxVlm5ZtklSi+CnlBoLdu2yncjecx+9OnjVe8WtsHOCBVDtiEqI3VoKjXGN2Ep8pcaolYZcv71xemVJjU0RVbEJP3utVcNX2CSkTmOpiiAcJHerFJtHSxpNWCnULQTKfOoMgWDKwk+NF3AlUzFDHbdQV3ZI3o45LBljroiyNp+24D4JFNIYnRbhpS0QgqXmT0Eb1XykmQkmruwevRxfD2l2163csPFp1s5kKBgiu4cOXn7dwT4wKSp9k5HwnYHkfWvnPtjEZz711b/Z8dW/xHf4YtZLF1YuAg/eTBB9NazT8j4vzR2cvjLNFqR0li0SRLq8o86VdqhOqHgoRvFL+zmiQe/70v7OajXtP9VaV5SPPPHGuis2cqwQdjVpp5bbhKVQQZ0rww5qf3z/AJqlThzROoV70S8pXdCZYk1Vh/DMVZtglalFTsa1pbHihgwClXnWDbsG+iveiFpYJzCM3vQOcJdoOOfJj/WVHTrPEWLoDIsT0qe7SF2ryVfZKFA+UVjsNQzZw4udOpJrS218xcYUl65KWEOIMpWqDG1ZskVHaO5/H+XLyE1LtHLsRtCV9oneNqpobIoziaUhaw0SUT3Z5isxeZ21ylR8qwuas7ii6CYZzVGu1mDzFCWsQymFEg+dTu3iskpWY86rlENJlv4fU92TTgjJOhoGq/eAKs5gHWqj+JvrXlDykjwq1KIaiwxdpMk5TH41Q+GdcV3W+741SF9cRo8o+dPGI3U/3mnkKK4l/ki3+zVgyUn2p3wK8oAT4VU/aVz/AIpB8hTk4ldc3T7CiTgA+RIqxcB0QdegpbbD3O1KlIV7UjOJXKlkZyR4xRK2vHTuoe1EuLEzlJBHC7ElSRlMmul8MYQi2ZTcOo+sP2ZGw61hMGvil1Mwa6rYvpubRt1H2VD2I0NM16MttvZPXq9XqhZVvrv4ZsqCSo+FYrHOIH3ULbbQtPI900ax195N6kthaminKU5TAPX50Cu0IcMlMHxrTjqKtdnnfP8AInLI4Xoyj95cIUcqFk+U1Qdur1RJCFn2rTPstgkRVRbDWsppjzSZgil6Mo+m7c1LB8O8KjbZuAdWTA5SK1KrdmZgjxqMstTuaCWWbGxjFbAaVXCCcjKgfMUi1XSt2169FCjZt2jso0htm/vGg5yHKQEzXfJtR8yP1rwevJgtADzFGDbI5LFN+FT98UPJhKbQFeF06mC3A/iFRBq6RolJA8FUe+FB2WKabQ/eBq+cvRXK9nyiwFLcA67V2v8A2dLJxGKYliAGjNsptJI3KiPyFcpssJWu57N0wlJiU7q6RPWvojhDhrEcH4L+GsMPfVeXACnDBG4Ok+GgrHmfKoo9Hklxxyl/Y03Y+HpShnwrGnhnioq7uH3IHi7/ADpw4U4rV/8AIO+rv860pL7PJv5n/wCNmyDMcqlQz4aVihwdxUTPwM/xOj9acODOKyf/AINsDxcH60WgHHyP/WzeMsjmQPWiFuyncrSPUVzdHB3FYMi3tx5rTRLA+C+IH7xsYi/b2lmDK1N5VLMckjafE/Pai5JArx/Km6UP+/4Oks2bLrZU4orG0JVvWZ41fWxeWF2oktJeCHCT9kFKgP8AmKR61rmLdmytUs26AhtIgDn5k8zWf4hZTdWTyFpzoIIUJ3HSkZnzR6vwPGXjRV9+wQ8oLTNC7pAWNKhw26W1cPYfcLzOsEBKjutJEpPqCDVu4TImK5rO2qM9e207ChTi32NDKk9K0twnoJoZcNDXSpZfEEKuwoEZyCfSqpXrvIq7c2gMkChbza2z0q+QS0XEOid9KetyfskRQzO6DyIqVtx5RGgiispl4EmJ+VPC9IqBIcjUgU8DqdaJMBly3WE1facOmtC2qvNkmDTExE1YbsX8kE7V2jh2P2FYKGy2Ur9xP51wcOlDRM7Ca6DxlaPtfsawt7t9ltKEsjslFJMDL+laMUeZy/M8leKlJq7aX+TpEjrTVuIQCVKAAripasZIexq/CgYIOcwRVZ+1wZSfrMXvV+BQo03h9iX5WRr8Y/8A06zieMYahJDjyQesVlb/AB3C0rUO1UfEJrAu4fw8QZxG+9GjVdWHcMDVV/iEx/hfypi0ujkeRg8vPLk3Ff8Af+TV3OPYYkx2i46kD9aHOcRYcDGZwjyH60ANnwmBre4kfJuolWvCEa3eKH/8dVf9hS/j/I/3INL4lw/kH/LKP1quviawicj/AJwP1oSWODRINxihA5ZBTC3wSkRnxX/QKFjF4XkfaCauKrEf+W/7J/WmHiyzgfVP/L9aG5eCgD3cWV6D9ajzcFSP7PixH+X9amg14Wf7QRVxdZ/4L3un9aYeL7SdGHj6iqXa8DgCbPFFDrI/WofiuDOWD4qrxzp/91UF/RZvtBA8X24mLd0/5hTDxgz/APSuf6hVL4vg0TlwLFVD/wC4P1pPjuERtw/ikHX+8/nUC/osv+5GY+ixq2xe7un7rKH7NTa25+ySvNrHUFJPrXS3rvEllX/jTiEkRCXSAPLWsF/s4ZTxFjaVttrT8I2YWkHXOa71cJZZchFtbxE/3YoeNOzsTk+jBWltf3TyGW8duCtZhI7df602/tL6xuyxc4zdJXGh7ZcH51tvjClUpYtwQdCEbV4Yk4tzvNMT1y6/jVi7bRkMMwe6xJakMYzcLWlOYjtVbe9Ji2CXOGrSm6xO5KVRBDijqeW9dDw14vZ8yEJgD7KYonbNoW5KkpJSdCRtV2RJy0jFcNcEqcWi6xd+6UyNUW6llJV0KtZA8PeugISltCUNpShCRASkQAOlPppoG7NUYqPRE9qN6D3ySEqkaGjDu1DLsAgzQsZE53xM12Pwt+0e8gdm5G8BUD20qayuxcsiYnnRHFWkKQW1CUKcUgg8wUiax9gpSDCVHumAfWsWWNOzbilaoOXAg+FUHhRAqK2QTvFUV0oeii8kHnQ+7b01AI61cfJ7aJ0qm8TJE6RULBS+4qntLlWmlLcpE1WA1ir6JQRLkDXevIOYzUDQkCavMpEbUaFskb0AmrDPeVrtUBqzbDWiTFtFsJCtF6p5jrW2xDiC3x66wu4YQW3Ld8FxskGAVAyDzEVi5hCzzAmh9u6ti8ZU2ojNEjlWjHkcHaOb5nhx8qHCTrp/42ae6bCL6+bhOZt9Y70xGY0cwjh1x1bb2IfCfDqRISlRnXahaPrXnXXDmcWkKUTrJka1OlxSmySdQa3t8lZy6cHxZNf8LPG5cNq7h6WCe4FkkgVX/wB071U/2jDzG+VBNMU6oN5p1mtNwwrPYvLUAVZkihYSbMv/ALtuJk/F2H/6/wCdWsUwSwet20Wjlsw8kjMtQCp015ionrVkLJCI7x5nrSrtmQRCI9T+tXxJzK1lgKGrpC7i6tHmUnvIS3lKvWTV7EsFtX2nEsss27gUFBRRMDpyqZhptt62CUDVQJnzojjYHbviNCgE+woHGmHGdpmUPDqZ0vWPLsRv707/AHebaEuXbQSdiWgPzou1bMpIIR8zRDEmGn1JS6gFOVJjbUCKJwaaTBjkUk2gFYYfZ2zhU9cMPiISnKkAHrUN1hVi++tz4kIzH7CAmBWgssPsgVg2rahH7xP605Nva5iRZ24/yn9anxtMnyprozjeA2qh3bh4gDUpCf0qMYbYIkfGv6fw/wDtrWv5G8PAaZaRnOuURsRFV2l24bSFYfZrPNSkGT86H2MtUmf/2Q==",
       "trangThai": "hoat_dong",
-      "password": "hlv001",
+      "password": "123",
       "doiPass": false,
       "clubs": [
         {
           "msCLB": "0011",
-          "tenCLB": "CLB Võ cổ truyền GDU Q1",
-          "diaChi": "12 Đinh Tiên Hoàng, Quận 1, TP.HCM"
+          "tenCLB": "Tân Bửu",
+          "diaChi": "Xã Tân Bửu, TP. Tây Ninh",
+          "msHLV": "001"
         },
         {
           "msCLB": "0012",
-          "tenCLB": "CLB Võ cổ truyền GDU Bình Thạnh",
-          "diaChi": "45 Xô Viết Nghệ Tĩnh, Bình Thạnh, TP.HCM"
+          "tenCLB": "Mỹ Xuân",
+          "diaChi": "TP. Tây Ninh",
+          "msHLV": "001"
         }
       ]
     },
     "2": {
       "msHLV": "002",
       "tenHLV": "Trần Thị Mai Anh",
-      "dangCap": 11,
+      "cap": 11,
       "sdt": "0912345678",
       "thanhTich": "Á quân giải Võ cổ truyền miền Nam 2019, Giảng viên bộ môn Võ cổ truyền GDU",
       "avatar": null,
       "trangThai": "hoat_dong",
       "password": "hlv002",
       "doiPass": false,
-      "clubs": [
-        {
-          "msCLB": "0021",
-          "tenCLB": "CLB Võ cổ truyền GDU Gò Vấp",
-          "diaChi": "78 Quang Trung, Gò Vấp, TP.HCM"
-        }
-      ]
-    },
-    "3": {
-      "msHLV": "003",
-      "tenHLV": "Lê Minh Khoa",
-      "dangCap": 13,
-      "sdt": "0923456789",
-      "thanhTich": "Vô địch giải Võ cổ truyền Đông Nam Á 2016, HLV đội tuyển TP.HCM 2017–2022",
-      "avatar": null,
-      "trangThai": "ngung_hoat_dong",
-      "password": "hlv003",
-      "doiPass": false,
-      "clubs": [
-        {
-          "msCLB": "0031",
-          "tenCLB": "CLB Võ cổ truyền GDU Thủ Đức",
-          "diaChi": "101 Võ Văn Ngân, Thủ Đức, TP.HCM"
-        }
-      ]
+      "clubs": []
     }
   },
   "students": {
     "1": {
-      "msVS": "001100011",
+      "msVS": "00110001",
       "msCLB": "0011",
       "msHLV": "001",
-      "tenVS": "Phạm Quốc Bảo",
+      "tenVS": "Trần Thanh Bình",
       "gioiTinh": "Nam",
-      "ngaySinh": "2005-03-15",
-      "diaChi": "23 Lý Tự Trọng, Q1, TP.HCM",
-      "dangCap": 5,
-      "ngayNhapHoc": "2021-09-01",
-      "ngayThi": "2023-06-10",
-      "avatar": null,
-      "password": "vs001",
+      "diaChi": "Phường Ninh Sơn, TP. Tây Ninh",
+      "cap": 1,
+      "ngayNhapHoc": "2023-01-10",
+      "ngayThi": "2023-12-20",
+      "password": "00012008",
       "doiPass": false,
       "hocPhi": {
-        "2024-11": true,
-        "2024-12": true,
-        "2025-01": false,
-        "2025-02": false
+        "2024-01": true,
+        "2024-02": true,
+        "2024-03": false,
+        "2026-04": false
       },
       "thanhTich": [
-        "Huy chương bạc giải học sinh TP.HCM 2023"
+        "Huy chương bạc giải trẻ CLB 2023"
       ],
-      "trangThaiThi": null
+      "trangThaiThi": "dat",
+      "trangThai": "Đang học",
+      "sdt": "",
+      "avatar": null,
+      "namSinh": "2008",
+      "tenCLB": null,
+      "thongBao": []
     },
     "2": {
-      "msVS": "001100021",
+      "msVS": "00110002",
       "msCLB": "0011",
       "msHLV": "001",
-      "tenVS": "Nguyễn Thị Lan",
+      "tenVS": "Nguyễn Ngọc Lan",
       "gioiTinh": "Nữ",
-      "ngaySinh": "2006-07-22",
-      "diaChi": "56 Nguyễn Huệ, Q1, TP.HCM",
-      "dangCap": 3,
-      "ngayNhapHoc": "2022-02-14",
-      "ngayThi": "2023-08-20",
-      "avatar": null,
-      "password": "vs002",
-      "doiPass": false,
-      "hocPhi": {
-        "2024-11": true,
-        "2024-12": true,
-        "2025-01": true,
-        "2025-02": false
-      },
-      "thanhTich": [],
-      "trangThaiThi": null
-    },
-    "3": {
-      "msVS": "001100031",
-      "msCLB": "0011",
-      "msHLV": "001",
-      "tenVS": "Trần Văn Đức",
-      "gioiTinh": "Nam",
-      "ngaySinh": "2004-11-08",
-      "diaChi": "89 Đồng Khởi, Q1, TP.HCM",
-      "dangCap": 7,
-      "ngayNhapHoc": "2020-06-15",
-      "ngayThi": "2023-11-05",
-      "avatar": null,
-      "password": "vs003",
-      "doiPass": false,
-      "hocPhi": {
-        "2024-11": true,
-        "2024-12": false,
-        "2025-01": false,
-        "2025-02": false
-      },
-      "thanhTich": [
-        "Vô địch giải Trẻ TP.HCM 2022",
-        "Huy chương vàng Cúp Mùa xuân 2023"
-      ],
-      "trangThaiThi": "cho_xac_nhan"
-    },
-    "4": {
-      "msVS": "001100041",
-      "msCLB": "0011",
-      "msHLV": "001",
-      "tenVS": "Lê Thị Hoa",
-      "gioiTinh": "Nữ",
-      "ngaySinh": "2007-04-30",
-      "diaChi": "12 Phạm Ngũ Lão, Q1, TP.HCM",
-      "dangCap": 2,
-      "ngayNhapHoc": "2023-01-10",
-      "ngayThi": "2023-07-15",
-      "avatar": null,
-      "password": "vs004",
-      "doiPass": true,
-      "hocPhi": {
-        "2024-11": true,
-        "2024-12": true,
-        "2025-01": true,
-        "2025-02": true
-      },
-      "thanhTich": [],
-      "trangThaiThi": null
-    },
-    "5": {
-      "msVS": "001200011",
-      "msCLB": "0012",
-      "msHLV": "001",
-      "tenVS": "Võ Thanh Tùng",
-      "gioiTinh": "Nam",
-      "ngaySinh": "2003-09-18",
-      "diaChi": "34 Nơ Trang Long, Bình Thạnh, TP.HCM",
-      "dangCap": 8,
-      "ngayNhapHoc": "2019-03-01",
-      "ngayThi": "2024-01-20",
-      "avatar": null,
-      "password": "vs005",
-      "doiPass": false,
-      "hocPhi": {
-        "2024-11": true,
-        "2024-12": true,
-        "2025-01": true,
-        "2025-02": false
-      },
-      "thanhTich": [
-        "Á quân giải Võ cổ truyền miền Nam U21 2022"
-      ],
-      "trangThaiThi": null
-    },
-    "6": {
-      "msVS": "001200021",
-      "msCLB": "0012",
-      "msHLV": "001",
-      "tenVS": "Đinh Thị Thu Hằng",
-      "gioiTinh": "Nữ",
-      "ngaySinh": "2005-12-03",
-      "diaChi": "67 Bạch Đằng, Bình Thạnh, TP.HCM",
-      "dangCap": 4,
-      "ngayNhapHoc": "2021-08-20",
-      "ngayThi": "2023-04-10",
-      "avatar": null,
-      "password": "vs006",
-      "doiPass": false,
-      "hocPhi": {
-        "2024-11": false,
-        "2024-12": false,
-        "2025-01": false,
-        "2025-02": false
-      },
-      "thanhTich": [],
-      "trangThaiThi": "cho_xac_nhan"
-    },
-    "7": {
-      "msVS": "002100011",
-      "msCLB": "0021",
-      "msHLV": "002",
-      "tenVS": "Huỳnh Minh Triết",
-      "gioiTinh": "Nam",
-      "ngaySinh": "2004-05-14",
-      "diaChi": "15 Phan Văn Trị, Gò Vấp, TP.HCM",
-      "dangCap": 6,
-      "ngayNhapHoc": "2020-10-05",
-      "ngayThi": "2023-09-15",
-      "avatar": null,
-      "password": "vs007",
-      "doiPass": false,
-      "hocPhi": {
-        "2024-11": true,
-        "2024-12": true,
-        "2025-01": true,
-        "2025-02": true
-      },
-      "thanhTich": [
-        "Huy chương đồng giải Trẻ toàn quốc 2023"
-      ],
-      "trangThaiThi": null
-    },
-    "8": {
-      "msVS": "002100021",
-      "msCLB": "0021",
-      "msHLV": "002",
-      "tenVS": "Nguyễn Hoàng Phúc",
-      "gioiTinh": "Nam",
-      "ngaySinh": "2006-02-28",
-      "diaChi": "88 Nguyễn Oanh, Gò Vấp, TP.HCM",
-      "dangCap": 3,
-      "ngayNhapHoc": "2022-06-01",
-      "ngayThi": "2023-12-01",
-      "avatar": null,
-      "password": "vs008",
-      "doiPass": false,
-      "hocPhi": {
-        "2024-11": true,
-        "2024-12": true,
-        "2025-01": false,
-        "2025-02": false
-      },
-      "thanhTich": [],
-      "trangThaiThi": null
-    },
-    "9": {
-      "msVS": "002100031",
-      "msCLB": "0021",
-      "msHLV": "002",
-      "tenVS": "Trần Thị Bích Ngọc",
-      "gioiTinh": "Nữ",
-      "ngaySinh": "2005-08-11",
-      "diaChi": "22 Dương Quảng Hàm, Gò Vấp, TP.HCM",
-      "dangCap": 5,
-      "ngayNhapHoc": "2021-03-15",
-      "ngayThi": "2023-07-20",
-      "avatar": null,
-      "password": "vs009",
-      "doiPass": false,
-      "hocPhi": {
-        "2024-11": true,
-        "2024-12": true,
-        "2025-01": true,
-        "2025-02": true
-      },
-      "thanhTich": [
-        "Vô địch học sinh TP.HCM 2022"
-      ],
-      "trangThaiThi": "cho_xac_nhan"
-    },
-    "10": {
-      "msVS": "`003100011`",
-      "msCLB": "0031",
-      "msHLV": "003",
-      "tenVS": "Lý Văn Nam",
-      "gioiTinh": "Nam",
-      "ngaySinh": "2003-01-25",
-      "diaChi": "5 Kha Vạn Cân, Thủ Đức, TP.HCM",
-      "dangCap": 9,
-      "ngayNhapHoc": "2018-09-01",
-      "ngayThi": "2023-10-30",
-      "avatar": null,
-      "password": "vs010",
-      "doiPass": false,
-      "hocPhi": {
-        "2024-11": true,
-        "2024-12": true,
-        "2025-01": true,
-        "2025-02": true
-      },
-      "thanhTich": [
-        "Huy chương vàng giải Võ cổ truyền TP.HCM 2021",
-        "Á quân toàn quốc 2023"
-      ],
-      "trangThaiThi": null
-    },
-    "11": {
-      "msVS": "00110051",
-      "msCLB": "0011",
-      "msHLV": "001",
-      "tenVS": "hang",
-      "gioiTinh": "Nam",
-      "ngaySinh": "2000-01-01",
-      "diaChi": "",
-      "dangCap": 1,
-      "ngayNhapHoc": "2026-03-31",
+      "diaChi": "TP. Tây Ninh",
+      "sdt": "",
+      "cap": 1,
+      "ngayNhapHoc": "2024-01-05",
       "ngayThi": null,
-      "password": "vs4472",
+      "password": "00022010",
       "doiPass": false,
       "hocPhi": {},
+      "thanhTich": [],
+      "trangThaiThi": null,
+      "trangThai": "Đang học",
+      "avatar": null,
+      "namSinh": "2010",
+      "tenCLB": null,
+      "thongBao": []
+    },
+    "3": {
+      "msVS": "00110003",
+      "msCLB": "0011",
+      "msHLV": "001",
+      "tenVS": "Nguyễn Thị Diễm Thúy",
+      "gioiTinh": "Nữ",
+      "namSinh": "2006",
+      "diaChi": "Ấp 2 Mỹ Yên",
+      "cap": 14,
+      "ngayNhapHoc": "2026-04-07",
+      "ngayThi": null,
+      "password": "00032006",
+      "doiPass": true,
+      "hocPhi": {
+        "2024-03": true,
+        "2024-02": true,
+        "2026-04": true
+      },
       "thanhTich": [],
       "trangThaiThi": null,
       "trangThai": "Đang học",
@@ -489,5 +278,6 @@
       "so": 0,
       "thoiGian": 300
     }
-  }
+  },
+  "reset_requests": {}
 }

@@ -327,3 +327,119 @@
 @media (max-width: 600px) {
   .form-row, .form-row-3 { grid-template-columns: 1fr; }
 }
+/* Custom SweetAlert2 Toast */
+div.swal2-container .swal2-popup.vct-swal-toast {
+  padding: 0.5rem 0.75rem !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+  border: 1px solid var(--border-subtle) !important;
+  display: flex !important;
+  align-items: center !important;
+  width: auto !important;
+  min-width: 200px !important;
+  background: var(--bg-surface) !important;
+}
+
+div.swal2-container .vct-swal-toast .swal2-title {
+  margin: 0 0 0 0.5rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body) !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+div.swal2-container .vct-swal-toast .swal2-icon {
+  margin: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  scale: 0.8 !important;
+}
+/* Progress bar for toasts */
+.vct-swal-toast .swal2-timer-progress-bar {
+  background: var(--gold-bright) !important;
+}
+
+/* Compact Confirmation Dialog */
+div.swal2-container .swal2-popup.vct-swal-popup {
+  border-radius: var(--radius-lg) !important;
+  padding: 1.25rem 1.75rem !important; 
+  width: 420px !important; /* Ép cứng chiều dài để không bị ghi đè */
+  min-width: 320px !important;
+  max-width: 95% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  background: var(--bg-surface) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+div.swal2-container .vct-swal-popup .swal2-icon {
+  margin: 0 15px 0 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  display: flex !important;
+  order: 1 !important;
+  border-color: #ff4d4f !important;
+  color: #ff4d4f !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Fix for the ! content inside the icon */
+div.swal2-container .vct-swal-popup .swal2-icon .swal2-icon-content {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 32px !important; /* Match icon height for perfect centering */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+}
+
+div.swal2-container .vct-swal-popup .swal2-title {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body) !important;
+  flex: 1 !important;
+  order: 2 !important;
+}
+
+div.swal2-container .vct-swal-popup .swal2-html-container {
+  margin: 0.75rem 0 0.5rem 0 !important;
+  width: 100% !important;
+  font-size: 0.95rem !important;
+  text-align: left !important;
+  color: var(--text-secondary) !important;
+  font-family: var(--font-body) !important;
+  line-height: 1.5 !important;
+  order: 3 !important;
+}
+
+div.swal2-container .vct-swal-popup .swal2-actions {
+  margin: 0.75rem 0 0 0 !important; /* Tighter spacing for actions */
+  width: 100% !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  display: flex !important;
+  order: 4 !important;
+}
+
+div.swal2-container .vct-swal-popup .swal2-confirm, 
+div.swal2-container .vct-swal-popup .swal2-cancel {
+  margin: 0 !important;
+  padding: 5px 14px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-full) !important;
+  font-family: var(--font-body) !important;
+}

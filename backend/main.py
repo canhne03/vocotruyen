@@ -29,9 +29,9 @@ root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 async def read_index():
     return FileResponse(os.path.join(root_dir, 'index.html'))
 
-@app.get("/dashboard.html")
-async def read_dashboard():
-    return FileResponse(os.path.join(root_dir, 'dashboard.html'))
+@app.get("/hlv.html")
+async def read_hlv():
+    return FileResponse(os.path.join(root_dir, 'hlv.html'))
 
 @app.get("/vosinh.html")
 async def read_vosinh():
@@ -71,11 +71,11 @@ async def login(request: models.LoginRequest):
     
     raise HTTPException(status_code=400, detail="Mã số hoặc mật khẩu không đúng.")
 
-@app.get("/search", response_model=List[models.Student])
-async def search_students(q: str = ""):
+@app.get("/search")
+async def search_public(q: str = ""):
     if not q:
         return []
-    return database.search_students_public(q)
+    return database.search_public(q)
 
 @app.get("/students", response_model=List[models.Student])
 async def get_students(current_user: dict = Depends(get_current_user)):
@@ -91,6 +91,17 @@ async def create_student(student: models.Student, current_user: dict = Depends(g
 async def update_student(msVS: str, student: models.Student, current_user: dict = Depends(get_current_user)):
     if current_user.get("role") != "hlv":
         raise HTTPException(status_code=403, detail="Chỉ Huấn luyện viên mới có quyền sửa võ sinh.")
+    
+    # Lấy dữ liệu cũ để so sánh học phí
+    old_student = database.find_student(msVS)
+    if old_student:
+        old_hoc_phi = old_student.get('hocPhi', {})
+        new_hoc_phi = student.hocPhi
+        for month, paid in new_hoc_phi.items():
+            # Nếu tháng này vừa được đánh dấu là đã đóng (True)
+            if paid and not old_hoc_phi.get(month):
+                database.delete_tuition_notification(msVS, month)
+
     return database.update_student(msVS, student.dict())
 
 @app.get("/rankings")
@@ -114,6 +125,42 @@ async def add_club(club: models.Club, current_user: dict = Depends(get_current_u
     if not success:
         raise HTTPException(status_code=400, detail="Lỗi khi thêm lớp học.")
     return {"message": "Thêm lớp học thành công"}
+
+@app.put("/hlv/update-profile")
+async def update_hlv_profile(profile: models.UpdateHLVProfile, current_user: dict = Depends(get_current_user)):
+    if current_user.get("role") != "hlv":
+        raise HTTPException(status_code=403, detail="Không có quyền truy cập.")
+    msHLV = current_user.get("sub")
+    hlv = database.find_hlv(msHLV)
+    if not hlv:
+        raise HTTPException(status_code=404, detail="Không tìm thấy thông tin HLV.")
+    
+    if profile.sdt is not None:
+        hlv['sdt'] = profile.sdt
+    if profile.thanhTich is not None:
+        hlv['thanhTich'] = profile.thanhTich
+    if profile.deleteAvatar:
+        hlv['avatar'] = None
+    elif profile.avatar is not None:
+        hlv['avatar'] = profile.avatar
+        
+    database.update_hlv(msHLV, hlv)
+    return {"message": "Cập nhật thông tin thành công.", "hlv": hlv}
+
+@app.post("/hlv/change-password")
+async def hlv_change_password(req: models.ChangePasswordRequest, current_user: dict = Depends(get_current_user)):
+    if current_user.get("role") != "hlv":
+        raise HTTPException(status_code=403, detail="Không có quyền truy cập.")
+    msHLV = current_user.get("sub")
+    hlv = database.find_hlv(msHLV)
+    if not hlv:
+        raise HTTPException(status_code=404, detail="Không tìm thấy HLV.")
+    
+    if not auth.verify_password(req.oldPassword, hlv['password']):
+        raise HTTPException(status_code=400, detail="Mật khẩu cũ không chính xác.")
+    
+    database.update_hlv_password(msHLV, req.newPassword)
+    return {"message": "Đổi mật khẩu thành công."}
 
 # --- Password Reset Endpoints ---
 
@@ -173,7 +220,9 @@ async def update_vs_profile(profile: models.UpdateStudentProfile, current_user: 
     # Cập nhật các trường được phép
     if profile.diaChi is not None:
         vs['diaChi'] = profile.diaChi
-    if profile.avatar is not None:
+    if profile.deleteAvatar:
+        vs['avatar'] = None
+    elif profile.avatar is not None:
         vs['avatar'] = profile.avatar
         
     database.update_student(msVS, vs)
@@ -193,3 +242,30 @@ async def vs_change_password(req: models.ChangePasswordRequest, current_user: di
     
     database.update_student_password(msVS, req.newPassword)
     return {"message": "Đổi mật khẩu thành công."}
+
+# --- Notification Endpoints ---
+
+@app.post("/students/{msVS}/notify")
+async def add_notification(msVS: str, notif: models.Notification, current_user: dict = Depends(get_current_user)):
+    if current_user.get("role") != "hlv":
+        raise HTTPException(status_code=403, detail="Không có quyền truy cập.")
+    success = database.add_notification(msVS, notif.dict())
+    if not success:
+        raise HTTPException(status_code=404, detail="Không tìm thấy võ sinh.")
+    return {"message": "Đã gửi thông báo."}
+
+@app.post("/vs/mark-notification-read/{notif_id}")
+async def mark_notification_read(notif_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user.get("role") != "vs":
+        raise HTTPException(status_code=403, detail="Không có quyền truy cập.")
+    msVS = current_user.get("sub")
+    success = database.mark_notification_read(msVS, notif_id)
+    return {"success": success}
+
+@app.post("/vs/mark-all-read")
+async def mark_all_notifications_read(current_user: dict = Depends(get_current_user)):
+    if current_user.get("role") != "vs":
+        raise HTTPException(status_code=403, detail="Không có quyền truy cập.")
+    msVS = current_user.get("sub")
+    database.mark_all_notifications_read(msVS)
+    return {"message": "Đã đánh dấu tất cả là đã đọc."}
